@@ -1,18 +1,14 @@
-# Four-week interview preparation roadmap
+# Interview review sprint (four weeks)
 
-This is a focused practice schedule, not a requirement to race through every problem. Favor clear solutions and review over a high completion count.
+This is the **accelerated review schedule** for learners who already know the basics. For foundational understanding, start with the more realistic [12-week mastery pathway](../MASTERY_ROADMAP.md) instead.
 
-| Week | Study focus | Core problems | Deliverable |
+| Week | Review focus | Selected graded problems | Nonnegotiable evidence |
 | --- | --- | --- | --- |
-| 1 | Hash maps, counting, two pointers, stacks | B01–B16 | Explain a linear-time invariant for each pattern |
-| 2 | Sliding windows, prefix sums, intervals, heaps | I01–I12 | 60-minute backend mock interview |
-| 3 | Trees, linked chains, graphs, union-find | I13–I16, A01–A06, A12 | Whiteboard a BFS, DSU and tree-bound proof |
-| 4 | DP, tries, backtracking, partition search | A07–A11, A13–A16 | 75-minute senior mock and final review |
+| 1 | Hashing, arrays, two pointers, stacks, binary search | B01–B16 | A correctness invariant and worst-case analysis for each |
+| 2 | Sliding windows, prefix sums, intervals, heaps, LRU | I01–I12 | Explain why windows fail on arbitrary signed sums; test tie rules |
+| 3 | Trees, linked chains, graph traversal, topology and DSU | I13–I16, A01–A06, A12 | BFS/DFS/DSU/greedy proof from memory and a random oracle |
+| 4 | DP, tries, backtracking, median partition and projects | A07–A11, A13–A16 | 75-minute mock plus transfer variations on weak topics |
 
-For each new question: read the constraints, state the brute-force baseline, name the intended invariant, write `solve`, and run the CLI grader. If you fail, diagnose one counterexample before revealing a hint or reference. After passing, state time/space complexity and implement a small input generator for extra confidence.
+For each task, write a baseline, identify the state, state a proof, implement, run fixtures, then construct an adversarial test. Use hints only after attempting the baseline. After reading a solution, close the reference and reimplement after 1, 3 and 7 days.
 
-**Repeat schedule:** Re-solve mistakes after 1 day, 3 days and 7 days. Group failures by *reason* (off-by-one, tie-breaking, incorrect state, duplicate handling) rather than memorizing the answer.
-
-**Recommended ordering for backend interviews:** hash maps → windows/prefix sums → sorting/intervals → queues/heaps/caches → trees → graph traversal and dependency planning → shortest paths → dynamic programming.
-
-A passing local test bank does not prove correctness for every possible input or evaluate production performance; discuss corner cases and complexity separately.
+**Outcome to aim for:** Solve unseen easy and medium interview variations confidently under time constraints, explain tradeoffs and debug edge cases—not just repeat published answer code.
