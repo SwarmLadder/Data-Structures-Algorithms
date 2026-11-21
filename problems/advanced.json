@@ -1,0 +1,790 @@
+[
+  {
+    "id": "A01",
+    "level": "advanced",
+    "difficulty": "Medium",
+    "title": "Count disconnected regions in a binary map",
+    "pattern": "Grid flood fill",
+    "prompt": "A rectangular grid of strings contains \"1\" for land and \"0\" for water. Count 4-connected land regions; diagonal contact alone does not connect. Do not mutate grid.",
+    "constraints": "0 <= rows, columns <= 300; when nonempty all rows have equal length.",
+    "signature": "def solve(grid):",
+    "hints": [
+      "Treat each unvisited land cell as a new component.",
+      "Explore neighbors with a queue and record visited cells."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            "11110",
+            "11010",
+            "11000",
+            "00000"
+          ]
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            "11000",
+            "11000",
+            "00100",
+            "00011"
+          ]
+        ],
+        "expected": 3
+      }
+    ]
+  },
+  {
+    "id": "A02",
+    "level": "advanced",
+    "difficulty": "Medium",
+    "title": "Deterministic shortest route across dependencies",
+    "pattern": "Breadth-first search",
+    "prompt": "Given n directed vertices 0..n-1, edges [u,v], start and target, return the lexicographically smallest shortest path as a list of vertex IDs. If no route exists return []; start==target returns [start].",
+    "constraints": "1 <= n <= 100000; 0 <= number of edges <= 200000; valid vertex IDs.",
+    "signature": "def solve(n, edges, start, target):",
+    "hints": [
+      "Breadth-first traversal guarantees the smallest hop count.",
+      "Process neighbors in sorted order to break ties between equal-length paths."
+    ],
+    "examples": [
+      {
+        "args": [
+          5,
+          [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              2,
+              4
+            ]
+          ],
+          0,
+          4
+        ],
+        "expected": [
+          0,
+          1,
+          4
+        ]
+      },
+      {
+        "args": [
+          4,
+          [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          0,
+          3
+        ],
+        "expected": []
+      }
+    ]
+  },
+  {
+    "id": "A03",
+    "level": "advanced",
+    "difficulty": "Medium",
+    "title": "Plan jobs with deterministic prerequisites",
+    "pattern": "Topological sort / heap",
+    "prompt": "There are n jobs numbered 0..n-1. Each directed edge [u,v] requires u before v. Return the lexicographically smallest valid job ordering. If there is a cycle return []; no edges means ascending IDs.",
+    "constraints": "0 <= n <= 100000; 0 <= number of edges <= 200000; valid IDs; duplicate edges permitted.",
+    "signature": "def solve(n, edges):",
+    "hints": [
+      "At each step, only jobs with no remaining prerequisites are ready.",
+      "Pick the smallest ready job, then update its dependents."
+    ],
+    "examples": [
+      {
+        "args": [
+          4,
+          [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ]
+        ],
+        "expected": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "args": [
+          2,
+          [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ]
+        ],
+        "expected": []
+      }
+    ]
+  },
+  {
+    "id": "A04",
+    "level": "advanced",
+    "difficulty": "Medium",
+    "title": "Minimum delivery delay through a weighted network",
+    "pattern": "Dijkstra / min heap",
+    "prompt": "Given n vertices and directed edges [u,v,weight] with nonnegative weights, return minimum distances from source to all vertices. Use -1 for unreachable vertices. Repeated edges are valid.",
+    "constraints": "1 <= n <= 100000; 0 <= edges <= 200000; 0 <= weight <= 10**9.",
+    "signature": "def solve(n, edges, source):",
+    "hints": [
+      "For nonnegative weights, the minimum tentative distance is safe to finalize.",
+      "Use a heap and ignore entries that are no longer current."
+    ],
+    "examples": [
+      {
+        "args": [
+          5,
+          [
+            [
+              0,
+              1,
+              2
+            ],
+            [
+              0,
+              2,
+              5
+            ],
+            [
+              1,
+              2,
+              1
+            ],
+            [
+              2,
+              3,
+              3
+            ]
+          ],
+          0
+        ],
+        "expected": [
+          0,
+          2,
+          3,
+          6,
+          -1
+        ]
+      },
+      {
+        "args": [
+          3,
+          [
+            [
+              0,
+              1,
+              1
+            ]
+          ],
+          0
+        ],
+        "expected": [
+          0,
+          1,
+          -1
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A05",
+    "level": "advanced",
+    "difficulty": "Medium",
+    "title": "Track live network connectivity",
+    "pattern": "Disjoint set union",
+    "prompt": "Process commands [\"connect\", u, v] and [\"linked\", u, v] for n isolated servers. connect adds an undirected link; linked returns whether a path currently connects them. Return booleans for linked commands only.",
+    "constraints": "0 <= n <= 100000; 0 <= commands <= 200000; all referenced IDs are in range.",
+    "signature": "def solve(n, commands):",
+    "hints": [
+      "Connectivity partitions the vertices into components.",
+      "Union by component size and compress paths when finding roots."
+    ],
+    "examples": [
+      {
+        "args": [
+          4,
+          [
+            [
+              "linked",
+              0,
+              1
+            ],
+            [
+              "connect",
+              0,
+              1
+            ],
+            [
+              "linked",
+              0,
+              1
+            ],
+            [
+              "connect",
+              1,
+              2
+            ],
+            [
+              "linked",
+              0,
+              2
+            ]
+          ]
+        ],
+        "expected": [
+          false,
+          true,
+          true
+        ]
+      },
+      {
+        "args": [
+          1,
+          [
+            [
+              "linked",
+              0,
+              0
+            ],
+            [
+              "connect",
+              0,
+              0
+            ]
+          ]
+        ],
+        "expected": [
+          true
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A06",
+    "level": "advanced",
+    "difficulty": "Medium",
+    "title": "Minimum cable cost to connect all offices",
+    "pattern": "Minimum spanning tree",
+    "prompt": "For n offices and undirected weighted links [u,v,cost], return the minimum total cost to connect all offices. Return -1 if impossible. Parallel edges and zero-cost links are allowed; n=0 returns 0.",
+    "constraints": "0 <= n <= 100000; 0 <= links <= 200000; costs are nonnegative integers.",
+    "signature": "def solve(n, links):",
+    "hints": [
+      "A minimum spanning tree uses n-1 edges when all nodes are connected.",
+      "Consider cheap links first and reject those that create cycles."
+    ],
+    "examples": [
+      {
+        "args": [
+          3,
+          [
+            [
+              0,
+              1,
+              5
+            ],
+            [
+              1,
+              2,
+              1
+            ],
+            [
+              0,
+              2,
+              9
+            ]
+          ]
+        ],
+        "expected": 6
+      },
+      {
+        "args": [
+          4,
+          [
+            [
+              0,
+              1,
+              1
+            ],
+            [
+              2,
+              3,
+              1
+            ]
+          ]
+        ],
+        "expected": -1
+      }
+    ]
+  },
+  {
+    "id": "A07",
+    "level": "advanced",
+    "difficulty": "Medium",
+    "title": "Fewest batch sizes to meet a target",
+    "pattern": "Dynamic programming",
+    "prompt": "Given distinct positive batch sizes and a nonnegative target, return the minimum number of batches that exactly sum to target, allowing unlimited use of each size. Return -1 if impossible.",
+    "constraints": "1 <= len(sizes) <= 100; 1 <= sizes[i] <= 10000; 0 <= target <= 10000.",
+    "signature": "def solve(sizes, target):",
+    "hints": [
+      "The best answer for a sum depends on smaller sums.",
+      "Try making each allowed size the final batch in an optimal solution."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            1,
+            2,
+            5
+          ],
+          11
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          [
+            2
+          ],
+          3
+        ],
+        "expected": -1
+      }
+    ]
+  },
+  {
+    "id": "A08",
+    "level": "advanced",
+    "difficulty": "Medium",
+    "title": "Segment a service name into allowed tokens",
+    "pattern": "Dynamic programming / strings",
+    "prompt": "Return True if text can be split into one or more words from dictionary, allowing reuse. The empty text is segmentable without using any words. Dictionary words are nonempty and distinct.",
+    "constraints": "0 <= len(text) <= 2000; up to 1000 dictionary words; total dictionary length <= 20000.",
+    "signature": "def solve(text, dictionary):",
+    "hints": [
+      "Think of where the last dictionary word could start.",
+      "Mark prefixes that can be built from previously accepted prefixes."
+    ],
+    "examples": [
+      {
+        "args": [
+          "leetcode",
+          [
+            "leet",
+            "code"
+          ]
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          "catsandog",
+          [
+            "cats",
+            "dog",
+            "sand",
+            "and",
+            "cat"
+          ]
+        ],
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "A09",
+    "level": "advanced",
+    "difficulty": "Medium",
+    "title": "Longest strictly increasing deployment run (not necessarily contiguous)",
+    "pattern": "Patience sorting / binary search",
+    "prompt": "Return the length of the longest strictly increasing subsequence, which may skip elements. Equal values do not extend the subsequence.",
+    "constraints": "0 <= len(nums) <= 100000.",
+    "signature": "def solve(nums):",
+    "hints": [
+      "You only need a good possible tail for each subsequence length.",
+      "Use binary search to replace the smallest tail that is not less than the new value."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            10,
+            9,
+            2,
+            5,
+            3,
+            7,
+            101,
+            18
+          ]
+        ],
+        "expected": 4
+      },
+      {
+        "args": [
+          [
+            0,
+            1,
+            0,
+            3,
+            2,
+            3
+          ]
+        ],
+        "expected": 4
+      }
+    ]
+  },
+  {
+    "id": "A10",
+    "level": "advanced",
+    "difficulty": "Medium",
+    "title": "Minimum edits between configuration keys",
+    "pattern": "Dynamic programming / edit distance",
+    "prompt": "Return the minimum number of single-character insertions, deletions and replacements needed to transform source into target. Every operation costs 1.",
+    "constraints": "0 <= len(source), len(target) <= 1000; lowercase strings.",
+    "signature": "def solve(source, target):",
+    "hints": [
+      "The last action is an insertion, deletion or a match/replacement.",
+      "The optimal cost depends on three neighboring smaller prefixes."
+    ],
+    "examples": [
+      {
+        "args": [
+          "horse",
+          "ros"
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          "intention",
+          "execution"
+        ],
+        "expected": 5
+      }
+    ]
+  },
+  {
+    "id": "A11",
+    "level": "advanced",
+    "difficulty": "Medium",
+    "title": "Choose nonrepeatable upgrades under a budget",
+    "pattern": "0/1 knapsack",
+    "prompt": "Each upgrade is [cost,value]. Select any subset, using an upgrade at most once, with total cost <= budget. Return the maximum achievable total value. Empty selection is allowed.",
+    "constraints": "0 <= len(upgrades) <= 200; 0 <= budget <= 10000; costs >= 1, values >= 0.",
+    "signature": "def solve(upgrades, budget):",
+    "hints": [
+      "A single choice cannot be used twice.",
+      "Update the one-dimensional budget DP from high capacity to low capacity."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            [
+              1,
+              1
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              5,
+              7
+            ]
+          ],
+          7
+        ],
+        "expected": 9
+      },
+      {
+        "args": [
+          [
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              4
+            ]
+          ],
+          1
+        ],
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "A12",
+    "level": "advanced",
+    "difficulty": "Hard",
+    "title": "Maximum path sum across a binary tree",
+    "pattern": "Tree DFS / postorder",
+    "prompt": "For a nonempty heap-indexed tree (root 0; children 2i+1 and 2i+2; null means missing), return the largest sum of any path that follows parent-child edges, without repeating nodes. A path may start and end at any reachable nodes.",
+    "constraints": "1 <= len(tree) <= 100000; root is an integer; node values may be negative.",
+    "signature": "def solve(tree):",
+    "hints": [
+      "A path passing through a node may collect a contribution from both children.",
+      "Only one side can be extended toward the parent; discard negative contributions."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "expected": 6
+      },
+      {
+        "args": [
+          [
+            -10,
+            9,
+            20,
+            null,
+            null,
+            15,
+            7
+          ]
+        ],
+        "expected": 42
+      }
+    ]
+  },
+  {
+    "id": "A13",
+    "level": "advanced",
+    "difficulty": "Medium",
+    "title": "Prefix suggestions for command names",
+    "pattern": "Trie / lexicographic search",
+    "prompt": "Return the lexicographically smallest k *distinct* words that start with prefix. If none match, return []. Word order in the input is irrelevant; k=0 means no suggestions.",
+    "constraints": "0 <= len(words) <= 50000; total characters <= 200000; lowercase words; 0 <= k <= 100.",
+    "signature": "def solve(words, prefix, k):",
+    "hints": [
+      "Shared prefixes can be stored as paths from a common root.",
+      "Walk to the prefix node, then traverse its children in sorted order."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            "car",
+            "card",
+            "care",
+            "cart",
+            "cat",
+            "dog"
+          ],
+          "car",
+          3
+        ],
+        "expected": [
+          "car",
+          "card",
+          "care"
+        ]
+      },
+      {
+        "args": [
+          [
+            "z",
+            "a",
+            "b",
+            "a"
+          ],
+          "",
+          3
+        ],
+        "expected": [
+          "a",
+          "b",
+          "z"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A14",
+    "level": "advanced",
+    "difficulty": "Hard",
+    "title": "Count safe placements of n schedulers",
+    "pattern": "Backtracking / constraints",
+    "prompt": "Return the number of ways to place n queens on an n-by-n chessboard so none share a row, column or diagonal. Count different board arrangements separately. Define n=0 as one empty arrangement.",
+    "constraints": "0 <= n <= 9.",
+    "signature": "def solve(n):",
+    "hints": [
+      "Place one queen per row to avoid row conflicts automatically.",
+      "Track occupied columns and the two kinds of diagonals."
+    ],
+    "examples": [
+      {
+        "args": [
+          4
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          1
+        ],
+        "expected": 1
+      }
+    ]
+  },
+  {
+    "id": "A15",
+    "level": "advanced",
+    "difficulty": "Medium",
+    "title": "Enumerate combinations of reusable package sizes",
+    "pattern": "Backtracking / combinations",
+    "prompt": "Given distinct positive sizes and target, return every unique nondecreasing list of sizes that sums to target. Each size may be used any number of times. Sort the list of combinations lexicographically. Return [[]] for target=0.",
+    "constraints": "1 <= len(sizes) <= 15; 1 <= sizes[i] <= 100; 0 <= target <= 35.",
+    "signature": "def solve(sizes, target):",
+    "hints": [
+      "Fixed ordering prevents counting permutations as separate combinations.",
+      "Only choose candidates at or after the current index during recursion."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            2,
+            3,
+            6,
+            7
+          ],
+          7
+        ],
+        "expected": [
+          [
+            2,
+            2,
+            3
+          ],
+          [
+            7
+          ]
+        ]
+      },
+      {
+        "args": [
+          [
+            2,
+            3,
+            5
+          ],
+          8
+        ],
+        "expected": [
+          [
+            2,
+            2,
+            2,
+            2
+          ],
+          [
+            2,
+            3,
+            3
+          ],
+          [
+            3,
+            5
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A16",
+    "level": "advanced",
+    "difficulty": "Hard",
+    "title": "Median across two sorted telemetry streams",
+    "pattern": "Binary search / partition",
+    "prompt": "Given two nondecreasing integer lists with at least one element total, return the numerical median of the merged list as a float. Do not merge or sort the arrays; seek O(log(min(n,m))) time.",
+    "constraints": "0 <= lengths <= 100000; total length >= 1. Each input integer is between -10**9 and 10**9.",
+    "signature": "def solve(a, b):",
+    "hints": [
+      "A valid split places half the total elements on the left.",
+      "Binary search a cut in the smaller array and derive the cut in the other array."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            1,
+            3
+          ],
+          [
+            2
+          ]
+        ],
+        "expected": 2.0
+      },
+      {
+        "args": [
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "expected": 2.5
+      }
+    ]
+  }
+]
