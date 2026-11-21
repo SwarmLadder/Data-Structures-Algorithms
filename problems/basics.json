@@ -1,0 +1,685 @@
+[
+  {
+    "id": "B01",
+    "level": "basics",
+    "difficulty": "Easy",
+    "title": "Find a pair of matching transaction amounts",
+    "pattern": "Hash map",
+    "prompt": "Return the indices [i, j] (i < j) of two different elements whose sum equals target. Exactly one valid pair exists. Indices refer to the original input.",
+    "constraints": "2 <= len(nums) <= 100000; signed integers; do not modify nums.",
+    "signature": "def solve(nums, target):",
+    "hints": [
+      "Track earlier values by their index.",
+      "Before storing the current number, look for its complement."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            2,
+            7,
+            11,
+            15
+          ],
+          9
+        ],
+        "expected": [
+          0,
+          1
+        ]
+      },
+      {
+        "args": [
+          [
+            3,
+            3
+          ],
+          6
+        ],
+        "expected": [
+          0,
+          1
+        ]
+      }
+    ]
+  },
+  {
+    "id": "B02",
+    "level": "basics",
+    "difficulty": "Medium",
+    "title": "Group request tokens by letter composition",
+    "pattern": "Hash map / strings",
+    "prompt": "Group strings that are anagrams of one another. Within each group sort words alphabetically, then sort groups by their first word. Preserve duplicate words. The empty string is valid.",
+    "constraints": "0 <= len(words) <= 20000; words contain lowercase a-z.",
+    "signature": "def solve(words):",
+    "hints": [
+      "Anagrams share a canonical representation.",
+      "Sort letters to create a dictionary key."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ]
+        ],
+        "expected": [
+          [
+            "ate",
+            "eat",
+            "tea"
+          ],
+          [
+            "bat"
+          ],
+          [
+            "nat",
+            "tan"
+          ]
+        ]
+      },
+      {
+        "args": [
+          [
+            "",
+            "",
+            "a"
+          ]
+        ],
+        "expected": [
+          [
+            "",
+            ""
+          ],
+          [
+            "a"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "B03",
+    "level": "basics",
+    "difficulty": "Easy",
+    "title": "Locate the first unique event marker",
+    "pattern": "Counting",
+    "prompt": "Return the zero-based position of the first character that appears exactly once in text, or -1 if none exists. Comparisons are case-sensitive.",
+    "constraints": "0 <= len(text) <= 100000; ASCII text.",
+    "signature": "def solve(text):",
+    "hints": [
+      "Count occurrences before choosing an index.",
+      "A dictionary avoids checking every later character again."
+    ],
+    "examples": [
+      {
+        "args": [
+          "leetcode"
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          "aabb"
+        ],
+        "expected": -1
+      }
+    ]
+  },
+  {
+    "id": "B04",
+    "level": "basics",
+    "difficulty": "Easy",
+    "title": "Check nested configuration delimiters",
+    "pattern": "Stack",
+    "prompt": "Return True when a string of round, square and curly brackets is properly matched and nested; otherwise False. The empty string is balanced.",
+    "constraints": "0 <= len(text) <= 100000; every character belongs to ()[]{}.",
+    "signature": "def solve(text):",
+    "hints": [
+      "Track the most recently unmatched opening bracket.",
+      "A closing bracket must match the top of a stack."
+    ],
+    "examples": [
+      {
+        "args": [
+          "([]){}"
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          "([)]"
+        ],
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "B05",
+    "level": "basics",
+    "difficulty": "Easy",
+    "title": "First alert timestamp at or above threshold",
+    "pattern": "Binary search",
+    "prompt": "Given a nondecreasing integer array, return the first index where nums[index] >= threshold; return len(nums) when all values are smaller. Do not linearly scan.",
+    "constraints": "0 <= len(nums) <= 100000; duplicates allowed.",
+    "signature": "def solve(nums, threshold):",
+    "hints": [
+      "The answer is a boundary rather than an exact equality match.",
+      "Keep a half-open search interval and shrink toward the leftmost valid position."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            1,
+            2,
+            2,
+            2,
+            5
+          ],
+          2
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            1,
+            3,
+            5
+          ],
+          2
+        ],
+        "expected": 1
+      }
+    ]
+  },
+  {
+    "id": "B06",
+    "level": "basics",
+    "difficulty": "Easy",
+    "title": "Combine sorted audit offsets",
+    "pattern": "Two pointers",
+    "prompt": "Merge sorted integer lists a and b into one nondecreasing list. Keep all duplicates and leave both inputs unchanged.",
+    "constraints": "0 <= len(a), len(b) <= 100000.",
+    "signature": "def solve(a, b):",
+    "hints": [
+      "Each array already has the required ordering.",
+      "Advance the pointer from the side with the smaller next value."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            1,
+            2,
+            4
+          ],
+          [
+            1,
+            3,
+            4
+          ]
+        ],
+        "expected": [
+          1,
+          1,
+          2,
+          3,
+          4,
+          4
+        ]
+      },
+      {
+        "args": [
+          [],
+          [
+            2,
+            5
+          ]
+        ],
+        "expected": [
+          2,
+          5
+        ]
+      }
+    ]
+  },
+  {
+    "id": "B07",
+    "level": "basics",
+    "difficulty": "Medium",
+    "title": "Largest consecutive net gain",
+    "pattern": "Dynamic programming",
+    "prompt": "Return the maximum sum over all nonempty contiguous subarrays. If every number is negative, return the largest (least negative) number.",
+    "constraints": "1 <= len(nums) <= 100000; signed integers.",
+    "signature": "def solve(nums):",
+    "hints": [
+      "Focus on the best subarray that ends at each position.",
+      "At a new position either extend the previous run or restart."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            -2,
+            1,
+            -3,
+            4,
+            -1,
+            2,
+            1,
+            -5,
+            4
+          ]
+        ],
+        "expected": 6
+      },
+      {
+        "args": [
+          [
+            -3,
+            -7,
+            -1
+          ]
+        ],
+        "expected": -1
+      }
+    ]
+  },
+  {
+    "id": "B08",
+    "level": "basics",
+    "difficulty": "Easy",
+    "title": "Rotate on-call assignments",
+    "pattern": "Array indexing",
+    "prompt": "Return a new array formed by rotating nums right by k positions. Handle k larger than the array length; an empty input stays empty.",
+    "constraints": "0 <= len(nums) <= 100000; 0 <= k <= 10**9.",
+    "signature": "def solve(nums, k):",
+    "hints": [
+      "Reduce the rotation count before slicing.",
+      "The last k elements become the first k after rotation."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          2
+        ],
+        "expected": [
+          4,
+          5,
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "args": [
+          [
+            1,
+            2
+          ],
+          3
+        ],
+        "expected": [
+          2,
+          1
+        ]
+      }
+    ]
+  },
+  {
+    "id": "B09",
+    "level": "basics",
+    "difficulty": "Medium",
+    "title": "Most frequent error labels",
+    "pattern": "Counting / sorting",
+    "prompt": "Return the k most frequent distinct lowercase labels ordered by descending frequency, breaking ties alphabetically. k is valid.",
+    "constraints": "1 <= len(labels) <= 100000; 1 <= k <= number of distinct labels.",
+    "signature": "def solve(labels, k):",
+    "hints": [
+      "Counting alone does not define how to break ties.",
+      "Sort by a pair: negative frequency and alphabetic label."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            "timeout",
+            "disk",
+            "timeout",
+            "cpu",
+            "disk",
+            "timeout"
+          ],
+          2
+        ],
+        "expected": [
+          "timeout",
+          "disk"
+        ]
+      },
+      {
+        "args": [
+          [
+            "b",
+            "a",
+            "b",
+            "a"
+          ],
+          1
+        ],
+        "expected": [
+          "a"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "B10",
+    "level": "basics",
+    "difficulty": "Easy",
+    "title": "Recover a missing sequence ID",
+    "pattern": "Arithmetic invariants",
+    "prompt": "An array holds n distinct numbers from 0 through n, missing exactly one. Return the missing number; an empty array means zero is missing.",
+    "constraints": "0 <= n <= 100000.",
+    "signature": "def solve(nums):",
+    "hints": [
+      "Compare the full range against the observed values.",
+      "The arithmetic series provides the expected sum without sorting."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            3,
+            0,
+            1
+          ]
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "B11",
+    "level": "basics",
+    "difficulty": "Easy",
+    "title": "Check a one-to-one masking map",
+    "pattern": "Hash map / strings",
+    "prompt": "Return True if every character of source maps consistently to exactly one character of masked and no two source characters share the same mapped character. Lengths must match.",
+    "constraints": "0 <= string lengths <= 100000; ASCII strings.",
+    "signature": "def solve(source, masked):",
+    "hints": [
+      "A forward mapping is necessary but may not be sufficient.",
+      "Check consistency in both directions."
+    ],
+    "examples": [
+      {
+        "args": [
+          "egg",
+          "add"
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          "foo",
+          "bar"
+        ],
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "B12",
+    "level": "basics",
+    "difficulty": "Easy",
+    "title": "Square ordered temperature offsets",
+    "pattern": "Two pointers",
+    "prompt": "Given a nondecreasing array, return the squares in nondecreasing order. Do not call a sorting function on the output.",
+    "constraints": "0 <= len(nums) <= 100000; -10000 <= nums[i] <= 10000.",
+    "signature": "def solve(nums):",
+    "hints": [
+      "The extremes have the largest absolute values.",
+      "Fill the result from the rightmost index backward."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            -4,
+            -1,
+            0,
+            3,
+            10
+          ]
+        ],
+        "expected": [
+          0,
+          1,
+          9,
+          16,
+          100
+        ]
+      },
+      {
+        "args": [
+          [
+            -7,
+            -3,
+            2,
+            3,
+            11
+          ]
+        ],
+        "expected": [
+          4,
+          9,
+          9,
+          49,
+          121
+        ]
+      }
+    ]
+  },
+  {
+    "id": "B13",
+    "level": "basics",
+    "difficulty": "Easy",
+    "title": "Common items across sorted inventories",
+    "pattern": "Two pointers",
+    "prompt": "Return the nondecreasing multiset intersection of sorted integer lists a and b. Each value should occur the minimum of its multiplicities in both lists.",
+    "constraints": "0 <= len(a), len(b) <= 100000.",
+    "signature": "def solve(a, b):",
+    "hints": [
+      "Sorted lists let you skip values without scanning everything.",
+      "Only move both pointers on an equal pair."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            1,
+            2,
+            2,
+            3
+          ],
+          [
+            2,
+            2,
+            4
+          ]
+        ],
+        "expected": [
+          2,
+          2
+        ]
+      },
+      {
+        "args": [
+          [],
+          [
+            1
+          ]
+        ],
+        "expected": []
+      }
+    ]
+  },
+  {
+    "id": "B14",
+    "level": "basics",
+    "difficulty": "Easy",
+    "title": "Compact nonzero sensor values",
+    "pattern": "Array compaction",
+    "prompt": "Return a new array with all nonzero elements in their original relative order followed by all zeroes. Do not modify the input.",
+    "constraints": "0 <= len(nums) <= 100000.",
+    "signature": "def solve(nums):",
+    "hints": [
+      "Preserve the order of useful entries.",
+      "The number of trailing zeroes is the original length minus the number of nonzero values."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            0,
+            1,
+            0,
+            3,
+            12
+          ]
+        ],
+        "expected": [
+          1,
+          3,
+          12,
+          0,
+          0
+        ]
+      },
+      {
+        "args": [
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "expected": [
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "id": "B15",
+    "level": "basics",
+    "difficulty": "Easy",
+    "title": "Longest shared route prefix",
+    "pattern": "Strings",
+    "prompt": "Return the longest prefix shared by every string in paths. If paths is empty, return \"\". Matching is case-sensitive.",
+    "constraints": "0 <= len(paths) <= 20000; total characters <= 100000.",
+    "signature": "def solve(paths):",
+    "hints": [
+      "One string can act as an initial candidate.",
+      "Shorten the candidate whenever a later string does not start with it."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            "flower",
+            "flow",
+            "flight"
+          ]
+        ],
+        "expected": "fl"
+      },
+      {
+        "args": [
+          [
+            "dog",
+            "racecar",
+            "car"
+          ]
+        ],
+        "expected": ""
+      }
+    ]
+  },
+  {
+    "id": "B16",
+    "level": "basics",
+    "difficulty": "Medium",
+    "title": "Product of metrics excluding current",
+    "pattern": "Prefix and suffix",
+    "prompt": "Return result[i] equal to the product of all nums[j] for j != i. Do not use division. Arrays may contain one or more zeros.",
+    "constraints": "2 <= len(nums) <= 100000; reference outputs fit signed 64-bit integers.",
+    "signature": "def solve(nums):",
+    "hints": [
+      "The contribution from the left can be precomputed as you go.",
+      "A reverse pass multiplies everything to the right."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            1,
+            2,
+            3,
+            4
+          ]
+        ],
+        "expected": [
+          24,
+          12,
+          8,
+          6
+        ]
+      },
+      {
+        "args": [
+          [
+            -1,
+            1,
+            0,
+            -3,
+            3
+          ]
+        ],
+        "expected": [
+          0,
+          0,
+          9,
+          0,
+          0
+        ]
+      }
+    ]
+  }
+]
