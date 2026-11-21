@@ -29,3 +29,21 @@ For longest increasing subsequence, a quadratic DP is a good starting proof. A s
 Write the state in a sentence, identify base cases, derive each transition, decide iteration order, and confirm the return value. Test zero target, impossible totals, identical strings, repeated values, and input consisting entirely of negative values if the prompt allows them.
 
 **Practice:** A07, A08, A09, A10, A11. For each problem justify whether the state describes a prefix, capacity, total or length—and why that state is sufficient.
+
+## Deep dive: iteration order encodes resource reuse
+
+For target sum with reusable package sizes, `dp[s]` is the fewest items required to reach s. You may transition from `dp[s-size]` repeatedly because unlimited reuse is allowed. For 0/1 knapsack, once an item has been considered you must **not** use it again in the same iteration: descending capacities preserve the previous-item state. Ascending capacities can wrongly count one item multiple times.
+
+### A small counterexample
+
+One available item costs 2 and yields value 3, with budget 4. Descending 0/1 DP updates dp[4]=3 and dp[2]=3. An ascending update would first set dp[2]=3, then use that **same item's** new dp[2] to set dp[4]=6. But two copies are forbidden. This is a state-dependency error, not a typo.
+
+### Edit distance prefixes
+
+Define `dp[i][j]` as minimum insert/delete/replace operations converting `source[:i]` to `target[:j]`. Empty-prefix bases are dp[i][0]=i and dp[0][j]=j. Last step must be insert, delete, replace or match, yielding three neighboring transitions. This last-operation partition is a correctness proof. If only the numeric distance is required, keep two rows; if the edit operations themselves are required, predecessor reconstruction needs additional information.
+
+### LIS tails are dominance states
+
+The O(n log n) LIS algorithm maintains the smallest achievable ending value for a strictly increasing subsequence of each length. Smaller tails dominate bigger ones because they permit every future extension that a bigger tail could. The tails array need not be an actual subsequence. Use `bisect_left` so equal values do not increase strict LIS length.
+
+**Practice:** A07, A08, A09, A10, A11. State each state definition in one precise sentence, derive base cases, and give an adversarial input for the naive greedy or wrong iteration order.
