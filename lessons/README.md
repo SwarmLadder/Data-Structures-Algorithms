@@ -1,6 +1,8 @@
 # The complete DSA learning curriculum — 36 rigorous lessons
 
-Each lesson includes an algorithmic mental model, a worked Python implementation, a correctness argument or invariant, realistic edge cases, complexity reasoning, and independent drills. The 48 graded problems include a separate **collapsed full solution walkthrough**; try the question first.
+**Level guides** (outcomes, units, study plan, assessment, glossary): [Foundations](basics/README.md) · [Intermediate](intermediate/README.md) · [Advanced](advanced/README.md)
+
+Each lesson includes an algorithmic mental model, a worked Python implementation, a correctness argument or invariant, realistic edge cases and complexity reasoning, then a runnable Try it with real output, a common-mistakes table, four graded drills, a quick quiz and a summary. The 48 graded problems include a separate **collapsed full solution walkthrough**; try the question first.
 
 ## Foundations — learn how to reason
 

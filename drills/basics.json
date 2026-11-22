@@ -1,0 +1,674 @@
+[
+  {
+    "id": "DB01",
+    "level": "basics",
+    "lesson": "lessons/basics/01_hashing_and_frequency.md",
+    "kind": "guided",
+    "title": "Has a duplicate",
+    "prompt": "Return True if any value appears at least twice in nums, otherwise False.",
+    "signature": "def solve(nums):",
+    "hints": [
+      "Remember every value you have already seen.",
+      "A set answers 'have I seen this?' in expected O(1).",
+      "Check membership before adding the current value."
+    ]
+  },
+  {
+    "id": "DB02",
+    "level": "basics",
+    "lesson": "lessons/basics/01_hashing_and_frequency.md",
+    "kind": "guided",
+    "title": "Count words",
+    "prompt": "Return a dict mapping each word of the space-separated string text to how many times it occurs. Words are case-sensitive.",
+    "signature": "def solve(text):",
+    "hints": [
+      "Split the text into words first.",
+      "Use counts.get(word, 0) + 1 to update.",
+      "An empty string has no words: return {}."
+    ]
+  },
+  {
+    "id": "DB03",
+    "level": "basics",
+    "lesson": "lessons/basics/01_hashing_and_frequency.md",
+    "kind": "independent",
+    "title": "First repeated character",
+    "prompt": "Return the first character of s that appears for the second time while scanning left to right, or '' if no character repeats.",
+    "signature": "def solve(s):",
+    "hints": [
+      "You need to know, at each position, whether the character appeared earlier.",
+      "The first repeat is detected at the earliest second occurrence, not the earliest first occurrence.",
+      "Scan once with a set; return as soon as a character is already in it."
+    ]
+  },
+  {
+    "id": "DB04",
+    "level": "basics",
+    "lesson": "lessons/basics/01_hashing_and_frequency.md",
+    "kind": "independent",
+    "title": "Most frequent value, smallest on ties",
+    "prompt": "Return the value that occurs most often in the non-empty list nums. If several values share the highest count, return the smallest of them.",
+    "signature": "def solve(nums):",
+    "hints": [
+      "Count every value first.",
+      "The tie rule is part of the answer: compare (count, value) carefully.",
+      "max over counts with key=lambda v: (counts[v], -v)."
+    ]
+  },
+  {
+    "id": "DB05",
+    "level": "basics",
+    "lesson": "lessons/basics/02_two_pointers_and_invariants.md",
+    "kind": "guided",
+    "title": "Reverse a list in place",
+    "prompt": "Reverse the list nums in place with two pointers (no slicing or reversed()) and return it.",
+    "signature": "def solve(nums):",
+    "hints": [
+      "Swap the outermost pair, then move inward.",
+      "Stop when the pointers meet or cross.",
+      "nums[i], nums[j] = nums[j], nums[i]"
+    ]
+  },
+  {
+    "id": "DB06",
+    "level": "basics",
+    "lesson": "lessons/basics/02_two_pointers_and_invariants.md",
+    "kind": "guided",
+    "title": "Pair with a target in a sorted list",
+    "prompt": "nums is sorted ascending. Return [i, j] (i < j) with nums[i] + nums[j] == target using two pointers, or [] if none exists. If several pairs exist, return the one found by moving the smaller-sum side first (start from both ends).",
+    "signature": "def solve(nums, target):",
+    "hints": [
+      "Start with the smallest and largest values.",
+      "A sum that is too small can only grow by moving the left pointer.",
+      "Return as soon as the sum matches; stop when left meets right."
+    ]
+  },
+  {
+    "id": "DB07",
+    "level": "basics",
+    "lesson": "lessons/basics/02_two_pointers_and_invariants.md",
+    "kind": "independent",
+    "title": "Remove duplicates from a sorted list",
+    "prompt": "nums is sorted ascending. Compact it in place so each value appears once, keeping order, and return the number of unique values k. (The checker reads only the return value.)",
+    "signature": "def solve(nums):",
+    "hints": [
+      "Equal values are adjacent in a sorted list.",
+      "Keep a write index for the next unique value.",
+      "Write nums[read] when it differs from the last written value."
+    ]
+  },
+  {
+    "id": "DB08",
+    "level": "basics",
+    "lesson": "lessons/basics/02_two_pointers_and_invariants.md",
+    "kind": "independent",
+    "title": "Is it a palindrome (letters and digits only)?",
+    "prompt": "Return True if s reads the same forwards and backwards when you ignore every character that isn't a letter or digit and ignore letter case.",
+    "signature": "def solve(s):",
+    "hints": [
+      "Two pointers from both ends.",
+      "Skip characters that are not alphanumeric on each side.",
+      "Compare lower-cased characters; str.isalnum() helps."
+    ]
+  },
+  {
+    "id": "DB09",
+    "level": "basics",
+    "lesson": "lessons/basics/03_stacks_and_state.md",
+    "kind": "guided",
+    "title": "Only round brackets",
+    "prompt": "Return True if every '(' in s is closed by a later ')' and no ')' appears without a matching '('. Other characters are ignored.",
+    "signature": "def solve(s):",
+    "hints": [
+      "With one kind of bracket a counter is enough.",
+      "The count must never drop below zero.",
+      "Return depth == 0 at the end."
+    ]
+  },
+  {
+    "id": "DB10",
+    "level": "basics",
+    "lesson": "lessons/basics/03_stacks_and_state.md",
+    "kind": "guided",
+    "title": "Undo with backspaces",
+    "prompt": "In s, the character '#' deletes the previous surviving character (if any). Return the final text.",
+    "signature": "def solve(s):",
+    "hints": [
+      "Each character either adds to or removes from the end of the result.",
+      "A list used as a stack supports both in O(1).",
+      "Join the stack at the end."
+    ]
+  },
+  {
+    "id": "DB11",
+    "level": "basics",
+    "lesson": "lessons/basics/03_stacks_and_state.md",
+    "kind": "independent",
+    "title": "Evaluate reverse Polish notation",
+    "prompt": "tokens is a valid expression in reverse Polish notation using integers and the operators + - * /. Division truncates toward zero (like int(a / b)). Return the value.",
+    "signature": "def solve(tokens):",
+    "hints": [
+      "Numbers wait on a stack until an operator needs them.",
+      "An operator pops the right operand first, then the left.",
+      "int(a / b) truncates toward zero; a // b floors."
+    ]
+  },
+  {
+    "id": "DB12",
+    "level": "basics",
+    "lesson": "lessons/basics/03_stacks_and_state.md",
+    "kind": "independent",
+    "title": "Days until a warmer day",
+    "prompt": "For each day i in temps, return how many days you wait until a strictly warmer temperature, or 0 if none comes.",
+    "signature": "def solve(temps):",
+    "hints": [
+      "A day is 'waiting' until a warmer day arrives.",
+      "Keep waiting days' indexes on a stack with decreasing temperatures.",
+      "When a warmer day arrives, pop and record i - index."
+    ]
+  },
+  {
+    "id": "DB13",
+    "level": "basics",
+    "lesson": "lessons/basics/04_binary_search_prefixes_and_dp.md",
+    "kind": "guided",
+    "title": "First index at or above target",
+    "prompt": "nums is sorted ascending. Return the first index i with nums[i] >= target, or len(nums) if there is none. Don't use the bisect module.",
+    "signature": "def solve(nums, target):",
+    "hints": [
+      "Keep the answer inside the half-open range [lo, hi].",
+      "If nums[mid] < target the answer is to the right of mid.",
+      "lo = mid + 1 in that case, otherwise hi = mid."
+    ]
+  },
+  {
+    "id": "DB14",
+    "level": "basics",
+    "lesson": "lessons/basics/04_binary_search_prefixes_and_dp.md",
+    "kind": "guided",
+    "title": "Range sums with a prefix array",
+    "prompt": "Return a list with the sum of nums[i:j] for each [i, j] pair in queries (half-open ranges). Build a prefix array once.",
+    "signature": "def solve(nums, queries):",
+    "hints": [
+      "prefix[k] = sum of the first k values; prefix[0] = 0.",
+      "sum(nums[i:j]) = prefix[j] - prefix[i].",
+      "One pass to build, O(1) per query."
+    ]
+  },
+  {
+    "id": "DB15",
+    "level": "basics",
+    "lesson": "lessons/basics/04_binary_search_prefixes_and_dp.md",
+    "kind": "independent",
+    "title": "Climbing stairs",
+    "prompt": "You climb n steps taking 1 or 2 steps at a time. Return the number of distinct ways (n >= 0; there is 1 way to climb 0 steps).",
+    "signature": "def solve(n):",
+    "hints": [
+      "The last move was either 1 or 2 steps.",
+      "ways(n) = ways(n-1) + ways(n-2).",
+      "Keep only the last two values."
+    ]
+  },
+  {
+    "id": "DB16",
+    "level": "basics",
+    "lesson": "lessons/basics/04_binary_search_prefixes_and_dp.md",
+    "kind": "independent",
+    "title": "Integer square root",
+    "prompt": "Return the largest integer r with r * r <= x for a non-negative integer x, using binary search (no math.isqrt or ** 0.5).",
+    "signature": "def solve(x):",
+    "hints": [
+      "The predicate r*r <= x is true then false as r grows.",
+      "Search for the last r where it's true.",
+      "Search in [0, x + 1) and track the largest passing mid."
+    ]
+  },
+  {
+    "id": "DB17",
+    "level": "basics",
+    "lesson": "lessons/basics/05_complexity_and_algorithm_analysis.md",
+    "kind": "guided",
+    "title": "Count the inner-loop iterations",
+    "prompt": "Return how many times the body of `for i in range(n): for j in range(i + 1, n): ...` runs, as a formula (no loops).",
+    "signature": "def solve(n):",
+    "hints": [
+      "For each i, the inner loop runs n - i - 1 times.",
+      "Sum (n-1) + (n-2) + … + 0.",
+      "That sum is n(n-1)/2; return it as an int."
+    ]
+  },
+  {
+    "id": "DB18",
+    "level": "basics",
+    "lesson": "lessons/basics/05_complexity_and_algorithm_analysis.md",
+    "kind": "guided",
+    "title": "How many halvings?",
+    "prompt": "Return how many times you can integer-halve n (n = n // 2) before it reaches 1, for n >= 1. This is floor(log2 n).",
+    "signature": "def solve(n):",
+    "hints": [
+      "Simulate the halving and count steps.",
+      "Stop when n becomes 1.",
+      "Alternatively: n.bit_length() - 1."
+    ]
+  },
+  {
+    "id": "DB19",
+    "level": "basics",
+    "lesson": "lessons/basics/05_complexity_and_algorithm_analysis.md",
+    "kind": "independent",
+    "title": "Pairs with a given difference",
+    "prompt": "Return how many index pairs i < j satisfy abs(nums[i] - nums[j]) == k (k >= 1). Aim for O(n) expected time with a counter instead of checking every pair.",
+    "signature": "def solve(nums, k):",
+    "hints": [
+      "For each value, count earlier values equal to value - k or value + k.",
+      "Keep a running count of values seen so far.",
+      "Add counts[value-k] + counts[value+k], then record value."
+    ]
+  },
+  {
+    "id": "DB20",
+    "level": "basics",
+    "lesson": "lessons/basics/05_complexity_and_algorithm_analysis.md",
+    "kind": "independent",
+    "title": "Classify a growth rate",
+    "prompt": "steps[i] is the measured work at input size sizes[i] (sizes double each time). Return 'constant', 'linear' or 'quadratic' depending on whether the work stays the same, roughly doubles, or roughly quadruples between the last two measurements (use the ratio: < 1.5, < 3, otherwise).",
+    "signature": "def solve(sizes, steps):",
+    "hints": [
+      "Look only at the last two measurements.",
+      "When size doubles, linear work doubles and quadratic work quadruples.",
+      "ratio = steps[-1] / steps[-2]."
+    ]
+  },
+  {
+    "id": "DB21",
+    "level": "basics",
+    "lesson": "lessons/basics/06_arrays_strings_and_index_invariants.md",
+    "kind": "guided",
+    "title": "Move zeros to the end",
+    "prompt": "Move all zeros in nums to the end in place, keeping the order of the non-zero values, and return nums.",
+    "signature": "def solve(nums):",
+    "hints": [
+      "Write each non-zero value at the next write position.",
+      "Afterwards, every position from write onwards becomes 0.",
+      "Two loops over the same list; no new list."
+    ]
+  },
+  {
+    "id": "DB22",
+    "level": "basics",
+    "lesson": "lessons/basics/06_arrays_strings_and_index_invariants.md",
+    "kind": "guided",
+    "title": "Rotate right by k",
+    "prompt": "Return a new list with nums rotated right by k positions (k >= 0 may exceed len(nums)). An empty list stays empty.",
+    "signature": "def solve(nums, k):",
+    "hints": [
+      "Rotating by len(nums) changes nothing.",
+      "Reduce k modulo n, but only after checking n > 0.",
+      "The last k items move to the front."
+    ]
+  },
+  {
+    "id": "DB23",
+    "level": "basics",
+    "lesson": "lessons/basics/06_arrays_strings_and_index_invariants.md",
+    "kind": "independent",
+    "title": "Merge two sorted lists",
+    "prompt": "a and b are sorted ascending. Return one sorted list with all their elements, in O(len(a) + len(b)) time (don't call sorted).",
+    "signature": "def solve(a, b):",
+    "hints": [
+      "Two read pointers, one per list.",
+      "Take the smaller front element each time.",
+      "Append whatever remains in either list at the end."
+    ]
+  },
+  {
+    "id": "DB24",
+    "level": "basics",
+    "lesson": "lessons/basics/06_arrays_strings_and_index_invariants.md",
+    "kind": "independent",
+    "title": "Reverse the words",
+    "prompt": "Return the words of s in reverse order, separated by single spaces. Leading, trailing and repeated spaces disappear.",
+    "signature": "def solve(s):",
+    "hints": [
+      "Split without an argument handles runs of spaces.",
+      "Reverse the list of words.",
+      "Join with one space."
+    ]
+  },
+  {
+    "id": "DB25",
+    "level": "basics",
+    "lesson": "lessons/basics/07_recursion_call_stack_and_base_cases.md",
+    "kind": "guided",
+    "title": "Sum of digits, recursively",
+    "prompt": "Return the sum of the decimal digits of a non-negative integer n using recursion.",
+    "signature": "def solve(n):",
+    "hints": [
+      "A one-digit number is its own digit sum.",
+      "n % 10 is the last digit; n // 10 drops it.",
+      "solve(n) = n % 10 + solve(n // 10)."
+    ]
+  },
+  {
+    "id": "DB26",
+    "level": "basics",
+    "lesson": "lessons/basics/07_recursion_call_stack_and_base_cases.md",
+    "kind": "guided",
+    "title": "Power by squaring",
+    "prompt": "Return base ** exp for an integer base and exp >= 0, using recursion that halves exp (O(log exp) multiplications).",
+    "signature": "def solve(base, exp):",
+    "hints": [
+      "x^0 = 1.",
+      "x^e = (x^(e//2))^2, times x if e is odd.",
+      "Compute the half power once and reuse it."
+    ]
+  },
+  {
+    "id": "DB27",
+    "level": "basics",
+    "lesson": "lessons/basics/07_recursion_call_stack_and_base_cases.md",
+    "kind": "independent",
+    "title": "All permutations",
+    "prompt": "Return every ordering of the distinct values in nums, in lexicographic order of positions chosen (i.e. the order produced by trying unused elements left to right).",
+    "signature": "def solve(nums):",
+    "hints": [
+      "Build the permutation one position at a time.",
+      "Track which indexes are used; try unused ones left to right.",
+      "Record a copy when the permutation is full; undo after each choice."
+    ]
+  },
+  {
+    "id": "DB28",
+    "level": "basics",
+    "lesson": "lessons/basics/07_recursion_call_stack_and_base_cases.md",
+    "kind": "independent",
+    "title": "Count paths in a grid",
+    "prompt": "Return the number of paths from the top-left to the bottom-right of a rows × cols grid moving only right or down (rows, cols >= 1). Use memoised recursion or a DP.",
+    "signature": "def solve(rows, cols):",
+    "hints": [
+      "A path to (r, c) arrives from above or from the left.",
+      "paths(r, c) = paths(r-1, c) + paths(r, c-1); the first row and column have 1 path.",
+      "Memoise with lru_cache or fill a table row by row."
+    ]
+  },
+  {
+    "id": "DB29",
+    "level": "basics",
+    "lesson": "lessons/basics/08_linked_lists_and_pointer_mutation.md",
+    "kind": "guided",
+    "title": "Reverse a linked list (as values)",
+    "prompt": "values describes a singly linked list. Build the nodes, reverse the links in place (no reversed() on the values), and return the reversed values.",
+    "signature": "def solve(values):",
+    "hints": [
+      "Keep previous, current, and the saved next node.",
+      "Point current.next at previous, then step both forward.",
+      "previous ends as the new head."
+    ]
+  },
+  {
+    "id": "DB30",
+    "level": "basics",
+    "lesson": "lessons/basics/08_linked_lists_and_pointer_mutation.md",
+    "kind": "guided",
+    "title": "Middle node",
+    "prompt": "Return the value of the middle node of the non-empty list described by values. For an even length, return the second of the two middle nodes. Use slow/fast pointers.",
+    "signature": "def solve(values):",
+    "hints": [
+      "Move slow one step and fast two steps.",
+      "Stop when fast can't take two steps.",
+      "Slow is then at the middle (second middle for even lengths)."
+    ]
+  },
+  {
+    "id": "DB31",
+    "level": "basics",
+    "lesson": "lessons/basics/08_linked_lists_and_pointer_mutation.md",
+    "kind": "independent",
+    "title": "Remove the nth node from the end",
+    "prompt": "Remove the nth node from the end (1 = last) of the list described by values, in one pass with a dummy head, and return the remaining values. 1 <= n <= len(values).",
+    "signature": "def solve(values, n):",
+    "hints": [
+      "A dummy node handles removing the head.",
+      "Move a lead pointer n+1 steps ahead of a trailing pointer, starting both at the dummy.",
+      "Advance both until lead is None; trailing.next is the node to remove."
+    ]
+  },
+  {
+    "id": "DB32",
+    "level": "basics",
+    "lesson": "lessons/basics/08_linked_lists_and_pointer_mutation.md",
+    "kind": "independent",
+    "title": "Where does the cycle start?",
+    "prompt": "values describes a list whose last node links back to index pos (or pos = -1 for no cycle). Return the index of the node where the cycle begins, or -1, using O(1) extra space (Floyd's algorithm).",
+    "signature": "def solve(values, pos):",
+    "hints": [
+      "First detect a meeting point with slow/fast pointers.",
+      "Then move one pointer back to the head; advance both one step at a time.",
+      "They meet at the cycle entry. Map nodes to indexes to answer."
+    ]
+  },
+  {
+    "id": "DB33",
+    "level": "basics",
+    "lesson": "lessons/basics/09_queues_deques_and_bfs_frontiers.md",
+    "kind": "guided",
+    "title": "Hot potato",
+    "prompt": "Players stand in a circle in the order given. Repeatedly pass the potato k times (move the front player to the back k times), then remove the player holding it (the new front). Return the order in which players are removed.",
+    "signature": "def solve(players, k):",
+    "hints": [
+      "A deque rotates cheaply: popleft then append.",
+      "After k passes, the front player is removed.",
+      "Repeat until the deque is empty."
+    ]
+  },
+  {
+    "id": "DB34",
+    "level": "basics",
+    "lesson": "lessons/basics/09_queues_deques_and_bfs_frontiers.md",
+    "kind": "guided",
+    "title": "Distances from a start node",
+    "prompt": "graph maps each node (a string) to a list of neighbours. Return a dict of the BFS distance (number of edges) from start to every reachable node.",
+    "signature": "def solve(graph, start):",
+    "hints": [
+      "The start is at distance 0.",
+      "A neighbour seen for the first time is one further than the current node.",
+      "Use a deque; a node is 'seen' when it gets a distance."
+    ]
+  },
+  {
+    "id": "DB35",
+    "level": "basics",
+    "lesson": "lessons/basics/09_queues_deques_and_bfs_frontiers.md",
+    "kind": "independent",
+    "title": "Sliding-window maximum",
+    "prompt": "Return the maximum of every contiguous window of size k in values (1 <= k <= len(values)), in O(n) using a deque of indexes.",
+    "signature": "def solve(values, k):",
+    "hints": [
+      "Drop indexes that have left the window from the front.",
+      "Before pushing i, drop indexes with values <= values[i] from the back.",
+      "The front of the deque is the window's maximum once i >= k - 1."
+    ]
+  },
+  {
+    "id": "DB36",
+    "level": "basics",
+    "lesson": "lessons/basics/09_queues_deques_and_bfs_frontiers.md",
+    "kind": "independent",
+    "title": "Recent calls counter",
+    "prompt": "times is a strictly increasing list of request times in milliseconds. For each request, return how many requests (including itself) happened in the inclusive window [t - 3000, t].",
+    "signature": "def solve(times):",
+    "hints": [
+      "Keep the recent request times in a queue.",
+      "Before counting, drop times older than t - 3000 from the front.",
+      "The queue length is the answer for t."
+    ]
+  },
+  {
+    "id": "DB37",
+    "level": "basics",
+    "lesson": "lessons/basics/10_sorting_stability_and_correctness.md",
+    "kind": "guided",
+    "title": "Sort by length, then alphabetically",
+    "prompt": "Return words sorted by length ascending; words of equal length are sorted alphabetically.",
+    "signature": "def solve(words):",
+    "hints": [
+      "A tuple key compares the first element, then the second.",
+      "The key is (len(word), word).",
+      "sorted(words, key=...)."
+    ]
+  },
+  {
+    "id": "DB38",
+    "level": "basics",
+    "lesson": "lessons/basics/10_sorting_stability_and_correctness.md",
+    "kind": "guided",
+    "title": "Counting sort for small ints",
+    "prompt": "Sort nums, whose values are integers from 0 to 9, using counting (no sorted or .sort).",
+    "signature": "def solve(nums):",
+    "hints": [
+      "Count how many times each digit appears.",
+      "Then emit each digit count times, in order.",
+      "counts = [0] * 10."
+    ]
+  },
+  {
+    "id": "DB39",
+    "level": "basics",
+    "lesson": "lessons/basics/10_sorting_stability_and_correctness.md",
+    "kind": "independent",
+    "title": "Top k frequent words",
+    "prompt": "Return the k most frequent words, most frequent first; ties are broken alphabetically.",
+    "signature": "def solve(words, k):",
+    "hints": [
+      "Count each word.",
+      "Sort the distinct words by (-count, word).",
+      "Take the first k."
+    ]
+  },
+  {
+    "id": "DB40",
+    "level": "basics",
+    "lesson": "lessons/basics/10_sorting_stability_and_correctness.md",
+    "kind": "independent",
+    "title": "Count inversions",
+    "prompt": "Return the number of index pairs i < j with nums[i] > nums[j], in O(n log n) using merge sort.",
+    "signature": "def solve(nums):",
+    "hints": [
+      "Split, count inversions in each half, then count across halves while merging.",
+      "When you take an element from the right half, every remaining left element is larger.",
+      "Add len(left) - i at that moment."
+    ]
+  },
+  {
+    "id": "DB41",
+    "level": "basics",
+    "lesson": "lessons/basics/11_bits_integer_arithmetic_and_overflow.md",
+    "kind": "guided",
+    "title": "The value without a partner",
+    "prompt": "Every value in nums appears exactly twice except one. Return that value using XOR (O(1) extra space).",
+    "signature": "def solve(nums):",
+    "hints": [
+      "x ^ x == 0 and x ^ 0 == x.",
+      "XOR every value together.",
+      "Order doesn't matter: XOR is commutative."
+    ]
+  },
+  {
+    "id": "DB42",
+    "level": "basics",
+    "lesson": "lessons/basics/11_bits_integer_arithmetic_and_overflow.md",
+    "kind": "guided",
+    "title": "Is it a power of two?",
+    "prompt": "Return True if the integer n is a positive power of two (1, 2, 4, …), using a bit trick.",
+    "signature": "def solve(n):",
+    "hints": [
+      "A power of two has exactly one set bit.",
+      "n & (n - 1) clears the lowest set bit.",
+      "So n > 0 and n & (n - 1) == 0."
+    ]
+  },
+  {
+    "id": "DB43",
+    "level": "basics",
+    "lesson": "lessons/basics/11_bits_integer_arithmetic_and_overflow.md",
+    "kind": "independent",
+    "title": "Count set bits from 0 to n",
+    "prompt": "Return a list whose i-th entry is the number of 1 bits in i, for every i from 0 to n, in O(n) using the relation bits(i) = bits(i >> 1) + (i & 1).",
+    "signature": "def solve(n):",
+    "hints": [
+      "bits(0) = 0.",
+      "Shifting right drops the last bit; add it back with i & 1.",
+      "Fill the list in increasing i."
+    ]
+  },
+  {
+    "id": "DB44",
+    "level": "basics",
+    "lesson": "lessons/basics/11_bits_integer_arithmetic_and_overflow.md",
+    "kind": "independent",
+    "title": "The missing number",
+    "prompt": "nums contains n distinct numbers taken from 0..n (so exactly one is missing). Return the missing one in O(n) time and O(1) extra space.",
+    "signature": "def solve(nums):",
+    "hints": [
+      "The full range 0..n has a known sum.",
+      "n = len(nums); expected = n(n+1)/2.",
+      "Or XOR all indexes and values together."
+    ]
+  },
+  {
+    "id": "DB45",
+    "level": "basics",
+    "lesson": "lessons/basics/12_debugging_testing_and_reasoning.md",
+    "kind": "guided",
+    "title": "Brute-force oracle: count equal pairs",
+    "prompt": "Return how many index pairs i < j have nums[i] == nums[j], by checking every pair (this is the oracle; clarity beats speed).",
+    "signature": "def solve(nums):",
+    "hints": [
+      "Two nested loops over i < j.",
+      "Count the pairs where values match.",
+      "j starts at i + 1."
+    ]
+  },
+  {
+    "id": "DB46",
+    "level": "basics",
+    "lesson": "lessons/basics/12_debugging_testing_and_reasoning.md",
+    "kind": "guided",
+    "title": "Fast version of the same count",
+    "prompt": "Same contract as the oracle: count pairs i < j with nums[i] == nums[j], but in O(n) expected time.",
+    "signature": "def solve(nums):",
+    "hints": [
+      "Each new value pairs with every earlier equal value.",
+      "Keep counts of values seen so far.",
+      "Add counts[value] before incrementing it."
+    ]
+  },
+  {
+    "id": "DB47",
+    "level": "basics",
+    "lesson": "lessons/basics/12_debugging_testing_and_reasoning.md",
+    "kind": "independent",
+    "title": "Maximum subarray sum (all-negative safe)",
+    "prompt": "Return the largest sum of a non-empty contiguous subarray of nums (len(nums) >= 1). All-negative input must return its largest element.",
+    "signature": "def solve(nums):",
+    "hints": [
+      "Track the best sum of a subarray ending at the current index.",
+      "Either extend the previous subarray or start fresh at the current value.",
+      "Initialise with nums[0], not 0."
+    ]
+  },
+  {
+    "id": "DB48",
+    "level": "basics",
+    "lesson": "lessons/basics/12_debugging_testing_and_reasoning.md",
+    "kind": "independent",
+    "title": "Which inputs break it?",
+    "prompt": "buggy(nums) returns max(nums) - min(nums) but crashes on empty input. Return the list of indexes into inputs for which calling max(x) - min(x) would raise (i.e. the empty lists).",
+    "signature": "def solve(inputs):",
+    "hints": [
+      "Which input makes max() raise?",
+      "Loop over inputs with their indexes.",
+      "Collect i where the list is empty."
+    ]
+  }
+]

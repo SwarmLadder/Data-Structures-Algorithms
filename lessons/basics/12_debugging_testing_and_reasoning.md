@@ -2,6 +2,8 @@
 
 **Outcome:** turn a vague algorithm problem into a tested solution without relying on memorized reference code. **Study time:** 90–120 minutes.
 
+**Before this:** [Bits, arithmetic invariants and numerical edge cases](11_bits_integer_arithmetic_and_overflow.md)
+
 ## 1. Restate the contract first
 
 Before typing, identify input structure, size limits, output ordering, in-place mutation rules, duplicate/tie semantics, and what happens when no solution exists. For a 'pair sum' question, 'return *any* pair' is fundamentally different from 'return the earliest lexicographic pair' and changes the proof and possibly the algorithm.
@@ -68,3 +70,122 @@ After reading a solution, close it and reimplement from the invariant after 24 h
 - Write a two-minute explanation of why O(n log n) sorting may be acceptable for 100,000 items but O(n²) usually is not.
 
 **Mastery checkpoint:** On an unfamiliar problem, you can obtain a correct baseline, produce an invariant, justify complexity and discover a counterexample without opening the reference code.
+
+<!-- lesson-practice -->
+
+## Try it
+
+Run this block (or `python -m tools.lessons` to refresh every page), then change one input and predict the new output before running it again.
+
+```python
+import random
+
+def oracle_max_subarray(nums):
+    return max(sum(nums[i:j]) for i in range(len(nums)) for j in range(i + 1, len(nums) + 1))
+
+def kadane_fast(nums):
+    running = best = nums[0]
+    for value in nums[1:]:
+        running = max(value, running + value)
+        best = max(best, running)
+    return best
+
+random.seed(7)
+for trial in range(300):                      # randomized differential test
+    nums = [random.randint(-5, 5) for _ in range(random.randint(1, 8))]
+    assert kadane_fast(nums) == oracle_max_subarray(nums), nums
+print("300 random cases agree")
+
+def buggy_kadane(nums):                        # a tempting bug: best starts at 0
+    running = best = 0
+    for value in nums:
+        running = max(value, running + value)
+        best = max(best, running)
+    return best
+
+for nums in ([-3], [-2, -1]):
+    print(nums, kadane_fast(nums), buggy_kadane(nums))
+```
+
+<!-- output -->
+```text
+300 random cases agree
+[-3] -3 0
+[-2, -1] -1 0
+```
+<!-- /output -->
+
+## Common mistakes
+
+| Mistake | What happens | Fix |
+|---|---|---|
+| Coding before restating the contract | Correct algorithm, wrong output format | Write inputs, outputs, ties and empty cases first |
+| No brute-force oracle | Fast solution never checked against truth | Write the slow obvious version for small inputs |
+| Random tests with tiny value ranges only | Misses big or negative values | Mix ranges, sizes and duplicates |
+| Trusting passing examples | Edge cases fail later | Test empty, single, all-equal, all-negative, max size |
+| Debugging by staring | Slow progress | Print the invariant at each step on a failing case |
+
+## Your turn
+
+<!-- drills -->
+Each drill is graded on six published cases. **Guided** drills give you a skeleton with `___` blanks; **independent** drills give only the signature.
+
+| ID | Drill | Kind |
+|---|---|---|
+| `DB45` | **Brute-force oracle: count equal pairs.** Return how many index pairs i < j have nums[i] == nums[j], by checking every pair (this is the oracle; clarity beats speed). | guided |
+| `DB46` | **Fast version of the same count.** Same contract as the oracle: count pairs i < j with nums[i] == nums[j], but in O(n) expected time. | guided |
+| `DB47` | **Maximum subarray sum (all-negative safe).** Return the largest sum of a non-empty contiguous subarray of nums (len(nums) >= 1). All-negative input must return its largest element. | independent |
+| `DB48` | **Which inputs break it?.** buggy(nums) returns max(nums) - min(nums) but crashes on empty input. Return the list of indexes into inputs for which calling max(x) - min(x) would raise (i.e. the empty lists). | independent |
+
+```bash
+python -m tools.drills show DB45
+python -m tools.drills check DB45
+python -m tools.drills hint DB45 1
+```
+<!-- /drills -->
+
+**Interview problems for this lesson:** `B07`, `B16`. Read one with `python -m tools.practice show B07 --hints`.
+
+## Quick quiz
+
+<!-- quiz -->
+Answer in your head first, then check. Answers are stored as hashes, so reading the files won't spoil them.
+
+**1.** What is a brute-force oracle for?
+
+   - **a)** Production use
+   - **b)** Checking a faster solution on small inputs
+   - **c)** Measuring speed
+
+**2.** Kadane initialised with best = 0 fails on…
+
+   - **a)** [1, 2]
+   - **b)** [-3]
+   - **c)** [0]
+
+**3.** A solution returns the right pair in the wrong order. That's a…
+
+   - **a)** contract bug
+   - **b)** complexity bug
+   - **c)** boundary bug
+
+**4.** Random differential testing compares…
+
+   - **a)** two runs of the same function
+   - **b)** the fast solution with an independent oracle on many random inputs
+   - **c)** timing
+
+```bash
+python -m tools.quiz basics/12 1 b      # question 1, answer b
+python -m tools.quiz basics/12           # list the questions
+```
+<!-- /quiz -->
+
+## Summary
+
+- Restate the contract: inputs, output order, ties, empty cases, mutation rules.
+- A brute-force oracle plus random small inputs finds bugs quickly.
+- Classify bugs: contract, invariant, boundary, complexity.
+- Explain the invariant, test adversarial inputs, then optimise.
+
+**Next level:** [Intermediate · Sliding windows: maintain a valid contiguous region](../intermediate/01_sliding_windows.md)

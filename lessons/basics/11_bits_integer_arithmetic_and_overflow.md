@@ -2,6 +2,8 @@
 
 **Outcome:** use bit operations and arithmetic safely, especially when interview implementations assume fixed-width integers. **Study time:** 75–100 minutes.
 
+**Before this:** [Sorting: algorithm choice, stability and proof by invariants](10_sorting_stability_and_correctness.md)
+
 ## 1. Bits as compact state
 
 A bitset stores boolean flags in integer bits: set bit k with `mask |= 1 << k`, check with `mask & (1 << k)`, clear with `mask &= ~(1 << k)`. This is useful when a problem has a small finite set of states (e.g., a–z letters or n≤20 chosen elements). An integer mask can encode a subset, but enumerating every mask still takes 2^n time.
@@ -65,3 +67,120 @@ When counting combinations modulo M, apply `% M` after additions/multiplications
 - Design a bitmask state for a backtracking problem with n≤16 independent tasks.
 
 **Mastery checkpoint:** You can state representation width, signedness, preconditions, overflow constraints and when a bit trick is valid.
+
+<!-- lesson-practice -->
+
+## Try it
+
+Run this block (or `python -m tools.lessons` to refresh every page), then change one input and predict the new output before running it again.
+
+```python
+mask = 0
+for bit in (0, 3, 5):
+    mask |= 1 << bit
+print(bin(mask), bool(mask & (1 << 3)), bool(mask & (1 << 4)))
+
+def xor_singleton(nums):
+    answer = 0
+    for x in nums:
+        answer ^= x
+    return answer
+
+print(xor_singleton([4, 1, 2, 1, 2]))
+
+def popcount(x):
+    count = 0
+    while x:
+        x &= x - 1          # clears the lowest set bit
+        count += 1
+    return count
+
+print(popcount(13), bin(13), (13).bit_count())
+print(-1 & 0xFFFFFFFF)          # 32-bit two's-complement view of -1
+print((10 ** 20 + 7) % 1_000_000_007)
+```
+
+<!-- output -->
+```text
+0b101001 True False
+4
+3 0b1101 3
+4294967295
+4907
+```
+<!-- /output -->
+
+## Common mistakes
+
+| Mistake | What happens | Fix |
+|---|---|---|
+| Using bit tricks outside their preconditions | Wrong answers when values repeat 3 times or are negative | State the precondition (e.g. 'every other value appears exactly twice') |
+| Assuming 32-bit overflow in Python | Python ints never overflow | Mask with `& 0xFFFFFFFF` when fixed width is required |
+| `1 << ord(ch)` on arbitrary characters | Huge integers or negative shifts | Restrict to the declared alphabet |
+| `x & 1 == 0` without parentheses | `==` binds tighter: `x & (1 == 0)` | Write `(x & 1) == 0` |
+| Dividing under a modulus | Wrong results | Use a modular inverse (when one exists) |
+
+## Your turn
+
+<!-- drills -->
+Each drill is graded on six published cases. **Guided** drills give you a skeleton with `___` blanks; **independent** drills give only the signature.
+
+| ID | Drill | Kind |
+|---|---|---|
+| `DB41` | **The value without a partner.** Every value in nums appears exactly twice except one. Return that value using XOR (O(1) extra space). | guided |
+| `DB42` | **Is it a power of two?.** Return True if the integer n is a positive power of two (1, 2, 4, …), using a bit trick. | guided |
+| `DB43` | **Count set bits from 0 to n.** Return a list whose i-th entry is the number of 1 bits in i, for every i from 0 to n, in O(n) using the relation bits(i) = bits(i >> 1) + (i & 1). | independent |
+| `DB44` | **The missing number.** nums contains n distinct numbers taken from 0..n (so exactly one is missing). Return the missing one in O(n) time and O(1) extra space. | independent |
+
+```bash
+python -m tools.drills show DB41
+python -m tools.drills check DB41
+python -m tools.drills hint DB41 1
+```
+<!-- /drills -->
+
+**Interview problems for this lesson:** `B10`. Read one with `python -m tools.practice show B10 --hints`.
+
+## Quick quiz
+
+<!-- quiz -->
+Answer in your head first, then check. Answers are stored as hashes, so reading the files won't spoil them.
+
+**1.** XOR of all values finds the singleton only if…
+
+   - **a)** every other value appears exactly twice (an even number of times)
+   - **b)** values are sorted
+   - **c)** values are positive
+
+**2.** What does `x & (x - 1)` do?
+
+   - **a)** Doubles x
+   - **b)** Clears the lowest set bit
+   - **c)** Sets every bit
+
+**3.** Python's `2**31 + 2**31` overflows to a negative number?
+
+   - **a)** Yes
+   - **b)** No, Python integers are unbounded
+   - **c)** Only on 32-bit machines
+
+**4.** Why does the sum formula fail if the input may contain duplicates?
+
+   - **a)** Sums are slow
+   - **b)** Its precondition (all distinct, exactly one missing) no longer holds
+   - **c)** It always works
+
+```bash
+python -m tools.quiz basics/11 1 b      # question 1, answer b
+python -m tools.quiz basics/11           # list the questions
+```
+<!-- /quiz -->
+
+## Summary
+
+- Bitmasks store small sets of flags: set with `|=`, test with `&`, clear with `&= ~`.
+- XOR cancels pairs: the XOR of a list where everything appears twice except one value is that value.
+- `x & (x - 1)` clears the lowest set bit; loop it to count bits.
+- Python integers are unbounded; simulate fixed width explicitly with masks.
+
+**Next:** [Learn to solve unseen problems: contracts, proofs and adversarial testing](12_debugging_testing_and_reasoning.md)

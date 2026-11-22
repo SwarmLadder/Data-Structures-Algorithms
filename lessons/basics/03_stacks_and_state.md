@@ -2,6 +2,8 @@
 
 **Outcome:** understand when a stack captures the order of unfinished work more naturally than recursion or a dictionary.
 
+**Study time:** 75–100 minutes · **Before this:** [Two pointers and array invariants](02_two_pointers_and_invariants.md)
+
 Consider brackets in a configuration expression: `([{}])` is valid, but `([)]` is not. Counting each type of bracket is insufficient. Both strings have the same counts; nesting order is the real constraint. Maintain a stack of unmatched opening brackets. On a closing bracket, demand a matching bracket on top, and remove it. At the end the stack must be empty.
 
 ```python
@@ -47,3 +49,122 @@ For daily latency `[7,4,6,8]`, an unresolved-index stack starts `[0]` for 7, bec
 An explicit stack is the iterative counterpart to DFS's call stack. For preorder traversal, push a node's right child before its left child so left is visited first. A recursive traversal of a 100,000-node chain may exceed Python's recursion limit; an explicit stack handles depth without Python recursive frames but still uses O(n) memory in the worst case.
 
 **Failure tests:** unmatched opener, unmatched closer, incorrect nesting, empty input, repeated equal latency values, entirely decreasing latency sequence. **Practice:** B04 and I09; for each explain the invariant, the reason popped items will never be relevant again, and the stack's maximum size.
+
+<!-- lesson-practice -->
+
+## Try it
+
+Run this block (or `python -m tools.lessons` to refresh every page), then change one input and predict the new output before running it again.
+
+```python
+PAIRS = {")": "(", "]": "[", "}": "{"}
+
+def balanced(text):
+    stack = []
+    for ch in text:
+        if ch in "([{":
+            stack.append(ch)
+        elif ch in PAIRS:
+            if not stack or stack.pop() != PAIRS[ch]:
+                return False
+    return not stack
+
+for sample in ["{[()]}", "([)]", "((", "", "a(b)c"]:
+    print(repr(sample), balanced(sample))
+
+def next_greater(values):
+    answer, stack = [-1] * len(values), []   # stack holds indexes still waiting
+    for i, value in enumerate(values):
+        while stack and values[stack[-1]] < value:
+            answer[stack.pop()] = value
+        stack.append(i)
+    return answer
+
+print(next_greater([2, 1, 2, 4, 3]))
+```
+
+<!-- output -->
+```text
+'{[()]}' True
+'([)]' False
+'((' False
+'' True
+'a(b)c' True
+[4, 2, 4, -1, -1]
+```
+<!-- /output -->
+
+## Common mistakes
+
+| Mistake | What happens | Fix |
+|---|---|---|
+| Popping from an empty stack on a closing bracket | IndexError on input like `)(` | Check `not stack` first |
+| Returning True after the loop without checking the stack | `((` counted as balanced | Return `not stack` |
+| Storing values instead of indexes in a monotonic stack | Can't write the answer back to the right position | Push indexes |
+| Calling a nested while-loop O(n²) | Overestimated cost | Each index is pushed and popped once: amortized O(n) |
+| Recursion for deep nesting | RecursionError around 1000 levels | Use an explicit stack |
+
+## Your turn
+
+<!-- drills -->
+Each drill is graded on six published cases. **Guided** drills give you a skeleton with `___` blanks; **independent** drills give only the signature.
+
+| ID | Drill | Kind |
+|---|---|---|
+| `DB09` | **Only round brackets.** Return True if every '(' in s is closed by a later ')' and no ')' appears without a matching '('. Other characters are ignored. | guided |
+| `DB10` | **Undo with backspaces.** In s, the character '#' deletes the previous surviving character (if any). Return the final text. | guided |
+| `DB11` | **Evaluate reverse Polish notation.** tokens is a valid expression in reverse Polish notation using integers and the operators + - * /. Division truncates toward zero (like int(a / b)). Return the value. | independent |
+| `DB12` | **Days until a warmer day.** For each day i in temps, return how many days you wait until a strictly warmer temperature, or 0 if none comes. | independent |
+
+```bash
+python -m tools.drills show DB09
+python -m tools.drills check DB09
+python -m tools.drills hint DB09 1
+```
+<!-- /drills -->
+
+**Interview problems for this lesson:** `B04`, `I09`. Read one with `python -m tools.practice show B04 --hints`.
+
+## Quick quiz
+
+<!-- quiz -->
+Answer in your head first, then check. Answers are stored as hashes, so reading the files won't spoil them.
+
+**1.** Which input breaks a checker that returns True after the loop without checking the stack?
+
+   - **a)** "()"
+   - **b)** "(("
+   - **c)** ")("
+
+**2.** In a next-greater scan, why store indexes instead of values?
+
+   - **a)** Indexes use less memory
+   - **b)** The answer must be written to the waiting element's position
+   - **c)** Values can't be compared
+
+**3.** Total time of the monotonic-stack next-greater algorithm?
+
+   - **a)** O(n²) because of the inner while
+   - **b)** O(n log n)
+   - **c)** O(n) amortized
+
+**4.** Why prefer an explicit stack over recursion for deeply nested input in Python?
+
+   - **a)** The recursion limit (about 1000 frames) can be exceeded
+   - **b)** Stacks are always faster
+   - **c)** Recursion can't express nesting
+
+```bash
+python -m tools.quiz basics/03 1 b      # question 1, answer b
+python -m tools.quiz basics/03           # list the questions
+```
+<!-- /quiz -->
+
+## Summary
+
+- A stack holds unfinished work, most recent first: perfect for nesting.
+- Balanced brackets: push openers, match closers, and require an empty stack at the end.
+- A monotonic stack keeps indexes still waiting for an answer; each is pushed and popped once.
+- Explicit stacks replace recursion when depth could be large.
+
+**Next:** [Binary search, prefix computation and one-dimensional DP](04_binary_search_prefixes_and_dp.md)

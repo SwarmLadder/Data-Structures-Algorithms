@@ -1,0 +1,590 @@
+{
+ "intermediate/01": {
+  "lesson": "lessons/intermediate/01_sliding_windows.md",
+  "questions": [
+   {
+    "question": "Why is shrinking the left edge safe when looking for the longest window without repeats?",
+    "options": {
+     "a": "Removing characters from a window without repeats can't create a repeat",
+     "b": "Windows are always sorted",
+     "c": "Because the right edge never moves"
+    },
+    "answer": "566527cd86bc",
+    "section": "Deep dive: the proof that shrinking is safe",
+    "explain": "Validity is monotone under removal, so no valid window is skipped."
+   },
+   {
+    "question": "A variable sliding window for 'sum ≥ target' breaks when…",
+    "options": {
+     "a": "values can be negative",
+     "b": "values are large",
+     "c": "the target is zero"
+    },
+    "answer": "b5812410c85d",
+    "section": "Why negative values break some windows",
+    "explain": "Adding a value may lower the sum, so the shrink argument fails."
+   },
+   {
+    "question": "Total pointer moves in a variable window over n items?",
+    "options": {
+     "a": "O(n²)",
+     "b": "At most 2n",
+     "c": "O(n log n)"
+    },
+    "answer": "9b19c41c51fc",
+    "section": "Jumping the boundary in O(n)",
+    "explain": "Each edge only moves forward, n times at most."
+   },
+   {
+    "question": "For the minimum covering window, requirements are counted with…",
+    "options": {
+     "a": "a set of letters",
+     "b": "multiplicity: how many of each letter are still needed",
+     "c": "a sorted list"
+    },
+    "answer": "b2fa0330bb53",
+    "section": "Minimum covering window counts multiplicity",
+    "explain": "'aa' needs two a's, not one."
+   }
+  ]
+ },
+ "intermediate/02": {
+  "lesson": "lessons/intermediate/02_prefix_sums_and_counts.md",
+  "questions": [
+   {
+    "question": "Why seed the prefix map with {0: 1}?",
+    "options": {
+     "a": "To count ranges that start at index 0",
+     "b": "To avoid KeyError",
+     "c": "Because sums are positive"
+    },
+    "answer": "082d43617fc9",
+    "section": "Deep dive: count ranges by algebra, not by enumeration",
+    "explain": "The empty prefix lets a range from the beginning be found."
+   },
+   {
+    "question": "A range (i, j] sums to k exactly when…",
+    "options": {
+     "a": "prefix[j] − prefix[i] = k",
+     "b": "prefix[i] = k",
+     "c": "nums[j] = k"
+    },
+    "answer": "eb9491445a8a",
+    "section": "Deep dive: count ranges by algebra, not by enumeration",
+    "explain": "So look up earlier prefixes equal to prefix[j] − k."
+   },
+   {
+    "question": "Time to count all subarrays with sum k using prefix sums and a map?",
+    "options": {
+     "a": "O(n²)",
+     "b": "O(n) expected",
+     "c": "O(n log n)"
+    },
+    "answer": "bd9bc35f01ad",
+    "section": "Complexity and generalization",
+    "explain": "One pass with expected O(1) map operations."
+   },
+   {
+    "question": "A 2-D rectangle sum from a prefix table needs…",
+    "options": {
+     "a": "one lookup",
+     "b": "four lookups with inclusion–exclusion",
+     "c": "a loop over the rectangle"
+    },
+    "answer": "a09dc5961615",
+    "section": "Two-dimensional extension",
+    "explain": "Add the full corner, subtract two strips, add the overlap back."
+   }
+  ]
+ },
+ "intermediate/03": {
+  "lesson": "lessons/intermediate/03_scheduling_heaps_and_cache.md",
+  "questions": [
+   {
+    "question": "With half-open intervals, do [1,3) and [3,5) need two rooms?",
+    "options": {
+     "a": "Yes",
+     "b": "No, they don't overlap",
+     "c": "Depends on the heap"
+    },
+    "answer": "fb5032e76e77",
+    "section": "Trace minimum workers",
+    "explain": "The first ends exactly when the second starts."
+   },
+   {
+    "question": "What does the min-heap hold in the minimum-workers algorithm?",
+    "options": {
+     "a": "Start times",
+     "b": "End times of the jobs currently running",
+     "c": "Durations"
+    },
+    "answer": "a827b4757c70",
+    "section": "A heap for concurrent jobs",
+    "explain": "The smallest end tells whether a worker becomes free."
+   },
+   {
+    "question": "An LRU cache must refresh an entry's recency on…",
+    "options": {
+     "a": "put only",
+     "b": "every get and put",
+     "c": "eviction"
+    },
+    "answer": "d8301c979c1d",
+    "section": "Distinguish LRU recency from order of insertion",
+    "explain": "Otherwise it behaves like FIFO."
+   },
+   {
+    "question": "Merging intervals costs…",
+    "options": {
+     "a": "O(n) because it's one sweep",
+     "b": "O(n log n), because of the initial sort",
+     "c": "O(n²)"
+    },
+    "answer": "4ccd8eb1f7ff",
+    "section": "Deep dive: scheduling and cache ordering are different problems",
+    "explain": "The sweep is linear; the sort dominates."
+   }
+  ]
+ },
+ "intermediate/04": {
+  "lesson": "lessons/intermediate/04_trees_cycles_and_search.md",
+  "questions": [
+   {
+    "question": "Why is comparing each node only with its direct children not enough to validate a BST?",
+    "options": {
+     "a": "A node deep in the left subtree can be larger than an ancestor",
+     "b": "Children may be None",
+     "c": "BSTs can't have duplicates"
+    },
+    "answer": "c4c56d637e69",
+    "section": "Executable heap-indexed BST range validation",
+    "explain": "Every node must respect bounds inherited from all ancestors."
+   },
+   {
+    "question": "How do you separate BFS output into levels?",
+    "options": {
+     "a": "Sort by value",
+     "b": "Process exactly len(queue) nodes per level",
+     "c": "Use recursion"
+    },
+    "answer": "289cdd2652e9",
+    "section": "Breadth-first traversal",
+    "explain": "The queue length at the start of a level is that level's size."
+   },
+   {
+    "question": "In a BST, the lowest common ancestor of a and b is…",
+    "options": {
+     "a": "the root",
+     "b": "the first node whose value lies between a and b (inclusive)",
+     "c": "the deepest node"
+    },
+    "answer": "9c019a7163ce",
+    "section": "Lowest common ancestor",
+    "explain": "Above it both targets are on the same side; below it they separate."
+   },
+   {
+    "question": "Tree operations that are O(h) cost O(n) when…",
+    "options": {
+     "a": "the tree degenerates into a chain",
+     "b": "the tree is balanced",
+     "c": "values are negative"
+    },
+    "answer": "bd7da18cff64",
+    "section": "Bottom-up and breadth-first alternatives",
+    "explain": "Height h can be n for a skewed tree."
+   }
+  ]
+ },
+ "intermediate/05": {
+  "lesson": "lessons/intermediate/05_monotonic_stacks_and_deques.md",
+  "questions": [
+   {
+    "question": "Why is the monotonic-stack next-greater algorithm O(n) despite a nested while?",
+    "options": {
+     "a": "Each index is pushed and popped at most once",
+     "b": "The inner loop runs once",
+     "c": "Python optimises it"
+    },
+    "answer": "e8ef5acaea01",
+    "section": "2. Amortized analysis",
+    "explain": "The total work of all inner loops is bounded by n pops."
+   },
+   {
+    "question": "When is an element's answer known in a next-greater scan?",
+    "options": {
+     "a": "When it is pushed",
+     "b": "When a later, larger element pops it",
+     "c": "At the very end"
+    },
+    "answer": "43bd8d144ce3",
+    "section": "1. Why stack ordering is useful",
+    "explain": "The popping element is exactly its next greater."
+   },
+   {
+    "question": "The sliding-window maximum uses a deque rather than a stack because…",
+    "options": {
+     "a": "old elements expire from the front",
+     "b": "deques are faster",
+     "c": "stacks can't hold indexes"
+    },
+    "answer": "eccdffe69172",
+    "section": "3. Monotone deque for sliding maximum",
+    "explain": "Elements leave from both ends: expiry at the front, domination at the back."
+   },
+   {
+    "question": "A monotonic stack is the wrong tool when…",
+    "options": {
+     "a": "you need the next greater element",
+     "b": "priorities must be retrieved in arbitrary order (use a heap)",
+     "c": "values are integers"
+    },
+    "answer": "81823a74a7d0",
+    "section": "4. When not to use these structures",
+    "explain": "Monotonic structures only discard dominated candidates in order."
+   }
+  ]
+ },
+ "intermediate/06": {
+  "lesson": "lessons/intermediate/06_binary_search_on_answer_and_boundary_predicates.md",
+  "questions": [
+   {
+    "question": "What must be true to binary search on the answer?",
+    "options": {
+     "a": "The input is sorted",
+     "b": "feasible(x) is monotone in x",
+     "c": "The answer is an integer power of two"
+    },
+    "answer": "571f55e669d3",
+    "section": "2. Define and prove monotonicity",
+    "explain": "False…false, true…true lets you discard half each step."
+   },
+   {
+    "question": "For 'ship within d days', a natural lower bound is…",
+    "options": {
+     "a": "0",
+     "b": "max(weights)",
+     "c": "sum(weights)"
+    },
+    "answer": "d8519bc36373",
+    "section": "1. The hidden binary-search pattern",
+    "explain": "Below the heaviest package nothing can ship."
+   },
+   {
+    "question": "The total cost of binary search on the answer is…",
+    "options": {
+     "a": "O(log range)",
+     "b": "O(cost of feasible × log range)",
+     "c": "O(n²)"
+    },
+    "answer": "eeb7a1350558",
+    "section": "3. Trace and complexity",
+    "explain": "Each probe runs the full feasibility check."
+   },
+   {
+    "question": "With mid = (lo + hi) // 2, which update can loop forever?",
+    "options": {
+     "a": "hi = mid",
+     "b": "lo = mid + 1",
+     "c": "lo = mid"
+    },
+    "answer": "7729160efc14",
+    "section": "4. Boundary templates and traps",
+    "explain": "When hi = lo + 1, mid = lo and nothing changes."
+   }
+  ]
+ },
+ "intermediate/07": {
+  "lesson": "lessons/intermediate/07_tree_traversals_and_subtree_information.md",
+  "questions": [
+   {
+    "question": "Why does postorder avoid repeated work for subtree properties?",
+    "options": {
+     "a": "Each node returns its summary once, and the parent combines them",
+     "b": "It visits fewer nodes",
+     "c": "It sorts the tree"
+    },
+    "answer": "235fa314d125",
+    "section": "3. Why postorder avoids repeated searches",
+    "explain": "Recomputing heights from the top for every node would be O(n²) on a chain."
+   },
+   {
+    "question": "Inorder traversal of a BST yields…",
+    "options": {
+     "a": "values in sorted order",
+     "b": "the root first",
+     "c": "level order"
+    },
+    "answer": "b7f444edcd5f",
+    "section": "1. What tree structure guarantees",
+    "explain": "Left subtree, node, right subtree respects the BST ordering."
+   },
+   {
+    "question": "What does the range check (low, high) prove when validating a BST?",
+    "options": {
+     "a": "Every node lies within bounds set by all its ancestors",
+     "b": "The tree is balanced",
+     "c": "There are no duplicates in children"
+    },
+    "answer": "d66da4319640",
+    "section": "2. A range proof for BST validity",
+    "explain": "Bounds tighten as you descend."
+   },
+   {
+    "question": "Iterative traversal is preferred in Python when…",
+    "options": {
+     "a": "the tree may be very deep",
+     "b": "the tree is small",
+     "c": "values are strings"
+    },
+    "answer": "ac3240eaf9a2",
+    "section": "4. Iterative traversal and depth",
+    "explain": "The recursion limit is around 1000 frames."
+   }
+  ]
+ },
+ "intermediate/08": {
+  "lesson": "lessons/intermediate/08_heaps_selection_and_top_k.md",
+  "questions": [
+   {
+    "question": "Python's heapq.heappop returns…",
+    "options": {
+     "a": "the largest element",
+     "b": "the smallest element",
+     "c": "the last element pushed"
+    },
+    "answer": "bcaa7eac80b8",
+    "section": "1. What a heap does and does not promise",
+    "explain": "heapq is a min-heap; negate values for max-heap behaviour."
+   },
+   {
+    "question": "Selecting the k largest of n values with a heap costs…",
+    "options": {
+     "a": "O(n log k)",
+     "b": "O(n log n)",
+     "c": "O(k)"
+    },
+    "answer": "cab36766d0c3",
+    "section": "2. Kth largest **distinct** number",
+    "explain": "Each of n elements does O(log k) heap work."
+   },
+   {
+    "question": "Is the heap's underlying list fully sorted?",
+    "options": {
+     "a": "Yes",
+     "b": "No, only heap[0] is guaranteed to be the minimum",
+     "c": "Only after heapify"
+    },
+    "answer": "c10b04f79a96",
+    "section": "1. What a heap does and does not promise",
+    "explain": "The heap property is parent ≤ children, not total order."
+   },
+   {
+    "question": "In a k-way merge, what does the heap hold?",
+    "options": {
+     "a": "All N elements",
+     "b": "The current front element of each list",
+     "c": "The list lengths"
+    },
+    "answer": "6476503ed568",
+    "section": "4. K-way merge",
+    "explain": "At most k entries, so each operation is O(log k)."
+   }
+  ]
+ },
+ "intermediate/09": {
+  "lesson": "lessons/intermediate/09_greedy_algorithms_and_exchange_arguments.md",
+  "questions": [
+   {
+    "question": "Greedy is a theorem, not a data structure. What does that mean?",
+    "options": {
+     "a": "A greedy rule needs a proof that the local choice is safe",
+     "b": "Greedy always works",
+     "c": "Greedy uses no memory"
+    },
+    "answer": "4ff002020509",
+    "section": "1. Greedy is a theorem, not a data structure",
+    "explain": "Without an exchange argument it's only a heuristic."
+   },
+   {
+    "question": "For maximum non-overlapping intervals, sort by…",
+    "options": {
+     "a": "start time",
+     "b": "end time",
+     "c": "length"
+    },
+    "answer": "84564cc34c5b",
+    "section": "2. Select maximum compatible intervals",
+    "explain": "Finishing earliest leaves the most room for the rest."
+   },
+   {
+    "question": "Greedy coins [1, 10, 25] for 30 gives 6 coins. The optimum is…",
+    "options": {
+     "a": "6",
+     "b": "3",
+     "c": "2"
+    },
+    "answer": "3d2fc00ce1f0",
+    "section": "3. Why a tempting heuristic fails",
+    "explain": "Three 10s; a counterexample kills the heuristic."
+   },
+   {
+    "question": "How does an exchange argument work?",
+    "options": {
+     "a": "Show any optimal solution can be changed to include the greedy choice without getting worse",
+     "b": "Try all permutations",
+     "c": "Sort twice"
+    },
+    "answer": "1de5c5414af1",
+    "section": "4. When sorting plus greedy works",
+    "explain": "Repeating the swap turns an optimum into the greedy solution."
+   }
+  ]
+ },
+ "intermediate/10": {
+  "lesson": "lessons/intermediate/10_tries_strings_and_search_indexes.md",
+  "questions": [
+   {
+    "question": "Looking up a word of length L in a trie costs…",
+    "options": {
+     "a": "O(L)",
+     "b": "O(number of words)",
+     "c": "O(log n)"
+    },
+    "answer": "156a75a3c6be",
+    "section": "2. Minimal trie implementation",
+    "explain": "One step per character, regardless of how many words are stored."
+   },
+   {
+    "question": "Why does a trie need an end-of-word marker?",
+    "options": {
+     "a": "To save memory",
+     "b": "So a stored prefix like 'de' is distinguishable from a word",
+     "c": "For sorting"
+    },
+    "answer": "89c41ad2e1b3",
+    "section": "2. Minimal trie implementation",
+    "explain": "Without it, every prefix of a word would look like a word."
+   },
+   {
+    "question": "How do you return suggestions in lexicographic order from a trie?",
+    "options": {
+     "a": "DFS visiting children in sorted order",
+     "b": "BFS",
+     "c": "Random order then sort"
+    },
+    "answer": "44a1b46b9c0e",
+    "section": "3. Lexicographic suggestions",
+    "explain": "Sorted child order produces sorted words."
+   },
+   {
+    "question": "When is a sorted list with binary search a good alternative to a trie?",
+    "options": {
+     "a": "Never",
+     "b": "When the word list is static and prefix queries are moderate",
+     "c": "Only for numbers"
+    },
+    "answer": "dc559f40bcda",
+    "section": "4. String matching alternatives",
+    "explain": "Matches for a prefix are contiguous in sorted order."
+   }
+  ]
+ },
+ "intermediate/11": {
+  "lesson": "lessons/intermediate/11_backtracking_pruning_and_state_restoration.md",
+  "questions": [
+   {
+    "question": "What makes backtracking correct when state is shared?",
+    "options": {
+     "a": "Undoing every change after the recursive call",
+     "b": "Copying the state at every node",
+     "c": "Sorting the input"
+    },
+    "answer": "4ac674b381e9",
+    "section": "1. Model choices and constraints",
+    "explain": "Siblings must see the state as it was before the choice."
+   },
+   {
+    "question": "How does N-queens check diagonals in O(1)?",
+    "options": {
+     "a": "By scanning the board",
+     "b": "Sets of r − c and r + c",
+     "c": "By recursion depth"
+    },
+    "answer": "53d5d5a30a6c",
+    "section": "2. N-queens with constant-time conflict checks",
+    "explain": "Every square on a diagonal shares one of these values."
+   },
+   {
+    "question": "To avoid duplicate combinations from repeated inputs…",
+    "options": {
+     "a": "sort and skip equal values at the same depth",
+     "b": "use a set of tuples only",
+     "c": "shuffle the input"
+    },
+    "answer": "ff01e96ac8af",
+    "section": "3. Avoid duplicate combinations",
+    "explain": "The set approach works but generates duplicates first."
+   },
+   {
+    "question": "A prune is safe when…",
+    "options": {
+     "a": "it speeds up the search",
+     "b": "you can prove no valid answer lies below the pruned branch",
+     "c": "it removes half the branches"
+    },
+    "answer": "714760bf0859",
+    "section": "4. Proving a prune safe",
+    "explain": "An unproved prune can silently drop answers."
+   }
+  ]
+ },
+ "intermediate/12": {
+  "lesson": "lessons/intermediate/12_algorithm_selection_and_constraint_drills.md",
+  "questions": [
+   {
+    "question": "Which fact decides between a sliding window and prefix sums for subarray sums?",
+    "options": {
+     "a": "Whether values can be negative",
+     "b": "Whether n is even",
+     "c": "Whether the array is long"
+    },
+    "answer": "2f5e3dc2e241",
+    "section": "2. Contrast look-alike problems",
+    "explain": "Negatives break the window's shrinking argument."
+   },
+   {
+    "question": "Roughly how many simple operations fit in a typical time limit?",
+    "options": {
+     "a": "10⁴",
+     "b": "10⁸",
+     "c": "10¹²"
+    },
+    "answer": "85c8fb68d232",
+    "section": "1. Diagnose the input before coding",
+    "explain": "So O(n²) is fine for n = 10⁴ but not for 10⁵."
+   },
+   {
+    "question": "Why write a brute force first?",
+    "options": {
+     "a": "To submit it",
+     "b": "It's a correct baseline and an oracle for testing the optimised version",
+     "c": "Interviewers require it"
+    },
+    "answer": "d8821424f983",
+    "section": "4. The mastery decision checklist",
+    "explain": "Correctness first; optimisation second."
+   },
+   {
+    "question": "In the Try it example, why does the window miscount [1, 1, -1, 1]?",
+    "options": {
+     "a": "A negative value means growing the window can lower the sum",
+     "b": "The window is too small",
+     "c": "Python bug"
+    },
+    "answer": "d0ce134ecc2d",
+    "section": "Try it",
+    "explain": "With non-positive values, shrinking is no longer guaranteed safe."
+   }
+  ]
+ }
+}

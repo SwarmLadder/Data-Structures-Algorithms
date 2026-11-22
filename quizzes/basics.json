@@ -1,0 +1,590 @@
+{
+ "basics/01": {
+  "lesson": "lessons/basics/01_hashing_and_frequency.md",
+  "questions": [
+   {
+    "question": "Why is `if seen.get(target - x):` a bug in pair search?",
+    "options": {
+     "a": "get is slow",
+     "b": "Index 0 is falsy, so a valid match at index 0 is ignored",
+     "c": "It modifies the dict"
+    },
+    "answer": "ba56e4200cfe",
+    "section": "Derive the pair-sum invariant",
+    "explain": "Test with `is not None` or membership; 0 is a legitimate index."
+   },
+   {
+    "question": "What should the map store to answer \"where did this value first appear?\"",
+    "options": {
+     "a": "value -> first index",
+     "b": "a set of values",
+     "c": "value -> count"
+    },
+    "answer": "29b7786b129e",
+    "section": "Deep dive: collisions, ties, and what the map represents",
+    "explain": "Store exactly the information the question needs; a set or count loses the position."
+   },
+   {
+    "question": "Expected time of the hash-map pair search on n integers?",
+    "options": {
+     "a": "O(n²)",
+     "b": "O(n log n)",
+     "c": "O(n)"
+    },
+    "answer": "a8c80dd219b6",
+    "section": "Cost model beyond O(1)",
+    "explain": "n iterations, each with expected O(1) lookups and inserts."
+   },
+   {
+    "question": "Grouping anagrams of n words of length k by sorted letters costs about…",
+    "options": {
+     "a": "O(n·k log k)",
+     "b": "O(n)",
+     "c": "O(k)"
+    },
+    "answer": "07e7cfa0e835",
+    "section": "Cost model beyond O(1)",
+    "explain": "Each word's key costs a sort of k letters."
+   }
+  ]
+ },
+ "basics/02": {
+  "lesson": "lessons/basics/02_two_pointers_and_invariants.md",
+  "questions": [
+   {
+    "question": "Why can the left pointer move right when the sum is too small (sorted input)?",
+    "options": {
+     "a": "nums[left] plus any remaining right value is at most the current sum, so it can't reach target",
+     "b": "Because left is always smaller",
+     "c": "It's a heuristic"
+    },
+    "answer": "b4e501f5e6b6",
+    "section": "Deep dive: the geometry of pointer movement",
+    "explain": "Every partner of nums[left] that remains is ≤ nums[right], so nums[left] is eliminated."
+   },
+   {
+    "question": "Two pointers on an unsorted list for pair sum…",
+    "options": {
+     "a": "works the same",
+     "b": "can miss valid pairs",
+     "c": "is faster"
+    },
+    "answer": "b9cfcd57e62c",
+    "section": "How to choose the direction",
+    "explain": "The elimination argument needs sorted order."
+   },
+   {
+    "question": "Time of an opposite-end two-pointer scan?",
+    "options": {
+     "a": "O(n log n)",
+     "b": "O(n²)",
+     "c": "O(n)"
+    },
+    "answer": "b33c7690d868",
+    "section": "A pointer potential function",
+    "explain": "The gap shrinks by one each step: at most n−1 moves."
+   },
+   {
+    "question": "Stable compaction with read/write pointers keeps…",
+    "options": {
+     "a": "the relative order of kept elements",
+     "b": "the original indexes",
+     "c": "a sorted order"
+    },
+    "answer": "e0dd2090ca56",
+    "section": "Stable compaction is a different invariant",
+    "explain": "Kept elements are written in the order they are read."
+   }
+  ]
+ },
+ "basics/03": {
+  "lesson": "lessons/basics/03_stacks_and_state.md",
+  "questions": [
+   {
+    "question": "Which input breaks a checker that returns True after the loop without checking the stack?",
+    "options": {
+     "a": "\"()\"",
+     "b": "\"((\"",
+     "c": "\")(\""
+    },
+    "answer": "545a4aadd023",
+    "section": "Validate the boundary cases",
+    "explain": "Unclosed openers remain on the stack; the answer must be `not stack`."
+   },
+   {
+    "question": "In a next-greater scan, why store indexes instead of values?",
+    "options": {
+     "a": "Indexes use less memory",
+     "b": "The answer must be written to the waiting element's position",
+     "c": "Values can't be compared"
+    },
+    "answer": "297131636c86",
+    "section": "Monotonic stacks store indices, not just values",
+    "explain": "The index says where the answer goes, and distinguishes equal values."
+   },
+   {
+    "question": "Total time of the monotonic-stack next-greater algorithm?",
+    "options": {
+     "a": "O(n²) because of the inner while",
+     "b": "O(n log n)",
+     "c": "O(n) amortized"
+    },
+    "answer": "ca2d3a4451d1",
+    "section": "From matching to monotonic stacks",
+    "explain": "Each index is pushed once and popped at most once."
+   },
+   {
+    "question": "Why prefer an explicit stack over recursion for deeply nested input in Python?",
+    "options": {
+     "a": "The recursion limit (about 1000 frames) can be exceeded",
+     "b": "Stacks are always faster",
+     "c": "Recursion can't express nesting"
+    },
+    "answer": "0559dafd86b3",
+    "section": "Stack versus recursion",
+    "explain": "An explicit list grows on the heap and isn't limited by the interpreter's call depth."
+   }
+  ]
+ },
+ "basics/04": {
+  "lesson": "lessons/basics/04_binary_search_prefixes_and_dp.md",
+  "questions": [
+   {
+    "question": "With half-open bounds `lo, hi = 0, len(nums)`, what does `while lo < hi` stop with?",
+    "options": {
+     "a": "lo == hi, the boundary index",
+     "b": "lo > hi",
+     "c": "mid"
+    },
+    "answer": "da2edf5810db",
+    "section": "Half-open binary search",
+    "explain": "The answer range [lo, hi] shrinks to a single point."
+   },
+   {
+    "question": "Why does a prefix-sum array start with 0?",
+    "options": {
+     "a": "So a range starting at index 0 is prefix[j] − prefix[0]",
+     "b": "Python needs it",
+     "c": "To avoid negative numbers"
+    },
+    "answer": "ece7e19bf3c7",
+    "section": "Why prefix sums need an initial zero",
+    "explain": "prefix[k] is the sum of the first k values; the empty prefix has sum 0."
+   },
+   {
+    "question": "Kadane's `running` holds…",
+    "options": {
+     "a": "the best sum seen anywhere",
+     "b": "the best sum of a subarray ending at the current index",
+     "c": "the sum of all values so far"
+    },
+    "answer": "27aa12033bd7",
+    "section": "DP as a recurrence, not a table",
+    "explain": "best is the global maximum; running is the state 'ending here'."
+   },
+   {
+    "question": "Binary search requires…",
+    "options": {
+     "a": "distinct values",
+     "b": "a predicate that is monotone over the search space",
+     "c": "an even length"
+    },
+    "answer": "0681662e5f77",
+    "section": "Questions to ask before implementation",
+    "explain": "False…false, true…true (or the reverse) is what lets you discard half."
+   }
+  ]
+ },
+ "basics/05": {
+  "lesson": "lessons/basics/05_complexity_and_algorithm_analysis.md",
+  "questions": [
+   {
+    "question": "Two pointers that only move toward each other inside one while loop run…",
+    "options": {
+     "a": "O(n²)",
+     "b": "O(n)",
+     "c": "O(log n)"
+    },
+    "answer": "bb0ead831f1c",
+    "section": "2. Derive a summation",
+    "explain": "Each iteration moves one pointer; there are at most n moves in total."
+   },
+   {
+    "question": "Binary search on n items takes about how many comparisons?",
+    "options": {
+     "a": "log₂ n",
+     "b": "n/2",
+     "c": "√n"
+    },
+    "answer": "0c07a4540843",
+    "section": "3. Understand logarithms and recurrences",
+    "explain": "Each comparison halves the candidates."
+   },
+   {
+    "question": "What does `nums.pop(0)` cost on a Python list of length n?",
+    "options": {
+     "a": "O(1)",
+     "b": "O(log n)",
+     "c": "O(n)"
+    },
+    "answer": "ca268a7c80e2",
+    "section": "4. Account for Python-specific hidden costs",
+    "explain": "Every remaining element shifts one place; use deque.popleft()."
+   },
+   {
+    "question": "Merge sort's recurrence T(n) = 2T(n/2) + Θ(n) solves to…",
+    "options": {
+     "a": "Θ(n)",
+     "b": "Θ(n log n)",
+     "c": "Θ(n²)"
+    },
+    "answer": "deb2ead3866a",
+    "section": "3. Understand logarithms and recurrences",
+    "explain": "log n levels, Θ(n) merging per level."
+   }
+  ]
+ },
+ "basics/06": {
+  "lesson": "lessons/basics/06_arrays_strings_and_index_invariants.md",
+  "questions": [
+   {
+    "question": "Inserting at the front of a Python list of length n costs…",
+    "options": {
+     "a": "O(1)",
+     "b": "O(n)",
+     "c": "O(log n)"
+    },
+    "answer": "a8482f1340f0",
+    "section": "1. Understand the data representation",
+    "explain": "Every existing reference shifts one slot."
+   },
+   {
+    "question": "What is the invariant of stable zero compaction?",
+    "options": {
+     "a": "nums[:write] holds the non-zeros seen so far, in order",
+     "b": "nums is sorted",
+     "c": "write == read"
+    },
+    "answer": "58e4267f4774",
+    "section": "2. Stable zero compaction",
+    "explain": "That prefix is exactly the answer for the processed part."
+   },
+   {
+    "question": "Rotating [1,2,3,4,5] right by 7 gives…",
+    "options": {
+     "a": "[3,4,5,1,2]",
+     "b": "[4,5,1,2,3]",
+     "c": "[1,2,3,4,5]"
+    },
+    "answer": "6e761441c321",
+    "section": "3. Prefixes and rotations",
+    "explain": "7 mod 5 = 2, so the last two elements move to the front."
+   },
+   {
+    "question": "Why fill sorted squares from the right?",
+    "options": {
+     "a": "The largest square comes from one of the two ends",
+     "b": "It uses less memory",
+     "c": "Python lists are reversed"
+    },
+    "answer": "85797e7ac4ba",
+    "section": "4. Sorted squares and output-direction reasoning",
+    "explain": "The extreme magnitudes are at the ends; the smallest may be anywhere in the middle."
+   }
+  ]
+ },
+ "basics/07": {
+  "lesson": "lessons/basics/07_recursion_call_stack_and_base_cases.md",
+  "questions": [
+   {
+    "question": "Which three things must every recursive function have?",
+    "options": {
+     "a": "A loop, a stack and a return",
+     "b": "A base case, progress toward it, and a correct combination",
+     "c": "Memoisation, a cache and a limit"
+    },
+    "answer": "2eb4175a3e2b",
+    "section": "1. The three obligations",
+    "explain": "Induction then proves it correct."
+   },
+   {
+    "question": "Why is naive recursive Fibonacci exponential?",
+    "options": {
+     "a": "Python is slow",
+     "b": "The same subproblems are recomputed many times",
+     "c": "Integers grow"
+    },
+    "answer": "70006791276a",
+    "section": "2. Repeated subproblems",
+    "explain": "Memoisation computes each fib(k) once."
+   },
+   {
+    "question": "In subset backtracking, what does `chosen.pop()` do?",
+    "options": {
+     "a": "Removes a duplicate",
+     "b": "Restores the state expected by the sibling branch",
+     "c": "Ends the recursion"
+    },
+    "answer": "29296a43e733",
+    "section": "3. Backtracking is controlled mutation",
+    "explain": "Every change made before a recursive call is undone after it."
+   },
+   {
+    "question": "Recording `output.append(chosen)` without copying gives…",
+    "options": {
+     "a": "Correct subsets",
+     "b": "Many references to the same list, all equal at the end",
+     "c": "An error"
+    },
+    "answer": "6c6a08d39a5b",
+    "section": "3. Backtracking is controlled mutation",
+    "explain": "Lists are mutable references; copy when you record."
+   }
+  ]
+ },
+ "basics/08": {
+  "lesson": "lessons/basics/08_linked_lists_and_pointer_mutation.md",
+  "questions": [
+   {
+    "question": "Reversing a list, what must you save before `current.next = previous`?",
+    "options": {
+     "a": "previous",
+     "b": "current.next (the rest of the list)",
+     "c": "the head"
+    },
+    "answer": "690a8fa72e1a",
+    "section": "2. Reverse without allocating nodes",
+    "explain": "Once overwritten, the unsaved continuation is unreachable."
+   },
+   {
+    "question": "Why use a dummy head?",
+    "options": {
+     "a": "To make the list longer",
+     "b": "So deleting or inserting at the front needs no special case",
+     "c": "For cycles"
+    },
+    "answer": "d54f2bb65606",
+    "section": "4. Dummy heads and deletions",
+    "explain": "Every real node then has a predecessor."
+   },
+   {
+    "question": "Why do slow and fast pointers meet inside a cycle?",
+    "options": {
+     "a": "Fast closes the gap by one node per step",
+     "b": "They start together",
+     "c": "Lists are short"
+    },
+    "answer": "3fc68a680074",
+    "section": "3. Slow/fast pointers and cycles",
+    "explain": "Modulo the cycle length, the distance shrinks by one each step."
+   },
+   {
+    "question": "Accessing the i-th node of a linked list costs…",
+    "options": {
+     "a": "O(1)",
+     "b": "O(i)",
+     "c": "O(log i)"
+    },
+    "answer": "8b219faae271",
+    "section": "1. Model the references",
+    "explain": "You must follow i links from the head."
+   }
+  ]
+ },
+ "basics/09": {
+  "lesson": "lessons/basics/09_queues_deques_and_bfs_frontiers.md",
+  "questions": [
+   {
+    "question": "Why use `deque.popleft()` instead of `list.pop(0)` for a queue?",
+    "options": {
+     "a": "pop(0) shifts every element: O(n)",
+     "b": "deque is sorted",
+     "c": "Lists can't pop"
+    },
+    "answer": "a1ca188cac7c",
+    "section": "1. Operations and asymptotic guarantees",
+    "explain": "deque supports O(1) operations at both ends."
+   },
+   {
+    "question": "BFS gives shortest paths when…",
+    "options": {
+     "a": "edges have arbitrary weights",
+     "b": "every edge has the same weight",
+     "c": "the graph is a tree only"
+    },
+    "answer": "783a346bd999",
+    "section": "1. Operations and asymptotic guarantees",
+    "explain": "Nodes leave the queue in nondecreasing distance."
+   },
+   {
+    "question": "When should BFS mark a node as seen?",
+    "options": {
+     "a": "When it is first discovered",
+     "b": "When it is dequeued",
+     "c": "At the end"
+    },
+    "answer": "c0b402b5072e",
+    "section": "2. Trace a small graph",
+    "explain": "Marking on discovery prevents queueing the same node twice."
+   },
+   {
+    "question": "Why does the window-maximum deque hold indexes?",
+    "options": {
+     "a": "Indexes say when an element expires and distinguish equal values",
+     "b": "Smaller memory",
+     "c": "deque requires integers"
+    },
+    "answer": "c6ac3925843a",
+    "section": "4. Why indices instead of values?",
+    "explain": "Expiry depends on position, not value."
+   }
+  ]
+ },
+ "basics/10": {
+  "lesson": "lessons/basics/10_sorting_stability_and_correctness.md",
+  "questions": [
+   {
+    "question": "A stable sort guarantees that…",
+    "options": {
+     "a": "equal keys keep their input order",
+     "b": "it runs in O(n)",
+     "c": "it sorts in place"
+    },
+    "answer": "40f2bb46e8c9",
+    "section": "1. Sorting is not merely `sorted()`",
+    "explain": "Python's sort is stable, which makes multi-pass sorting work."
+   },
+   {
+    "question": "Using `<` instead of `<=` when merging makes merge sort…",
+    "options": {
+     "a": "faster",
+     "b": "unstable",
+     "c": "incorrect"
+    },
+    "answer": "5896ee8d59ec",
+    "section": "2. Prove merge correctness",
+    "explain": "On ties the right element would jump ahead of the left one."
+   },
+   {
+    "question": "Counting sort on n values in the range 0..K costs…",
+    "options": {
+     "a": "O(n log n)",
+     "b": "O(n + K)",
+     "c": "O(K log n)"
+    },
+    "answer": "70a47d930b10",
+    "section": "3. Sorting can be a reduction",
+    "explain": "It never compares elements, so the comparison lower bound doesn't apply."
+   },
+   {
+    "question": "To sort by count descending, then name ascending, use the key…",
+    "options": {
+     "a": "(count, name)",
+     "b": "(-count, name)",
+     "c": "(name, -count)"
+    },
+    "answer": "67726478f863",
+    "section": "4. Comparator consistency",
+    "explain": "Negating the count flips its order while names stay ascending."
+   }
+  ]
+ },
+ "basics/11": {
+  "lesson": "lessons/basics/11_bits_integer_arithmetic_and_overflow.md",
+  "questions": [
+   {
+    "question": "XOR of all values finds the singleton only if…",
+    "options": {
+     "a": "every other value appears exactly twice (an even number of times)",
+     "b": "values are sorted",
+     "c": "values are positive"
+    },
+    "answer": "4e4a3ac32520",
+    "section": "2. XOR properties and their limits",
+    "explain": "Pairs cancel; three copies would not."
+   },
+   {
+    "question": "What does `x & (x - 1)` do?",
+    "options": {
+     "a": "Doubles x",
+     "b": "Clears the lowest set bit",
+     "c": "Sets every bit"
+    },
+    "answer": "eea39b1a9243",
+    "section": "4. Counting set bits",
+    "explain": "Subtracting 1 flips the lowest set bit and the zeros below it."
+   },
+   {
+    "question": "Python's `2**31 + 2**31` overflows to a negative number?",
+    "options": {
+     "a": "Yes",
+     "b": "No, Python integers are unbounded",
+     "c": "Only on 32-bit machines"
+    },
+    "answer": "02fdd95e03c7",
+    "section": "2. XOR properties and their limits",
+    "explain": "Simulate fixed width with masks when a problem requires it."
+   },
+   {
+    "question": "Why does the sum formula fail if the input may contain duplicates?",
+    "options": {
+     "a": "Sums are slow",
+     "b": "Its precondition (all distinct, exactly one missing) no longer holds",
+     "c": "It always works"
+    },
+    "answer": "0d446ab8f88c",
+    "section": "3. Derive missing-value formulas",
+    "explain": "An algorithm's preconditions are part of its correctness."
+   }
+  ]
+ },
+ "basics/12": {
+  "lesson": "lessons/basics/12_debugging_testing_and_reasoning.md",
+  "questions": [
+   {
+    "question": "What is a brute-force oracle for?",
+    "options": {
+     "a": "Production use",
+     "b": "Checking a faster solution on small inputs",
+     "c": "Measuring speed"
+    },
+    "answer": "acce0c70f1f9",
+    "section": "2. Establish a brute-force oracle",
+    "explain": "Obvious-but-slow code is a trustworthy reference."
+   },
+   {
+    "question": "Kadane initialised with best = 0 fails on…",
+    "options": {
+     "a": "[1, 2]",
+     "b": "[-3]",
+     "c": "[0]"
+    },
+    "answer": "cb2f462b87c1",
+    "section": "2. Establish a brute-force oracle",
+    "explain": "The answer must be a non-empty subarray; for all-negative input it's negative."
+   },
+   {
+    "question": "A solution returns the right pair in the wrong order. That's a…",
+    "options": {
+     "a": "contract bug",
+     "b": "complexity bug",
+     "c": "boundary bug"
+    },
+    "answer": "24a5f68a8288",
+    "section": "3. Classify bugs by cause",
+    "explain": "The algorithm may be fine; the output contract isn't met."
+   },
+   {
+    "question": "Random differential testing compares…",
+    "options": {
+     "a": "two runs of the same function",
+     "b": "the fast solution with an independent oracle on many random inputs",
+     "c": "timing"
+    },
+    "answer": "dff5765f0a1a",
+    "section": "4. Randomized differential testing",
+    "explain": "Disagreement pinpoints a failing input to debug."
+   }
+  ]
+ }
+}

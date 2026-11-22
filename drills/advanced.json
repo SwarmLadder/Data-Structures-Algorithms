@@ -1,0 +1,674 @@
+[
+  {
+    "id": "DA01",
+    "level": "advanced",
+    "lesson": "lessons/advanced/01_graph_traversals_and_dependencies.md",
+    "kind": "guided",
+    "title": "Count connected components",
+    "prompt": "n nodes are numbered 0..n-1; edges is a list of undirected [a, b] pairs. Return the number of connected components.",
+    "signature": "def solve(n, edges):",
+    "hints": [
+      "Build an adjacency list.",
+      "Start a traversal from every unvisited node and count the starts.",
+      "Mark nodes when you first see them."
+    ]
+  },
+  {
+    "id": "DA02",
+    "level": "advanced",
+    "lesson": "lessons/advanced/01_graph_traversals_and_dependencies.md",
+    "kind": "guided",
+    "title": "Course order (Kahn)",
+    "prompt": "Courses 0..n-1; prereqs is a list of [course, required] pairs. Return an order to take all courses where the smallest available course number is always taken next, or [] if impossible.",
+    "signature": "def solve(n, prereqs):",
+    "hints": [
+      "Edge required → course; count in-degrees.",
+      "A heap of courses with in-degree 0 gives the smallest-first rule.",
+      "If you output fewer than n courses, there's a cycle."
+    ]
+  },
+  {
+    "id": "DA03",
+    "level": "advanced",
+    "lesson": "lessons/advanced/01_graph_traversals_and_dependencies.md",
+    "kind": "independent",
+    "title": "Shortest path in a grid",
+    "prompt": "grid is a list of strings with '.' open and '#' blocked. Return the fewest moves (up/down/left/right) from the top-left to the bottom-right cell, or -1 if unreachable or if either cell is blocked.",
+    "signature": "def solve(grid):",
+    "hints": [
+      "Unit-cost moves: BFS gives shortest paths.",
+      "Store distance per cell when first discovered.",
+      "Check bounds and walls before enqueueing."
+    ]
+  },
+  {
+    "id": "DA04",
+    "level": "advanced",
+    "lesson": "lessons/advanced/01_graph_traversals_and_dependencies.md",
+    "kind": "independent",
+    "title": "Does a directed graph have a cycle?",
+    "prompt": "Nodes 0..n-1, directed edges [a, b] meaning a → b. Return True if the graph contains a directed cycle.",
+    "signature": "def solve(n, edges):",
+    "hints": [
+      "Kahn's algorithm outputs every node exactly when there's no cycle.",
+      "Alternatively DFS with three colours: white, grey (on the stack), black.",
+      "A grey-to-grey edge is a cycle."
+    ]
+  },
+  {
+    "id": "DA05",
+    "level": "advanced",
+    "lesson": "lessons/advanced/02_dijkstra_dsu_and_spanning_trees.md",
+    "kind": "guided",
+    "title": "Union–find: count groups after merges",
+    "prompt": "n items start in their own groups. Apply every union [a, b] in order and return the number of groups.",
+    "signature": "def solve(n, unions):",
+    "hints": [
+      "parent[x] = x at first.",
+      "find walks to the root (compress the path as you go).",
+      "Each union of two different roots reduces the group count by one."
+    ]
+  },
+  {
+    "id": "DA06",
+    "level": "advanced",
+    "lesson": "lessons/advanced/02_dijkstra_dsu_and_spanning_trees.md",
+    "kind": "guided",
+    "title": "Dijkstra distances",
+    "prompt": "n nodes 0..n-1, directed weighted edges [a, b, w] with w >= 0. Return the list of shortest distances from source, with -1 for unreachable nodes.",
+    "signature": "def solve(n, edges, source):",
+    "hints": [
+      "Pop the closest unsettled node from a heap.",
+      "Skip entries whose distance is larger than the best known.",
+      "Relax each outgoing edge."
+    ]
+  },
+  {
+    "id": "DA07",
+    "level": "advanced",
+    "lesson": "lessons/advanced/02_dijkstra_dsu_and_spanning_trees.md",
+    "kind": "independent",
+    "title": "Minimum spanning tree cost",
+    "prompt": "n nodes 0..n-1 and undirected weighted edges [a, b, w]. Return the total weight of a minimum spanning tree, or -1 if the graph is not connected.",
+    "signature": "def solve(n, edges):",
+    "hints": [
+      "Sort edges by weight (Kruskal).",
+      "Add an edge if it joins two different components (union–find).",
+      "A spanning tree has exactly n − 1 edges."
+    ]
+  },
+  {
+    "id": "DA08",
+    "level": "advanced",
+    "lesson": "lessons/advanced/02_dijkstra_dsu_and_spanning_trees.md",
+    "kind": "independent",
+    "title": "First redundant connection",
+    "prompt": "Edges [a, b] are added one by one to an undirected graph of nodes 1..n. Return the first edge that connects two nodes already connected, or [] if none does.",
+    "signature": "def solve(edges):",
+    "hints": [
+      "Union–find tells whether two nodes are already connected.",
+      "Size the parent array from the largest node label.",
+      "Return the edge whose endpoints have the same root."
+    ]
+  },
+  {
+    "id": "DA09",
+    "level": "advanced",
+    "lesson": "lessons/advanced/03_dynamic_programming.md",
+    "kind": "guided",
+    "title": "House robber",
+    "prompt": "Return the maximum sum of non-adjacent values in nums (values >= 0; 0 for an empty list).",
+    "signature": "def solve(nums):",
+    "hints": [
+      "At each house: take it plus the best two back, or skip it.",
+      "best(i) = max(best(i-1), best(i-2) + nums[i]).",
+      "Keep two rolling values."
+    ]
+  },
+  {
+    "id": "DA10",
+    "level": "advanced",
+    "lesson": "lessons/advanced/03_dynamic_programming.md",
+    "kind": "guided",
+    "title": "Fewest coins",
+    "prompt": "Return the fewest coins (unlimited supply of each denomination) that sum to amount, or -1 if impossible. amount >= 0.",
+    "signature": "def solve(coins, amount):",
+    "hints": [
+      "best[a] = fewest coins for amount a; best[0] = 0.",
+      "best[a] = 1 + min(best[a - c]) over coins c <= a.",
+      "Use infinity for impossible amounts."
+    ]
+  },
+  {
+    "id": "DA11",
+    "level": "advanced",
+    "lesson": "lessons/advanced/03_dynamic_programming.md",
+    "kind": "independent",
+    "title": "Longest common subsequence",
+    "prompt": "Return the length of the longest subsequence common to strings a and b.",
+    "signature": "def solve(a, b):",
+    "hints": [
+      "dp[i][j] = LCS length of a[:i] and b[:j].",
+      "Equal last characters extend dp[i-1][j-1].",
+      "Otherwise take max(dp[i-1][j], dp[i][j-1])."
+    ]
+  },
+  {
+    "id": "DA12",
+    "level": "advanced",
+    "lesson": "lessons/advanced/03_dynamic_programming.md",
+    "kind": "independent",
+    "title": "Decode ways",
+    "prompt": "A message of digits maps 'A'=1 … 'Z'=26. Return how many ways s can be decoded (an empty string has 1 way; a leading zero makes a part invalid).",
+    "signature": "def solve(s):",
+    "hints": [
+      "dp[i] = ways to decode s[:i]; dp[0] = 1.",
+      "One digit s[i-1] counts if it's not '0'.",
+      "Two digits s[i-2:i] count if they form 10..26."
+    ]
+  },
+  {
+    "id": "DA13",
+    "level": "advanced",
+    "lesson": "lessons/advanced/04_backtracking_tries_and_partition_search.md",
+    "kind": "guided",
+    "title": "Word search in a grid",
+    "prompt": "board is a list of strings. Return True if word can be formed by adjacent (up/down/left/right) cells, using each cell at most once per path.",
+    "signature": "def solve(board, word):",
+    "hints": [
+      "Try every cell as a start.",
+      "Mark a cell as used during the recursion, then restore it.",
+      "Stop when all characters of word are matched."
+    ]
+  },
+  {
+    "id": "DA14",
+    "level": "advanced",
+    "lesson": "lessons/advanced/04_backtracking_tries_and_partition_search.md",
+    "kind": "guided",
+    "title": "Generate balanced parentheses",
+    "prompt": "Return all strings of n pairs of balanced parentheses, in lexicographic order ('(' sorts before ')').",
+    "signature": "def solve(n):",
+    "hints": [
+      "Add '(' while fewer than n are open.",
+      "Add ')' only while closes < opens.",
+      "Trying '(' before ')' yields lexicographic order."
+    ]
+  },
+  {
+    "id": "DA15",
+    "level": "advanced",
+    "lesson": "lessons/advanced/04_backtracking_tries_and_partition_search.md",
+    "kind": "independent",
+    "title": "Median of two sorted lists",
+    "prompt": "a and b are sorted and not both empty. Return their combined median as a float, in O(log(min(len(a), len(b)))) using a partition search.",
+    "signature": "def solve(a, b):",
+    "hints": [
+      "Binary search the cut position i in the shorter list; j is determined.",
+      "A valid cut has a[i-1] <= b[j] and b[j-1] <= a[i] (with ±inf at the edges).",
+      "Odd total: max of left halves; even: average of the middle two."
+    ]
+  },
+  {
+    "id": "DA16",
+    "level": "advanced",
+    "lesson": "lessons/advanced/04_backtracking_tries_and_partition_search.md",
+    "kind": "independent",
+    "title": "Palindrome partitions",
+    "prompt": "Return every way to split s into substrings that are all palindromes, as lists of parts, in the order produced by trying shorter first parts first.",
+    "signature": "def solve(s):",
+    "hints": [
+      "Choose the first part s[:k] if it's a palindrome, then partition the rest.",
+      "Try k from 1 upwards for the required order.",
+      "An empty remainder completes one partition."
+    ]
+  },
+  {
+    "id": "DA17",
+    "level": "advanced",
+    "lesson": "lessons/advanced/05_shortest_paths_and_weight_assumptions.md",
+    "kind": "guided",
+    "title": "Bellman–Ford distances",
+    "prompt": "n nodes, directed edges [a, b, w] (weights may be negative, no negative cycles). Return shortest distances from source, with None for unreachable nodes.",
+    "signature": "def solve(n, edges, source):",
+    "hints": [
+      "Start with 0 for the source and infinity elsewhere.",
+      "Relax every edge n − 1 times.",
+      "Skip edges whose start is still unreachable."
+    ]
+  },
+  {
+    "id": "DA18",
+    "level": "advanced",
+    "lesson": "lessons/advanced/05_shortest_paths_and_weight_assumptions.md",
+    "kind": "guided",
+    "title": "Negative cycle detector",
+    "prompt": "Return True if the directed graph (n nodes, edges [a, b, w]) has a negative-weight cycle reachable from node 0.",
+    "signature": "def solve(n, edges):",
+    "hints": [
+      "Run n − 1 rounds of Bellman–Ford from node 0.",
+      "Then try one more relaxation pass.",
+      "Any further improvement means a negative cycle."
+    ]
+  },
+  {
+    "id": "DA19",
+    "level": "advanced",
+    "lesson": "lessons/advanced/05_shortest_paths_and_weight_assumptions.md",
+    "kind": "independent",
+    "title": "Cheapest flight with at most k stops",
+    "prompt": "n cities, flights [a, b, price]. Return the cheapest price from src to dst using at most k intermediate stops, or -1.",
+    "signature": "def solve(n, flights, src, dst, k):",
+    "hints": [
+      "At most k stops means at most k + 1 edges.",
+      "Run k + 1 rounds of Bellman–Ford, relaxing from a copy of last round's distances.",
+      "The copy stops a single round from using more than one new edge."
+    ]
+  },
+  {
+    "id": "DA20",
+    "level": "advanced",
+    "lesson": "lessons/advanced/05_shortest_paths_and_weight_assumptions.md",
+    "kind": "independent",
+    "title": "Fewest edges or least cost?",
+    "prompt": "n nodes, directed weighted edges [a, b, w] (w >= 0). Return [fewest_edges, least_cost] from 0 to n-1, using -1 for both if unreachable.",
+    "signature": "def solve(n, edges):",
+    "hints": [
+      "Fewest edges ignores weights: BFS.",
+      "Least cost needs Dijkstra.",
+      "They can choose different paths; compute both."
+    ]
+  },
+  {
+    "id": "DA21",
+    "level": "advanced",
+    "lesson": "lessons/advanced/06_topological_sort_scc_and_dependency_cycles.md",
+    "kind": "guided",
+    "title": "Cycle check with DFS colours",
+    "prompt": "Directed graph on nodes 0..n-1 with edges [a, b]. Return True if it contains a cycle, using DFS with three colours.",
+    "signature": "def solve(n, edges):",
+    "hints": [
+      "0 = unvisited, 1 = on the current path, 2 = finished.",
+      "Reaching a node with colour 1 means a cycle.",
+      "Colour 2 after all neighbours are done."
+    ]
+  },
+  {
+    "id": "DA22",
+    "level": "advanced",
+    "lesson": "lessons/advanced/06_topological_sort_scc_and_dependency_cycles.md",
+    "kind": "guided",
+    "title": "Topological order by DFS finish times",
+    "prompt": "Return a topological order of the DAG (nodes 0..n-1, edges [a, b] meaning a before b) as the reverse of DFS finish order, visiting start nodes and neighbours in increasing order.",
+    "signature": "def solve(n, edges):",
+    "hints": [
+      "A node finishes after all nodes it points to.",
+      "Reverse the finish order.",
+      "Sort adjacency lists for a deterministic result."
+    ]
+  },
+  {
+    "id": "DA23",
+    "level": "advanced",
+    "lesson": "lessons/advanced/06_topological_sort_scc_and_dependency_cycles.md",
+    "kind": "independent",
+    "title": "Number of strongly connected components",
+    "prompt": "Return the number of strongly connected components of the directed graph on nodes 0..n-1 with edges [a, b].",
+    "signature": "def solve(n, edges):",
+    "hints": [
+      "Kosaraju: record DFS finish order on the graph.",
+      "Reverse every edge.",
+      "DFS the reversed graph in decreasing finish order; each new start is a component."
+    ]
+  },
+  {
+    "id": "DA24",
+    "level": "advanced",
+    "lesson": "lessons/advanced/06_topological_sort_scc_and_dependency_cycles.md",
+    "kind": "independent",
+    "title": "Safe states",
+    "prompt": "A node is safe if every path from it ends at a node with no outgoing edges (never reaching a cycle). Return the sorted list of safe nodes of the directed graph on 0..n-1.",
+    "signature": "def solve(n, edges):",
+    "hints": [
+      "Nodes on or leading into cycles are unsafe.",
+      "Reverse the edges and run Kahn from terminal nodes.",
+      "Nodes whose out-degree drops to 0 are safe."
+    ]
+  },
+  {
+    "id": "DA25",
+    "level": "advanced",
+    "lesson": "lessons/advanced/07_dp_multidimensional_state_design.md",
+    "kind": "guided",
+    "title": "Grid paths around walls",
+    "prompt": "grid is a list of strings ('.' open, '#' wall). Count right/down paths from top-left to bottom-right (0 if either end is a wall).",
+    "signature": "def solve(grid):",
+    "hints": [
+      "dp[r][c] = paths into (r, c).",
+      "Paths come from above and from the left.",
+      "Walls have 0 paths."
+    ]
+  },
+  {
+    "id": "DA26",
+    "level": "advanced",
+    "lesson": "lessons/advanced/07_dp_multidimensional_state_design.md",
+    "kind": "guided",
+    "title": "Minimum path sum",
+    "prompt": "grid is a list of rows of non-negative integers. Return the minimum sum of a right/down path from the top-left to the bottom-right.",
+    "signature": "def solve(grid):",
+    "hints": [
+      "dp[r][c] = cheapest cost to reach (r, c).",
+      "It's grid[r][c] plus the cheaper of above and left.",
+      "Fill the first row and column first, or handle edges with infinity."
+    ]
+  },
+  {
+    "id": "DA27",
+    "level": "advanced",
+    "lesson": "lessons/advanced/07_dp_multidimensional_state_design.md",
+    "kind": "independent",
+    "title": "Edit distance",
+    "prompt": "Return the minimum number of single-character insertions, deletions or substitutions to turn a into b.",
+    "signature": "def solve(a, b):",
+    "hints": [
+      "d(i, j) = cost for a[:i] → b[:j].",
+      "If the last characters match, d(i, j) = d(i-1, j-1).",
+      "Otherwise 1 + min(delete, insert, substitute); d(i, 0) = i, d(0, j) = j."
+    ]
+  },
+  {
+    "id": "DA28",
+    "level": "advanced",
+    "lesson": "lessons/advanced/07_dp_multidimensional_state_design.md",
+    "kind": "independent",
+    "title": "Longest palindromic subsequence",
+    "prompt": "Return the length of the longest subsequence of s that reads the same forwards and backwards.",
+    "signature": "def solve(s):",
+    "hints": [
+      "Interval state: best[i][j] for s[i..j].",
+      "Equal ends add 2 to the inside interval; otherwise drop one end.",
+      "Iterate by increasing interval length (or i from the end)."
+    ]
+  },
+  {
+    "id": "DA29",
+    "level": "advanced",
+    "lesson": "lessons/advanced/08_dp_optimization_and_space_compression.md",
+    "kind": "guided",
+    "title": "0/1 knapsack in one row",
+    "prompt": "Return the maximum total value of items (each used at most once) with total weight <= cap.",
+    "signature": "def solve(weights, values, cap):",
+    "hints": [
+      "best[c] = best value with capacity c.",
+      "For each item, update capacities from high to low.",
+      "best[c] = max(best[c], best[c - w] + v)."
+    ]
+  },
+  {
+    "id": "DA30",
+    "level": "advanced",
+    "lesson": "lessons/advanced/08_dp_optimization_and_space_compression.md",
+    "kind": "guided",
+    "title": "Count coin combinations",
+    "prompt": "Return the number of combinations (order doesn't matter) of coins (unlimited supply) that sum to amount.",
+    "signature": "def solve(amount, coins):",
+    "hints": [
+      "ways[0] = 1.",
+      "Loop coins on the outside so each combination is counted once.",
+      "For each coin, amounts upwards: ways[a] += ways[a - c]."
+    ]
+  },
+  {
+    "id": "DA31",
+    "level": "advanced",
+    "lesson": "lessons/advanced/08_dp_optimization_and_space_compression.md",
+    "kind": "independent",
+    "title": "Longest increasing subsequence (n log n)",
+    "prompt": "Return the length of the longest strictly increasing subsequence of nums in O(n log n).",
+    "signature": "def solve(nums):",
+    "hints": [
+      "Keep tails[k] = smallest tail of an increasing subsequence of length k+1.",
+      "bisect_left finds where x goes.",
+      "Append if it extends the longest, otherwise replace."
+    ]
+  },
+  {
+    "id": "DA32",
+    "level": "advanced",
+    "lesson": "lessons/advanced/08_dp_optimization_and_space_compression.md",
+    "kind": "independent",
+    "title": "Partition into equal sums",
+    "prompt": "Return True if nums (positive integers) can be split into two groups with equal sums.",
+    "signature": "def solve(nums):",
+    "hints": [
+      "An odd total is impossible.",
+      "Look for a subset summing to total // 2 (0/1 reuse).",
+      "A boolean array, updated downwards, or a set of reachable sums."
+    ]
+  },
+  {
+    "id": "DA33",
+    "level": "advanced",
+    "lesson": "lessons/advanced/09_fenwick_segment_trees_and_range_queries.md",
+    "kind": "guided",
+    "title": "Range sums with point updates",
+    "prompt": "Start from values. ops is a list of ['add', i, delta] or ['sum', lo, hi] (half-open). Return the results of every 'sum' in order, using a Fenwick tree.",
+    "signature": "def solve(values, ops):",
+    "hints": [
+      "Build the tree by adding each value.",
+      "prefix(i) sums values[0:i]; range = prefix(hi) − prefix(lo).",
+      "Internally use 1-based indexes: i += 1."
+    ]
+  },
+  {
+    "id": "DA34",
+    "level": "advanced",
+    "lesson": "lessons/advanced/09_fenwick_segment_trees_and_range_queries.md",
+    "kind": "guided",
+    "title": "Range minimum queries",
+    "prompt": "Return the minimum of data[lo:hi] for each [lo, hi] in queries (half-open, non-empty), using an iterative segment tree.",
+    "signature": "def solve(data, queries):",
+    "hints": [
+      "Leaves live at t[n:]; internal node i = min of children 2i and 2i+1.",
+      "Walk lo and hi up the tree, taking nodes at odd boundaries.",
+      "Identity for min is infinity."
+    ]
+  },
+  {
+    "id": "DA35",
+    "level": "advanced",
+    "lesson": "lessons/advanced/09_fenwick_segment_trees_and_range_queries.md",
+    "kind": "independent",
+    "title": "Count smaller numbers to the right",
+    "prompt": "For each index i, return how many values to the right of i are strictly smaller than nums[i], in O(n log n).",
+    "signature": "def solve(nums):",
+    "hints": [
+      "Process from right to left.",
+      "Compress values to ranks, and use a Fenwick tree of counts.",
+      "Query the count of ranks below the current one, then add it."
+    ]
+  },
+  {
+    "id": "DA36",
+    "level": "advanced",
+    "lesson": "lessons/advanced/09_fenwick_segment_trees_and_range_queries.md",
+    "kind": "independent",
+    "title": "Which structure?",
+    "prompt": "Return the simplest suitable structure for the operation mix: 'prefix sums' if there are no updates, 'fenwick' for updates with an invertible combine (sum/xor), and 'segment tree' otherwise (min/max/gcd).",
+    "signature": "def solve(has_updates, combine):",
+    "hints": [
+      "No updates: precompute once.",
+      "Fenwick needs subtraction to answer ranges.",
+      "min, max and gcd can't be 'subtracted'."
+    ]
+  },
+  {
+    "id": "DA37",
+    "level": "advanced",
+    "lesson": "lessons/advanced/10_amortized_analysis_dsu_and_rollback.md",
+    "kind": "guided",
+    "title": "Union by size: largest group",
+    "prompt": "Apply the unions [a, b] to n singleton groups and return the size of the largest group.",
+    "signature": "def solve(n, unions):",
+    "hints": [
+      "Keep size[root] for each root.",
+      "When merging, add the smaller size to the larger root.",
+      "Track the maximum size as you go (at least 1 when n > 0, 0 when n == 0)."
+    ]
+  },
+  {
+    "id": "DA38",
+    "level": "advanced",
+    "lesson": "lessons/advanced/10_amortized_analysis_dsu_and_rollback.md",
+    "kind": "guided",
+    "title": "Amortised cost of doubling",
+    "prompt": "A dynamic array starts with capacity 1 and doubles when full. Return the total number of element copies caused by resizes while appending n elements (n >= 0).",
+    "signature": "def solve(n):",
+    "hints": [
+      "Each resize copies every current element.",
+      "Resizes happen when size reaches 1, 2, 4, 8, … and another append arrives.",
+      "Simulate: when size == capacity before an append, add size copies and double."
+    ]
+  },
+  {
+    "id": "DA39",
+    "level": "advanced",
+    "lesson": "lessons/advanced/10_amortized_analysis_dsu_and_rollback.md",
+    "kind": "independent",
+    "title": "Accounts merge by shared email",
+    "prompt": "Each account is [name, email1, email2, …]. Accounts sharing any email belong to the same person. Return merged accounts as [name, sorted emails…], sorted by their first email.",
+    "signature": "def solve(accounts):",
+    "hints": [
+      "Union the emails within each account.",
+      "Group emails by their root; remember a name per email.",
+      "Sort emails in each group, then sort the groups."
+    ]
+  },
+  {
+    "id": "DA40",
+    "level": "advanced",
+    "lesson": "lessons/advanced/10_amortized_analysis_dsu_and_rollback.md",
+    "kind": "independent",
+    "title": "Rollback union–find",
+    "prompt": "Process ops on n singletons: ['union', a, b], ['same', a, b] (record True/False), or ['undo'] (revert the most recent union that actually merged two sets; no-op if none). Return the recorded answers. Use union by size without path compression.",
+    "signature": "def solve(n, ops):",
+    "hints": [
+      "Path compression would make undo impossible.",
+      "Push (child_root, parent_root) for each successful union.",
+      "Undo: pop, reset the child's parent and subtract its size."
+    ]
+  },
+  {
+    "id": "DA41",
+    "level": "advanced",
+    "lesson": "lessons/advanced/11_correctness_proofs_and_property_based_testing.md",
+    "kind": "guided",
+    "title": "A tiny differential tester",
+    "prompt": "Return the list of inputs (from inputs) on which candidate(x) != oracle(x), where oracle sorts x and candidate is 'sorted unless the list has exactly 2 elements, then unchanged'.",
+    "signature": "def solve(inputs):",
+    "hints": [
+      "Write both functions inside solve.",
+      "Compare their outputs on every input.",
+      "Collect the disagreements in order."
+    ]
+  },
+  {
+    "id": "DA42",
+    "level": "advanced",
+    "lesson": "lessons/advanced/11_correctness_proofs_and_property_based_testing.md",
+    "kind": "guided",
+    "title": "Check a loop invariant",
+    "prompt": "Run the max-finding loop on nums (non-empty) and return True if the invariant 'best == max(nums[:i])' holds before every iteration i from 1 to len(nums), and at the end.",
+    "signature": "def solve(nums):",
+    "hints": [
+      "best starts as nums[0], so the invariant holds for i = 1.",
+      "Check the invariant at the top of each iteration.",
+      "After the loop, best should equal max(nums)."
+    ]
+  },
+  {
+    "id": "DA43",
+    "level": "advanced",
+    "lesson": "lessons/advanced/11_correctness_proofs_and_property_based_testing.md",
+    "kind": "independent",
+    "title": "Find a counterexample to a greedy rule",
+    "prompt": "The rule 'always take the largest coin that fits' is tested on amounts 1..limit. Return the list of all amounts where it uses more coins than optimal. coins contains 1.",
+    "signature": "def solve(coins, limit):",
+    "hints": [
+      "Compute optimal counts with a DP oracle.",
+      "Simulate the greedy rule.",
+      "Collect every amount where greedy is worse."
+    ]
+  },
+  {
+    "id": "DA44",
+    "level": "advanced",
+    "lesson": "lessons/advanced/11_correctness_proofs_and_property_based_testing.md",
+    "kind": "independent",
+    "title": "Metamorphic check for a sort",
+    "prompt": "Given a list nums, return True if a sorting function passes three metamorphic checks on it: sorting is idempotent (sort(sort(x)) == sort(x)), length-preserving, and invariant to reversing the input. Use Python's sorted as the function.",
+    "signature": "def solve(nums):",
+    "hints": [
+      "Compute s = sorted(nums) once.",
+      "Check each property with ==.",
+      "All three must hold."
+    ]
+  },
+  {
+    "id": "DA45",
+    "level": "advanced",
+    "lesson": "lessons/advanced/12_mini_system_design_algorithm_capstone.md",
+    "kind": "guided",
+    "title": "Critical path length",
+    "prompt": "tasks maps names to durations; deps is a list of [before, after]. With unlimited workers, return the time at which all tasks finish (the longest dependency path). The graph is a DAG.",
+    "signature": "def solve(tasks, deps):",
+    "hints": [
+      "Process tasks in topological order.",
+      "finish[t] = duration[t] + max(finish of its prerequisites).",
+      "The answer is the maximum finish time (0 for no tasks)."
+    ]
+  },
+  {
+    "id": "DA46",
+    "level": "advanced",
+    "lesson": "lessons/advanced/12_mini_system_design_algorithm_capstone.md",
+    "kind": "guided",
+    "title": "Task order with priorities",
+    "prompt": "Return a valid order of tasks respecting deps ([before, after]); whenever several tasks are ready, pick the one with the highest priority, then the smallest name. Return [] if there's a cycle.",
+    "signature": "def solve(priority, deps):",
+    "hints": [
+      "Kahn's algorithm with a heap of ready tasks.",
+      "Heap key: (-priority, name).",
+      "If fewer tasks are output than exist, report []."
+    ]
+  },
+  {
+    "id": "DA47",
+    "level": "advanced",
+    "lesson": "lessons/advanced/12_mini_system_design_algorithm_capstone.md",
+    "kind": "independent",
+    "title": "Makespan with k workers",
+    "prompt": "Independent tasks with the given durations are assigned in input order, each to the worker that becomes free earliest (ties: lowest worker id). Return the time when the last task finishes (0 for no tasks).",
+    "signature": "def solve(durations, k):",
+    "hints": [
+      "A min-heap of (free_time, worker_id).",
+      "Pop the earliest-free worker, assign the next task, push back its new free time.",
+      "The answer is the largest finish time."
+    ]
+  },
+  {
+    "id": "DA48",
+    "level": "advanced",
+    "lesson": "lessons/advanced/12_mini_system_design_algorithm_capstone.md",
+    "kind": "independent",
+    "title": "Deadline check",
+    "prompt": "tasks maps names to durations, deps lists [before, after], and deadline is a number. With unlimited workers, return the sorted list of tasks whose earliest finish time exceeds deadline.",
+    "signature": "def solve(tasks, deps, deadline):",
+    "hints": [
+      "Compute earliest finish times in topological order (critical path).",
+      "finish[t] = duration + max(finish of prerequisites).",
+      "Collect tasks with finish > deadline, sorted by name."
+    ]
+  }
+]

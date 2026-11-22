@@ -1,0 +1,10 @@
+"""DI23 reference: Minimum eating speed. Open after your own attempt."""
+def solve(piles, h):
+    lo, hi = 1, max(piles)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if sum((p + mid - 1) // mid for p in piles) <= h:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo

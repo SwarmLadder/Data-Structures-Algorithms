@@ -2,6 +2,8 @@
 
 **Outcome:** distinguish a justified greedy rule from a plausible but incorrect heuristic. **Time:** 90–120 minutes.
 
+**Study time:** 90–120 minutes · **Before this:** [Heaps: selecting priorities without sorting everything](08_heaps_selection_and_top_k.md)
+
 ## 1. Greedy is a theorem, not a data structure
 
 A greedy algorithm repeatedly makes a locally preferred choice and never revisits it. Correctness requires showing that there is always an optimal solution consistent with the choice. Two common proof methods are **exchange arguments** and **staying-ahead arguments**. Neither 'always pick the smallest' nor 'always pick the largest' is valid without a structural reason.
@@ -51,3 +53,113 @@ If you suspect a greedy rule works, enumerate all tiny instances (e.g., at most 
 5. Compare greedy partition feasibility in lesson 06 with an optimization solved by DP.
 
 **Exit criterion:** Your explanation includes a specific local choice, an exchange/staying-ahead proof, and a concrete counterexample to a tempting incorrect rule.
+
+<!-- lesson-practice -->
+
+## Try it
+
+Run this block (or `python -m tools.lessons` to refresh every page), then change one input and predict the new output before running it again.
+
+```python
+def max_non_overlapping(intervals):
+    count, last_end = 0, float("-inf")
+    for start, end in sorted(intervals, key=lambda iv: iv[1]):   # earliest finish first
+        if start >= last_end:
+            count, last_end = count + 1, end
+    return count
+
+jobs = [(1, 4), (3, 5), (0, 6), (5, 7), (3, 9), (5, 9), (6, 10), (8, 11)]
+print(max_non_overlapping(jobs))
+
+def greedy_coins(amount, coins):
+    used = []
+    for c in sorted(coins, reverse=True):
+        while amount >= c:
+            amount -= c
+            used.append(c)
+    return used if amount == 0 else None
+
+print(greedy_coins(30, [1, 10, 25]))   # 6 coins, but 3 × 10 is optimal
+```
+
+<!-- output -->
+```text
+3
+[25, 1, 1, 1, 1, 1]
+```
+<!-- /output -->
+
+## Common mistakes
+
+| Mistake | What happens | Fix |
+|---|---|---|
+| Trusting a greedy rule without proof | Plausible but non-optimal answers | Try an exchange argument or find a counterexample |
+| Sorting intervals by start for maximum non-overlapping | Long early intervals block many short ones | Sort by end time |
+| Greedy coin change for arbitrary coins | Too many coins ([1, 10, 25], amount 30) | Dynamic programming |
+| Ignoring ties in the sort key | Different (still valid?) answers | Specify tie-breaking |
+| Checking only examples where greedy happens to work | False confidence | Search small inputs exhaustively for a counterexample |
+
+## Your turn
+
+<!-- drills -->
+Each drill is graded on six published cases. **Guided** drills give you a skeleton with `___` blanks; **independent** drills give only the signature.
+
+| ID | Drill | Kind |
+|---|---|---|
+| `DI33` | **Most non-overlapping meetings.** Return the maximum number of pairwise non-overlapping half-open intervals [start, end) you can choose. | guided |
+| `DI34` | **Assign cookies.** Child i is content with a cookie of size >= greed[i]. Each child gets at most one cookie. Return the maximum number of content children. | guided |
+| `DI35` | **Jump game.** nums[i] is the maximum jump length from index i. Return True if you can reach the last index starting from index 0 (an empty list counts as False). | independent |
+| `DI36` | **Does greedy coin change fail?.** Return the smallest amount between 1 and limit for which taking the largest coin first uses more coins than the optimum, or -1 if greedy is optimal for every amount up to limit. coins always contains 1. | independent |
+
+```bash
+python -m tools.drills show DI33
+python -m tools.drills check DI33
+python -m tools.drills hint DI33 1
+```
+<!-- /drills -->
+
+**Interview problems for this lesson:** `I05`, `I07`. Read one with `python -m tools.practice show I05 --hints`.
+
+## Quick quiz
+
+<!-- quiz -->
+Answer in your head first, then check. Answers are stored as hashes, so reading the files won't spoil them.
+
+**1.** Greedy is a theorem, not a data structure. What does that mean?
+
+   - **a)** A greedy rule needs a proof that the local choice is safe
+   - **b)** Greedy always works
+   - **c)** Greedy uses no memory
+
+**2.** For maximum non-overlapping intervals, sort by…
+
+   - **a)** start time
+   - **b)** end time
+   - **c)** length
+
+**3.** Greedy coins [1, 10, 25] for 30 gives 6 coins. The optimum is…
+
+   - **a)** 6
+   - **b)** 3
+   - **c)** 2
+
+**4.** How does an exchange argument work?
+
+   - **a)** Show any optimal solution can be changed to include the greedy choice without getting worse
+   - **b)** Try all permutations
+   - **c)** Sort twice
+
+```bash
+python -m tools.quiz intermediate/09 1 b      # question 1, answer b
+python -m tools.quiz intermediate/09           # list the questions
+```
+<!-- /quiz -->
+
+## Summary
+
+- A greedy algorithm commits to a locally best choice and never revisits it.
+- It's correct only with a proof, usually an exchange argument.
+- Earliest-finish-first maximises non-overlapping intervals.
+- When greedy fails, a small brute-force search finds the counterexample; switch to DP.
+
+**Next:** [Tries and string algorithms: how to index prefixes](10_tries_strings_and_search_indexes.md)

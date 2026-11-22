@@ -2,6 +2,8 @@
 
 **Outcome:** combine parsing, graphs, priority queues, scheduling, and testing in a realistic backend scenario. **Time:** 3–5 hours.
 
+**Study time:** 90–120 minutes · **Before this:** [Prove and test algorithms like an engineer](11_correctness_proofs_and_property_based_testing.md)
+
 ## 1. The scenario and contract
 
 A task orchestrator receives task IDs 0..n−1, prerequisite edges `[before,after]` and nonnegative execution times. You must (a) detect dependency cycles; (b) emit a deterministic feasible execution order using smallest available ID first; (c) calculate each task's earliest start and finish assuming unlimited workers; and (d) compute total makespan. This is a **DAG scheduling** problem, not a request for actual concurrent process execution.
@@ -69,3 +71,131 @@ def schedule(durations, edges):
 Explain why topological ordering is a prerequisite to longest-path-style earliest-start DP on a DAG, why graph cycles invalidate the schedule, and why task precedence is not the same as resource contention. Demonstrate running tests before claiming completion.
 
 **Mastery checkpoint:** Deliver a tested CLI or module with documentation, complexity justification and a clear statement of which constraints (especially unlimited workers) are assumed.
+
+<!-- lesson-practice -->
+
+## Try it
+
+Run this block (or `python -m tools.lessons` to refresh every page), then change one input and predict the new output before running it again.
+
+```python
+import heapq
+
+def schedule_on_workers(tasks, deps, workers):
+    """tasks: {name: duration}; deps: [(before, after)]. Returns {name: (start, end)}."""
+    after = {t: [] for t in tasks}
+    indegree = {t: 0 for t in tasks}
+    for before, nxt in deps:
+        after[before].append(nxt)
+        indegree[nxt] += 1
+    ready = sorted(t for t in tasks if indegree[t] == 0)
+    heapq.heapify(ready)
+    free_at = [(0, w) for w in range(workers)]      # (time worker becomes free, id)
+    earliest = {t: 0 for t in tasks}
+    plan = {}
+    running = []                                    # (end time, task)
+    while ready or running:
+        while ready and free_at:
+            task = heapq.heappop(ready)
+            t_free, w = heapq.heappop(free_at)
+            start = max(t_free, earliest[task])
+            plan[task] = (start, start + tasks[task])
+            heapq.heappush(running, (start + tasks[task], task, w))
+        end, task, w = heapq.heappop(running)
+        heapq.heappush(free_at, (end, w))
+        for nxt in after[task]:
+            earliest[nxt] = max(earliest[nxt], end)
+            indegree[nxt] -= 1
+            if indegree[nxt] == 0:
+                heapq.heappush(ready, nxt)
+    return plan
+
+plan = schedule_on_workers({"build": 3, "test": 2, "lint": 1, "deploy": 1},
+                [("build", "test"), ("lint", "deploy"), ("test", "deploy")], workers=2)
+for name, (s, e) in sorted(plan.items(), key=lambda kv: kv[1]):
+    print(f"{name:<7} {s}-{e}")
+```
+
+<!-- output -->
+```text
+lint    0-1
+build   0-3
+test    3-5
+deploy  5-6
+```
+<!-- /output -->
+
+## Common mistakes
+
+| Mistake | What happens | Fix |
+|---|---|---|
+| Designing without a written contract | Ambiguous tie-breaking, unclear outputs | Fix inputs, outputs, ties and failure modes first |
+| Ignoring cycles in dependencies | Scheduler hangs or drops tasks | Detect with Kahn and report |
+| Nondeterministic choices | Flaky tests | Heaps with total orderings |
+| Starting a task when a worker frees but before its dependencies finish | Invalid schedules | Start = max(worker free, dependencies done) |
+| No complexity statement | Can't argue scalability | State O((V + E) log V) and where the log comes from |
+
+## Your turn
+
+<!-- drills -->
+Each drill is graded on six published cases. **Guided** drills give you a skeleton with `___` blanks; **independent** drills give only the signature.
+
+| ID | Drill | Kind |
+|---|---|---|
+| `DA45` | **Critical path length.** tasks maps names to durations; deps is a list of [before, after]. With unlimited workers, return the time at which all tasks finish (the longest dependency path). The graph is a DAG. | guided |
+| `DA46` | **Task order with priorities.** Return a valid order of tasks respecting deps ([before, after]); whenever several tasks are ready, pick the one with the highest priority, then the smallest name. Return [] if there's a cycle. | guided |
+| `DA47` | **Makespan with k workers.** Independent tasks with the given durations are assigned in input order, each to the worker that becomes free earliest (ties: lowest worker id). Return the time when the last task finishes (0 for no tasks). | independent |
+| `DA48` | **Deadline check.** tasks maps names to durations, deps lists [before, after], and deadline is a number. With unlimited workers, return the sorted list of tasks whose earliest finish time exceeds deadline. | independent |
+
+```bash
+python -m tools.drills show DA45
+python -m tools.drills check DA45
+python -m tools.drills hint DA45 1
+```
+<!-- /drills -->
+
+**Interview problems for this lesson:** `A03`, `A04`. Read one with `python -m tools.practice show A03 --hints`.
+
+## Quick quiz
+
+<!-- quiz -->
+Answer in your head first, then check. Answers are stored as hashes, so reading the files won't spoil them.
+
+**1.** What should you write before any code for a system-style algorithm problem?
+
+   - **a)** The contract: inputs, outputs, ties, failure modes
+   - **b)** Unit tests only
+   - **c)** The class hierarchy
+
+**2.** Which data structure keeps the scheduler deterministic when several tasks are ready?
+
+   - **a)** A heap with a total ordering key
+   - **b)** A set
+   - **c)** A dict
+
+**3.** Adding task priorities to the scheduler changes…
+
+   - **a)** only the heap key
+   - **b)** the invariants and tie rules, which must be restated
+   - **c)** nothing
+
+**4.** A good interview presentation order is…
+
+   - **a)** code, then contract
+   - **b)** contract → algorithm → invariant → complexity → tests
+   - **c)** tests only
+
+```bash
+python -m tools.quiz advanced/12 1 b      # question 1, answer b
+python -m tools.quiz advanced/12           # list the questions
+```
+<!-- /quiz -->
+
+## Summary
+
+- Capstone design: contract first, then data structures that enforce it.
+- Topological order + heaps of ready tasks and free workers give deterministic schedules.
+- Each extension (priorities, deadlines, failures) changes the invariants; restate them.
+- Present the design as contract → algorithm → invariant → complexity → tests.
+
+**You've finished the lessons.** Next: the [projects](../../projects/README.md), the [mock interviews](../../interview/MOCK_INTERVIEWS.md) and the [mastery assessment](../../MASTERY_ASSESSMENT.md).

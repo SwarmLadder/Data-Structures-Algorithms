@@ -1,0 +1,674 @@
+[
+  {
+    "id": "DI01",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/01_sliding_windows.md",
+    "kind": "guided",
+    "title": "Maximum sum of k consecutive values",
+    "prompt": "Return the largest sum of any k consecutive values in nums (1 <= k <= len(nums)), in O(n).",
+    "signature": "def solve(nums, k):",
+    "hints": [
+      "Start with the sum of the first k values.",
+      "Sliding one step adds nums[i] and removes nums[i-k].",
+      "Track the best window sum."
+    ]
+  },
+  {
+    "id": "DI02",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/01_sliding_windows.md",
+    "kind": "guided",
+    "title": "Shortest subarray with sum at least target",
+    "prompt": "nums contains positive integers. Return the length of the shortest contiguous subarray whose sum is >= target, or 0 if none exists.",
+    "signature": "def solve(target, nums):",
+    "hints": [
+      "Grow the window to the right until the sum reaches target.",
+      "While it still reaches target, record the length and shrink from the left.",
+      "Positivity makes shrinking safe."
+    ]
+  },
+  {
+    "id": "DI03",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/01_sliding_windows.md",
+    "kind": "independent",
+    "title": "Longest run with at most k flips",
+    "prompt": "bits contains 0s and 1s. Return the length of the longest contiguous run of 1s you can get by flipping at most k zeros.",
+    "signature": "def solve(bits, k):",
+    "hints": [
+      "A window is valid while it contains at most k zeros.",
+      "Grow right; when zeros exceed k, move left until valid again.",
+      "Track the longest valid window."
+    ]
+  },
+  {
+    "id": "DI04",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/01_sliding_windows.md",
+    "kind": "independent",
+    "title": "Is a permutation of p inside s?",
+    "prompt": "Return True if some contiguous substring of s is a rearrangement of p (same letters, same counts).",
+    "signature": "def solve(p, s):",
+    "hints": [
+      "The window has fixed length len(p).",
+      "Compare letter counts of the window with those of p.",
+      "Slide: add the entering letter's count, remove the leaving one."
+    ]
+  },
+  {
+    "id": "DI05",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/02_prefix_sums_and_counts.md",
+    "kind": "guided",
+    "title": "Running totals",
+    "prompt": "Return the list of prefix sums of nums: entry i is nums[0] + … + nums[i].",
+    "signature": "def solve(nums):",
+    "hints": [
+      "Keep a running total.",
+      "Append it after adding each value.",
+      "An empty list gives an empty result."
+    ]
+  },
+  {
+    "id": "DI06",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/02_prefix_sums_and_counts.md",
+    "kind": "guided",
+    "title": "Count subarrays with sum k",
+    "prompt": "Return how many contiguous non-empty subarrays of nums sum to exactly k. Values may be negative.",
+    "signature": "def solve(nums, k):",
+    "hints": [
+      "A range ending here sums to k iff an earlier prefix equals total − k.",
+      "Seed the map with {0: 1}.",
+      "Count before recording the current prefix."
+    ]
+  },
+  {
+    "id": "DI07",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/02_prefix_sums_and_counts.md",
+    "kind": "independent",
+    "title": "Pivot index",
+    "prompt": "Return the leftmost index i where the sum of values strictly left of i equals the sum strictly right of i, or -1.",
+    "signature": "def solve(nums):",
+    "hints": [
+      "Compute the total once.",
+      "Walk left to right keeping the left sum.",
+      "right = total - left - nums[i]."
+    ]
+  },
+  {
+    "id": "DI08",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/02_prefix_sums_and_counts.md",
+    "kind": "independent",
+    "title": "Longest balanced binary subarray",
+    "prompt": "bits contains 0s and 1s. Return the length of the longest contiguous subarray with equally many 0s and 1s.",
+    "signature": "def solve(bits):",
+    "hints": [
+      "Treat 0 as -1; a balanced range has sum 0.",
+      "Equal prefix sums at two positions mean the range between them is balanced.",
+      "Store the first index of each prefix value (prefix 0 at index -1)."
+    ]
+  },
+  {
+    "id": "DI09",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/03_scheduling_heaps_and_cache.md",
+    "kind": "guided",
+    "title": "Merge overlapping intervals",
+    "prompt": "Merge all overlapping closed intervals [start, end] and return them sorted by start. Intervals that touch (end == next start) merge.",
+    "signature": "def solve(intervals):",
+    "hints": [
+      "Sort by start first.",
+      "If the next interval starts at or before the last merged end, extend it.",
+      "Otherwise begin a new merged interval."
+    ]
+  },
+  {
+    "id": "DI10",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/03_scheduling_heaps_and_cache.md",
+    "kind": "guided",
+    "title": "Minimum meeting rooms",
+    "prompt": "meetings are half-open [start, end) intervals. Return the minimum number of rooms needed so no two overlapping meetings share a room.",
+    "signature": "def solve(meetings):",
+    "hints": [
+      "Process meetings by start time.",
+      "A min-heap holds the end times of rooms in use.",
+      "If the earliest end is <= the new start, reuse that room."
+    ]
+  },
+  {
+    "id": "DI11",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/03_scheduling_heaps_and_cache.md",
+    "kind": "independent",
+    "title": "LRU cache simulator",
+    "prompt": "Simulate an LRU cache with the given capacity. ops is a list of ['put', key, value] or ['get', key]. Return the results of every get in order (-1 for a miss). A get refreshes recency.",
+    "signature": "def solve(capacity, ops):",
+    "hints": [
+      "OrderedDict keeps keys in recency order.",
+      "move_to_end(key) on every hit and every put.",
+      "After a put, evict with popitem(last=False) if over capacity."
+    ]
+  },
+  {
+    "id": "DI12",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/03_scheduling_heaps_and_cache.md",
+    "kind": "independent",
+    "title": "Free time across schedules",
+    "prompt": "busy is a list of half-open [start, end) intervals for one person. Return the gaps (as [start, end]) strictly between busy periods, sorted, after merging overlapping or touching intervals.",
+    "signature": "def solve(busy):",
+    "hints": [
+      "Merge first (sort by start).",
+      "A gap exists between consecutive merged intervals.",
+      "Gap = [previous end, next start] when previous end < next start."
+    ]
+  },
+  {
+    "id": "DI13",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/04_trees_cycles_and_search.md",
+    "kind": "guided",
+    "title": "Height of a tree",
+    "prompt": "tree is a nested list [value, left, right] with None for missing children (or tree itself is None). Return the number of nodes on the longest root-to-leaf path (0 for an empty tree).",
+    "signature": "def solve(tree):",
+    "hints": [
+      "The empty tree has height 0.",
+      "A node's height is 1 + the taller child.",
+      "Recurse on tree[1] and tree[2]."
+    ]
+  },
+  {
+    "id": "DI14",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/04_trees_cycles_and_search.md",
+    "kind": "guided",
+    "title": "Values by level",
+    "prompt": "tree is a nested list [value, left, right] (None for missing). Return a list of levels, each a list of values left to right.",
+    "signature": "def solve(tree):",
+    "hints": [
+      "Use a queue, starting with the root.",
+      "Record the current queue's values as one level.",
+      "Then replace the queue with all children of that level."
+    ]
+  },
+  {
+    "id": "DI15",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/04_trees_cycles_and_search.md",
+    "kind": "independent",
+    "title": "Is it a valid BST?",
+    "prompt": "tree is a nested list [value, left, right]. Return True if it is a binary search tree with strictly smaller values on the left and strictly larger values on the right of every node.",
+    "signature": "def solve(tree):",
+    "hints": [
+      "Each node has an allowed open range (low, high).",
+      "Going left lowers high to the node's value; going right raises low.",
+      "Start with (-inf, inf)."
+    ]
+  },
+  {
+    "id": "DI16",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/04_trees_cycles_and_search.md",
+    "kind": "independent",
+    "title": "Lowest common ancestor in a BST",
+    "prompt": "tree is a valid BST as nested lists [value, left, right]; a and b are values present in it. Return the value of their lowest common ancestor in O(height).",
+    "signature": "def solve(tree, a, b):",
+    "hints": [
+      "If both values are smaller than the node, the LCA is on the left.",
+      "If both are larger, go right.",
+      "Otherwise the current node splits them: it's the LCA."
+    ]
+  },
+  {
+    "id": "DI17",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/05_monotonic_stacks_and_deques.md",
+    "kind": "guided",
+    "title": "Next greater element",
+    "prompt": "For each value, return the next value to its right that is strictly greater, or -1.",
+    "signature": "def solve(values):",
+    "hints": [
+      "Keep indexes of values still waiting for a greater one.",
+      "When a larger value arrives, pop and answer them.",
+      "Push the current index afterwards."
+    ]
+  },
+  {
+    "id": "DI18",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/05_monotonic_stacks_and_deques.md",
+    "kind": "guided",
+    "title": "Stock span",
+    "prompt": "For each day, return the span: the number of consecutive days ending today (including today) with price <= today's price.",
+    "signature": "def solve(prices):",
+    "hints": [
+      "Keep indexes of previous prices that are larger than everything after them.",
+      "Pop indexes whose price is <= today's.",
+      "Span = today's index minus the remaining top (or i + 1 if empty)."
+    ]
+  },
+  {
+    "id": "DI19",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/05_monotonic_stacks_and_deques.md",
+    "kind": "independent",
+    "title": "Largest rectangle in a histogram",
+    "prompt": "Return the area of the largest rectangle that fits under the histogram heights (bars of width 1).",
+    "signature": "def solve(heights):",
+    "hints": [
+      "Keep indexes of increasing heights on a stack.",
+      "When a lower bar arrives, popped bars can't extend further right: measure them.",
+      "Width = i − (new top) − 1, or i if the stack is empty; add a 0 sentinel at the end."
+    ]
+  },
+  {
+    "id": "DI20",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/05_monotonic_stacks_and_deques.md",
+    "kind": "independent",
+    "title": "Remove k digits",
+    "prompt": "num is a string of digits. Remove exactly k digits to make the smallest possible number; return it without leading zeros ('0' if nothing is left).",
+    "signature": "def solve(num, k):",
+    "hints": [
+      "A digit should go if a smaller digit follows it.",
+      "Keep an increasing stack; pop while the top is larger and removals remain.",
+      "Remove leftover k from the end, then strip leading zeros."
+    ]
+  },
+  {
+    "id": "DI21",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/06_binary_search_on_answer_and_boundary_predicates.md",
+    "kind": "guided",
+    "title": "First true in a monotone predicate",
+    "prompt": "flags is a list of booleans that is all False then all True. Return the index of the first True, or len(flags) if there is none, in O(log n).",
+    "signature": "def solve(flags):",
+    "hints": [
+      "Search in [0, len(flags)].",
+      "If flags[mid] is True, the answer is at mid or left of it.",
+      "Otherwise it's right of mid."
+    ]
+  },
+  {
+    "id": "DI22",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/06_binary_search_on_answer_and_boundary_predicates.md",
+    "kind": "guided",
+    "title": "Ship within d days",
+    "prompt": "Packages with the given weights must ship in order, at most one day's capacity per day. Return the smallest daily capacity that ships everything within days days.",
+    "signature": "def solve(weights, days):",
+    "hints": [
+      "Feasibility: greedily fill days without exceeding capacity.",
+      "The answer lies between max(weights) and sum(weights).",
+      "Find the first capacity that is feasible."
+    ]
+  },
+  {
+    "id": "DI23",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/06_binary_search_on_answer_and_boundary_predicates.md",
+    "kind": "independent",
+    "title": "Minimum eating speed",
+    "prompt": "piles[i] bananas; you eat at speed s per hour, one pile per hour at most (an hour with fewer than s left finishes that pile). Return the minimum integer s to finish within h hours (h >= len(piles)).",
+    "signature": "def solve(piles, h):",
+    "hints": [
+      "Hours at speed s = sum(ceil(p / s)).",
+      "Faster speed never needs more hours: monotone.",
+      "Search s in [1, max(piles)]; ceil(p/s) = (p + s - 1) // s."
+    ]
+  },
+  {
+    "id": "DI24",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/06_binary_search_on_answer_and_boundary_predicates.md",
+    "kind": "independent",
+    "title": "Split into k parts minimising the largest sum",
+    "prompt": "Split nums (non-negative) into k non-empty contiguous parts (1 <= k <= len(nums)) to minimise the largest part sum. Return that minimum.",
+    "signature": "def solve(nums, k):",
+    "hints": [
+      "Guess a limit; check whether nums can be cut into <= k parts with sums <= limit.",
+      "Feasibility is monotone in the limit.",
+      "Search the limit in [max(nums), sum(nums)]."
+    ]
+  },
+  {
+    "id": "DI25",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/07_tree_traversals_and_subtree_information.md",
+    "kind": "guided",
+    "title": "Sum of all values",
+    "prompt": "tree is a nested list [value, left, right] or None. Return the sum of all values (0 for an empty tree).",
+    "signature": "def solve(tree):",
+    "hints": [
+      "Empty tree sums to 0.",
+      "A node's sum = its value + the sums of both subtrees.",
+      "Recurse into tree[1] and tree[2]."
+    ]
+  },
+  {
+    "id": "DI26",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/07_tree_traversals_and_subtree_information.md",
+    "kind": "guided",
+    "title": "Inorder traversal without recursion",
+    "prompt": "Return the inorder (left, node, right) sequence of values of the nested-list tree, using an explicit stack.",
+    "signature": "def solve(tree):",
+    "hints": [
+      "Push nodes while walking left.",
+      "Pop one, record it, then move to its right child.",
+      "Loop while the stack or the current node is non-empty."
+    ]
+  },
+  {
+    "id": "DI27",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/07_tree_traversals_and_subtree_information.md",
+    "kind": "independent",
+    "title": "Diameter of a tree",
+    "prompt": "Return the number of edges on the longest path between any two nodes of the nested-list tree (0 for empty or single-node trees).",
+    "signature": "def solve(tree):",
+    "hints": [
+      "The longest path through a node uses the heights of both children.",
+      "Compute heights bottom-up and update a best value at each node.",
+      "Return the best, counting edges."
+    ]
+  },
+  {
+    "id": "DI28",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/07_tree_traversals_and_subtree_information.md",
+    "kind": "independent",
+    "title": "Root-to-leaf path sums",
+    "prompt": "Return True if some root-to-leaf path in the nested-list tree has values summing to target. An empty tree has no paths.",
+    "signature": "def solve(tree, target):",
+    "hints": [
+      "Pass the remaining target down the tree.",
+      "At a leaf, check whether the remainder equals its value.",
+      "A node with one child is not a leaf."
+    ]
+  },
+  {
+    "id": "DI29",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/08_heaps_selection_and_top_k.md",
+    "kind": "guided",
+    "title": "Kth largest",
+    "prompt": "Return the kth largest value in nums (counting duplicates; 1 <= k <= len(nums)) using a min-heap of size k.",
+    "signature": "def solve(nums, k):",
+    "hints": [
+      "Keep the k largest seen so far in a min-heap.",
+      "When the heap grows past k, pop its smallest.",
+      "At the end, heap[0] is the kth largest."
+    ]
+  },
+  {
+    "id": "DI30",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/08_heaps_selection_and_top_k.md",
+    "kind": "guided",
+    "title": "Last stone weight",
+    "prompt": "Repeatedly smash the two heaviest stones: equal stones both vanish, otherwise the lighter vanishes and the heavier loses the lighter's weight. Return the last stone's weight, or 0.",
+    "signature": "def solve(stones):",
+    "hints": [
+      "You need the two largest repeatedly: a max-heap.",
+      "heapq is a min-heap, so store negatives.",
+      "Push back the difference if it's non-zero."
+    ]
+  },
+  {
+    "id": "DI31",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/08_heaps_selection_and_top_k.md",
+    "kind": "independent",
+    "title": "Merge k sorted lists",
+    "prompt": "Merge the sorted lists into one sorted list in O(N log k) using a heap of the current list heads.",
+    "signature": "def solve(lists):",
+    "hints": [
+      "Start the heap with (first value, list index, position) for each non-empty list.",
+      "Pop the smallest, then push the next element of that list.",
+      "The index in the tuple breaks ties."
+    ]
+  },
+  {
+    "id": "DI32",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/08_heaps_selection_and_top_k.md",
+    "kind": "independent",
+    "title": "K closest points",
+    "prompt": "Return the k points [x, y] closest to the origin (by squared distance), sorted by distance, ties broken by x then y.",
+    "signature": "def solve(points, k):",
+    "hints": [
+      "Squared distance avoids square roots.",
+      "heapq.nsmallest with a key does the selection in O(n log k).",
+      "Key: (x*x + y*y, x, y)."
+    ]
+  },
+  {
+    "id": "DI33",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/09_greedy_algorithms_and_exchange_arguments.md",
+    "kind": "guided",
+    "title": "Most non-overlapping meetings",
+    "prompt": "Return the maximum number of pairwise non-overlapping half-open intervals [start, end) you can choose.",
+    "signature": "def solve(intervals):",
+    "hints": [
+      "Sort by end time.",
+      "Take an interval if it starts at or after the last chosen end.",
+      "Count what you take."
+    ]
+  },
+  {
+    "id": "DI34",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/09_greedy_algorithms_and_exchange_arguments.md",
+    "kind": "guided",
+    "title": "Assign cookies",
+    "prompt": "Child i is content with a cookie of size >= greed[i]. Each child gets at most one cookie. Return the maximum number of content children.",
+    "signature": "def solve(greed, sizes):",
+    "hints": [
+      "Sort both lists.",
+      "Give the smallest adequate cookie to the least greedy child.",
+      "Advance through cookies; advance the child pointer only on success."
+    ]
+  },
+  {
+    "id": "DI35",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/09_greedy_algorithms_and_exchange_arguments.md",
+    "kind": "independent",
+    "title": "Jump game",
+    "prompt": "nums[i] is the maximum jump length from index i. Return True if you can reach the last index starting from index 0 (an empty list counts as False).",
+    "signature": "def solve(nums):",
+    "hints": [
+      "Track the farthest index reachable so far.",
+      "If you reach an index beyond that frontier, you're stuck.",
+      "Update farthest = max(farthest, i + nums[i])."
+    ]
+  },
+  {
+    "id": "DI36",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/09_greedy_algorithms_and_exchange_arguments.md",
+    "kind": "independent",
+    "title": "Does greedy coin change fail?",
+    "prompt": "Return the smallest amount between 1 and limit for which taking the largest coin first uses more coins than the optimum, or -1 if greedy is optimal for every amount up to limit. coins always contains 1.",
+    "signature": "def solve(coins, limit):",
+    "hints": [
+      "Compute the optimal coin counts with DP up to limit.",
+      "Simulate greedy for each amount.",
+      "Return the first amount where greedy > optimal."
+    ]
+  },
+  {
+    "id": "DI37",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/10_tries_strings_and_search_indexes.md",
+    "kind": "guided",
+    "title": "Longest common prefix",
+    "prompt": "Return the longest common prefix of all strings in words ('' for an empty list).",
+    "signature": "def solve(words):",
+    "hints": [
+      "Compare character columns of the first word with the others.",
+      "Stop at the first mismatch or the end of any word.",
+      "Return the first word up to that column."
+    ]
+  },
+  {
+    "id": "DI38",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/10_tries_strings_and_search_indexes.md",
+    "kind": "guided",
+    "title": "Trie: which queries are prefixes?",
+    "prompt": "Insert every word into a trie (nested dicts), then return a list of booleans: for each query, whether some word starts with it.",
+    "signature": "def solve(words, queries):",
+    "hints": [
+      "Insert: walk/create one dict per character.",
+      "Query: walk; if a character is missing, it's not a prefix.",
+      "The empty query is a prefix of everything (if any words exist? here: always True)."
+    ]
+  },
+  {
+    "id": "DI39",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/10_tries_strings_and_search_indexes.md",
+    "kind": "independent",
+    "title": "Autocomplete top three",
+    "prompt": "For each prefix of query (query[:1], query[:2], …), return up to three words from words that start with it, in lexicographic order.",
+    "signature": "def solve(words, query):",
+    "hints": [
+      "Sorting words once makes matches contiguous.",
+      "For each prefix, find the first word >= prefix with bisect.",
+      "Take up to three consecutive words that start with the prefix."
+    ]
+  },
+  {
+    "id": "DI40",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/10_tries_strings_and_search_indexes.md",
+    "kind": "independent",
+    "title": "Replace words with roots",
+    "prompt": "Replace every word in sentence with the shortest root from roots that is a prefix of it (keep the word if none). Return the new sentence.",
+    "signature": "def solve(roots, sentence):",
+    "hints": [
+      "Put the roots in a trie with end markers.",
+      "For each word, walk the trie and stop at the first end marker.",
+      "If the walk fails before any marker, keep the word."
+    ]
+  },
+  {
+    "id": "DI41",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/11_backtracking_pruning_and_state_restoration.md",
+    "kind": "guided",
+    "title": "All subsets",
+    "prompt": "Return every subset of the distinct values in nums, generated by deciding exclude-then-include for each value in order.",
+    "signature": "def solve(nums):",
+    "hints": [
+      "At index i, first recurse without nums[i], then with it.",
+      "Record a copy of the current subset at the end.",
+      "Pop after the include branch."
+    ]
+  },
+  {
+    "id": "DI42",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/11_backtracking_pruning_and_state_restoration.md",
+    "kind": "guided",
+    "title": "Combinations of size k",
+    "prompt": "Return all combinations of k numbers chosen from 1..n, each in increasing order, listed in lexicographic order.",
+    "signature": "def solve(n, k):",
+    "hints": [
+      "Choose numbers in increasing order with a start value.",
+      "Stop when the combination has k numbers.",
+      "Recurse with start = chosen + 1."
+    ]
+  },
+  {
+    "id": "DI43",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/11_backtracking_pruning_and_state_restoration.md",
+    "kind": "independent",
+    "title": "Subsets without duplicates",
+    "prompt": "nums may contain duplicates. Return all distinct subsets, each sorted ascending, with the list of subsets sorted lexicographically.",
+    "signature": "def solve(nums):",
+    "hints": [
+      "Sort nums first.",
+      "At each depth, skip a value equal to the previous one at the same depth.",
+      "Sort the final list to fix the order."
+    ]
+  },
+  {
+    "id": "DI44",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/11_backtracking_pruning_and_state_restoration.md",
+    "kind": "independent",
+    "title": "Count N-queens solutions",
+    "prompt": "Return the number of ways to place n queens on an n×n board so that none attack each other.",
+    "signature": "def solve(n):",
+    "hints": [
+      "Place one queen per row.",
+      "Track used columns and both diagonals (r - c and r + c) in sets.",
+      "Undo the three markers after each recursive call."
+    ]
+  },
+  {
+    "id": "DI45",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/12_algorithm_selection_and_constraint_drills.md",
+    "kind": "guided",
+    "title": "Pick the technique",
+    "prompt": "Given flags describing a subarray-sum problem, return 'sliding window' if all values are positive, 'prefix sums' if values may be negative, and 'brute force' if n <= 50 regardless.",
+    "signature": "def solve(n, all_positive):",
+    "hints": [
+      "Tiny inputs don't need cleverness.",
+      "Positive values make shrinking a window safe.",
+      "Otherwise prefix sums with a hash map."
+    ]
+  },
+  {
+    "id": "DI46",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/12_algorithm_selection_and_constraint_drills.md",
+    "kind": "guided",
+    "title": "Feasible complexity for n",
+    "prompt": "Return the slowest complexity class among ['O(n^2)', 'O(n log n)', 'O(n)'] whose operation count stays at or under 10**8 for the given n (use n*n, n*log2(n), n). If none fit, return 'too large'.",
+    "signature": "def solve(n):",
+    "hints": [
+      "Check the slowest class first.",
+      "math.log2(n) gives log base 2; treat n <= 1 as log 1.",
+      "Return the first class whose count is <= 10**8."
+    ]
+  },
+  {
+    "id": "DI47",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/12_algorithm_selection_and_constraint_drills.md",
+    "kind": "independent",
+    "title": "Two sum: sorted or not?",
+    "prompt": "Return [i, j] (i < j, original indexes) of two values summing to target, or []. If several pairs exist return the one with the smallest j, then smallest i. Must work for unsorted input.",
+    "signature": "def solve(nums, target):",
+    "hints": [
+      "Unsorted input rules out two pointers without losing indexes.",
+      "A map from value to its first index finds the complement.",
+      "Scanning j left to right finds the smallest j first."
+    ]
+  },
+  {
+    "id": "DI48",
+    "level": "intermediate",
+    "lesson": "lessons/intermediate/12_algorithm_selection_and_constraint_drills.md",
+    "kind": "independent",
+    "title": "Count ranges with sum k (any sign)",
+    "prompt": "Return how many contiguous non-empty subarrays of nums sum to k. Values may be negative or zero.",
+    "signature": "def solve(nums, k):",
+    "hints": [
+      "Negative values rule out a sliding window.",
+      "Count earlier prefix sums equal to current − k.",
+      "Seed with {0: 1}."
+    ]
+  }
+]

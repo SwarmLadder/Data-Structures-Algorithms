@@ -10,14 +10,22 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
       - name: Validate course content and differential tests
         run: python -m unittest discover -s tests -v
       - name: Verify all reference solutions and edge fixtures
         run: python -m tools.practice verify-references
+      - name: Verify every drill reference
+        run: python -m tools.drills verify-references
+      - name: Verify every project reference against its test suite
+        run: python -m tools.projects verify-references
+      - name: Lesson outputs, drill lists and quizzes are current
+        run: python -m tools.lessons --check
+      - name: Level indexes are current
+        run: python -m tools.level_index --check
       - name: Verify grading rejects an unfinished starter
         run: |
           if python -m tools.practice check B01 problems/starter/B01.py; then

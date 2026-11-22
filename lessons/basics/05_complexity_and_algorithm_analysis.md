@@ -2,6 +2,8 @@
 
 **Outcome:** derive runtime and auxiliary space from operations, recurrences, and data representation rather than memorizing labels. **Study time:** 90–120 minutes.
 
+**Before this:** [Binary search, prefix computation and one-dimensional DP](04_binary_search_prefixes_and_dp.md)
+
 ## 1. Declare an input size and a primitive operation
 
 A program may have one input size or several. For an array of length *n*, comparisons and swaps are useful primitives. For a graph, use *V* vertices and *E* edges; writing O(n) without defining n hides the cost. For a list of *n* strings of length *k*, hashing every full string may cost O(nk), not O(n).
@@ -79,3 +81,118 @@ An upper bound shows your method cannot use more than a stated number of operati
 5. Give a justified bound for grouping n fixed-length-k strings with a hash map. **Check:** expected O(nk) hashing plus any sorting of groups/output.
 
 **Mastery checkpoint:** You can name the primitive operation, derive a sum or recurrence, identify hidden costs, and explain your memory convention without guessing from indentation.
+
+<!-- lesson-practice -->
+
+## Try it
+
+Run this block (or `python -m tools.lessons` to refresh every page), then change one input and predict the new output before running it again.
+
+```python
+import timeit
+
+def count_inner_iterations(nums):
+    count = 0
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            count += 1
+    return count
+
+for n in [10, 20, 40]:
+    print(n, count_inner_iterations(list(range(n))), n * (n - 1) // 2)
+
+def has_duplicate_quadratic(nums):
+    return any(nums[i] == nums[j] for i in range(len(nums)) for j in range(i + 1, len(nums)))
+
+def has_duplicate_linear(nums):
+    return len(set(nums)) != len(nums)
+
+data = list(range(2000))
+slow = timeit.timeit(lambda: has_duplicate_quadratic(data), number=1)
+fast = timeit.timeit(lambda: has_duplicate_linear(data), number=1)
+print("linear is faster:", fast < slow)
+```
+
+<!-- output -->
+```text
+10 45 45
+20 190 190
+40 780 780
+linear is faster: True
+```
+<!-- /output -->
+
+## Common mistakes
+
+| Mistake | What happens | Fix |
+|---|---|---|
+| Counting loops instead of work | Two nested monotone pointers mistaken for O(n²) | Sum the iterations or use a potential argument |
+| Ignoring hidden costs of slicing and `in list` | An "O(n)" loop that is really O(n²) | Know the cost of each built-in operation |
+| Calling expected O(1) hashing worst-case O(1) | Wrong guarantees under adversarial keys | Say "expected" and know the worst case |
+| Forgetting output size in space analysis | Under-reported memory | Report auxiliary space and output space separately |
+| Trusting one timing run | Noise read as a trend | Compare growth across sizes, not one number |
+
+## Your turn
+
+<!-- drills -->
+Each drill is graded on six published cases. **Guided** drills give you a skeleton with `___` blanks; **independent** drills give only the signature.
+
+| ID | Drill | Kind |
+|---|---|---|
+| `DB17` | **Count the inner-loop iterations.** Return how many times the body of `for i in range(n): for j in range(i + 1, n): ...` runs, as a formula (no loops). | guided |
+| `DB18` | **How many halvings?.** Return how many times you can integer-halve n (n = n // 2) before it reaches 1, for n >= 1. This is floor(log2 n). | guided |
+| `DB19` | **Pairs with a given difference.** Return how many index pairs i < j satisfy abs(nums[i] - nums[j]) == k (k >= 1). Aim for O(n) expected time with a counter instead of checking every pair. | independent |
+| `DB20` | **Classify a growth rate.** steps[i] is the measured work at input size sizes[i] (sizes double each time). Return 'constant', 'linear' or 'quadratic' depending on whether the work stays the same, roughly doubles, or roughly quadruples between the last two measurements (use the ratio: < 1.5, < 3, otherwise). | independent |
+
+```bash
+python -m tools.drills show DB17
+python -m tools.drills check DB17
+python -m tools.drills hint DB17 1
+```
+<!-- /drills -->
+
+**Interview problems for this lesson:** `B01`, `B03`, `B06`, `B14`. Read one with `python -m tools.practice show B01 --hints`.
+
+## Quick quiz
+
+<!-- quiz -->
+Answer in your head first, then check. Answers are stored as hashes, so reading the files won't spoil them.
+
+**1.** Two pointers that only move toward each other inside one while loop run…
+
+   - **a)** O(n²)
+   - **b)** O(n)
+   - **c)** O(log n)
+
+**2.** Binary search on n items takes about how many comparisons?
+
+   - **a)** log₂ n
+   - **b)** n/2
+   - **c)** √n
+
+**3.** What does `nums.pop(0)` cost on a Python list of length n?
+
+   - **a)** O(1)
+   - **b)** O(log n)
+   - **c)** O(n)
+
+**4.** Merge sort's recurrence T(n) = 2T(n/2) + Θ(n) solves to…
+
+   - **a)** Θ(n)
+   - **b)** Θ(n log n)
+   - **c)** Θ(n²)
+
+```bash
+python -m tools.quiz basics/05 1 b      # question 1, answer b
+python -m tools.quiz basics/05           # list the questions
+```
+<!-- /quiz -->
+
+## Summary
+
+- Pick an input size and a primitive operation, then count how often it runs.
+- Nested loops can be O(n²) or O(n); derive the sum or a potential function.
+- Logarithms come from repeated halving; recurrences like T(n) = 2T(n/2) + n give n log n.
+- Python built-ins have costs: slicing copies, `pop(0)` shifts, `in list` scans.
+
+**Next:** [Arrays and strings: indexes, range invariants, and stable transforms](06_arrays_strings_and_index_invariants.md)

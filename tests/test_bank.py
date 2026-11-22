@@ -45,7 +45,7 @@ class CurriculumTests(unittest.TestCase):
 
     def test_lesson_coverage_and_mock_interviews(self):
         for level in LEVELS:
-            articles = list((ROOT / 'lessons' / level).glob('*.md'))
+            articles = list((ROOT / 'lessons' / level).glob('[0-9][0-9]_*.md'))
             self.assertGreaterEqual(len(articles), 4, level)
             for article in articles:
                 content = article.read_text()

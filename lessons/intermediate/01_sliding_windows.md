@@ -2,6 +2,8 @@
 
 **Outcome:** know when a moving window is valid, what must be counted inside it, and why some sums cannot be handled by this pattern.
 
+**Study time:** 90–120 minutes · **Before this:** [Learn to solve unseen problems: contracts, proofs and adversarial testing](../basics/12_debugging_testing_and_reasoning.md)
+
 The sliding-window technique processes a *contiguous* interval while adjusting only its endpoints. In the longest substring with no repeated character, keep a start position and the most recent index of each character. When a character repeats inside the current region, move the start **after** its previous occurrence. Do not move the start backward: an earlier duplicate outside the current region has already been resolved.
 
 ```python
@@ -47,3 +49,118 @@ If required is `'AABC'`, a window with one A, one B and one C is insufficient. M
 For sum-at-most-k with nonnegative numbers, adding on the right cannot decrease a sum, so shrinking the left is justified when the sum exceeds k. With negative values, adding a new element may decrease the sum later; shrinking now might discard a future valid range. For arbitrary signed target-sum counts use prefix sums and frequencies instead.
 
 **Practice:** I01, I02 and I04; explicitly describe what happens for empty requirements, duplicate required characters, k=0 and a repeated character outside the current window. Explain how tie-breaking chooses the earliest minimal window when several have equal length.
+
+<!-- lesson-practice -->
+
+## Try it
+
+Run this block (or `python -m tools.lessons` to refresh every page), then change one input and predict the new output before running it again.
+
+```python
+def longest_unique(s):
+    last, left, best = {}, 0, 0
+    for right, ch in enumerate(s):
+        if ch in last and last[ch] >= left:
+            left = last[ch] + 1           # jump past the previous copy
+        last[ch] = right
+        best = max(best, right - left + 1)
+    return best
+
+for s in ["abcabcbb", "bbbbb", "pwwkew", ""]:
+    print(repr(s), longest_unique(s))
+
+def max_sum_window(nums, k):
+    window = sum(nums[:k])
+    best = window
+    for i in range(k, len(nums)):
+        window += nums[i] - nums[i - k]   # slide: add the new, drop the old
+        best = max(best, window)
+    return best
+
+print(max_sum_window([2, 1, 5, 1, 3, 2], 3))
+```
+
+<!-- output -->
+```text
+'abcabcbb' 3
+'bbbbb' 1
+'pwwkew' 3
+'' 0
+9
+```
+<!-- /output -->
+
+## Common mistakes
+
+| Mistake | What happens | Fix |
+|---|---|---|
+| Using a variable window with negative numbers for 'sum ≥ target' | Shrinking is no longer safe; wrong answers | Use prefix sums (+ a deque or sorted structure) |
+| Moving `left` backwards on a jump | Window grows past a repeat | `left = max(left, last[ch] + 1)` or check `last[ch] >= left` |
+| Recomputing the window sum each step | O(n·k) | Add the entering element, subtract the leaving one |
+| Comparing counts with `==` on whole dicts every step | O(alphabet) per step, often fine but hides intent | Track how many requirements are satisfied |
+| Off-by-one window length | Answers one too long or short | Length of [left, right] is right − left + 1 |
+
+## Your turn
+
+<!-- drills -->
+Each drill is graded on six published cases. **Guided** drills give you a skeleton with `___` blanks; **independent** drills give only the signature.
+
+| ID | Drill | Kind |
+|---|---|---|
+| `DI01` | **Maximum sum of k consecutive values.** Return the largest sum of any k consecutive values in nums (1 <= k <= len(nums)), in O(n). | guided |
+| `DI02` | **Shortest subarray with sum at least target.** nums contains positive integers. Return the length of the shortest contiguous subarray whose sum is >= target, or 0 if none exists. | guided |
+| `DI03` | **Longest run with at most k flips.** bits contains 0s and 1s. Return the length of the longest contiguous run of 1s you can get by flipping at most k zeros. | independent |
+| `DI04` | **Is a permutation of p inside s?.** Return True if some contiguous substring of s is a rearrangement of p (same letters, same counts). | independent |
+
+```bash
+python -m tools.drills show DI01
+python -m tools.drills check DI01
+python -m tools.drills hint DI01 1
+```
+<!-- /drills -->
+
+**Interview problems for this lesson:** `I01`, `I02`, `I04`. Read one with `python -m tools.practice show I01 --hints`.
+
+## Quick quiz
+
+<!-- quiz -->
+Answer in your head first, then check. Answers are stored as hashes, so reading the files won't spoil them.
+
+**1.** Why is shrinking the left edge safe when looking for the longest window without repeats?
+
+   - **a)** Removing characters from a window without repeats can't create a repeat
+   - **b)** Windows are always sorted
+   - **c)** Because the right edge never moves
+
+**2.** A variable sliding window for 'sum ≥ target' breaks when…
+
+   - **a)** values can be negative
+   - **b)** values are large
+   - **c)** the target is zero
+
+**3.** Total pointer moves in a variable window over n items?
+
+   - **a)** O(n²)
+   - **b)** At most 2n
+   - **c)** O(n log n)
+
+**4.** For the minimum covering window, requirements are counted with…
+
+   - **a)** a set of letters
+   - **b)** multiplicity: how many of each letter are still needed
+   - **c)** a sorted list
+
+```bash
+python -m tools.quiz intermediate/01 1 b      # question 1, answer b
+python -m tools.quiz intermediate/01           # list the questions
+```
+<!-- /quiz -->
+
+## Summary
+
+- A window is valid or invalid; grow the right edge and shrink the left only while it stays safe.
+- Shrinking is safe when validity is monotone: removing elements can't make an invalid window valid (or the reverse).
+- Fixed-size windows slide in O(1) per step; variable windows move each edge at most n times.
+- Negative values break many sum-window arguments; switch to prefix sums.
+
+**Next:** [Prefix sums: turn range questions into dictionary lookups](02_prefix_sums_and_counts.md)

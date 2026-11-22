@@ -4,39 +4,39 @@ A **rigorous, original, offline Python DSA curriculum** for aspiring software en
 
 ## What's included
 
-| Learning resource | Depth |
-| --- | --- |
-| [36 detailed lessons](lessons/README.md) | Foundations, interview patterns, advanced graph/DP/data structures, correctness arguments, worked Python examples, drills |
-| [48 real interview-style problems](problems/basics.md) | 16 foundation + [16 intermediate](problems/intermediate.md) + [16 advanced](problems/advanced.md) |
-| **48 deep solution walkthroughs** | Every problem has an optional expanded explanation with invariant, full code, trace, complexity, traps and an unseen extension |
-| **288 published executable test cases** | Six per problem, plus additional independent randomized differential tests |
-| [Three end-to-end portfolio projects](projects/README.md) | Log analytics, minimal-worker scheduler and dependency/network planner |
-| [12-week mastery plan](MASTERY_ROADMAP.md) | Practice, spaced repetition, proof milestones and transfer checks |
-| [Proof techniques](PROOF_TECHNIQUES.md), [pattern atlas](PATTERN_ATLAS.md) | Select appropriate algorithms and explain why they work |
-| [Mastery assessment](MASTERY_ASSESSMENT.md) | Four timed assessments, 100-point rubric, retention audit |
+| Level | Lessons | Graded drills | Quiz questions | Worked examples | Interview problems | Projects |
+|---|---:|---:|---:|---:|---:|---:|
+| [Foundations](lessons/basics/README.md) | 12 | 48 | 48 | 6 | 16 | 2 tested + 1 capstone |
+| [Intermediate](lessons/intermediate/README.md) | 12 | 48 | 48 | 6 | 16 | 2 tested + 1 capstone |
+| [Advanced](lessons/advanced/README.md) | 12 | 48 | 48 | 6 | 16 | 2 tested + 1 capstone |
+| **Total** | **36** | **144** | **144** | **18** | **48** | **9** |
+
+- **Lessons** explain a technique from first principles, prove its invariant, and end with a runnable **Try it** (with real output), a **common-mistakes** table, four **graded drills** (two guided with `___` blanks, two independent), a **quick quiz** and a **summary**.
+- **Interview problems** come with six published test cases each and a collapsed deep solution study (invariant, trace, code, complexity, failure modes, transfer).
+- **Worked examples** solve a problem step by step: plan, a tempting wrong attempt with its actual output, the fix, and a randomized test against an independent oracle.
+- **Projects:** two per level with tickets, acceptance criteria, starters, references and test suites, plus one open-ended capstone per level.
+- **Mastery resources:** [12-week plan](MASTERY_ROADMAP.md), [proof techniques](PROOF_TECHNIQUES.md), [pattern atlas](PATTERN_ATLAS.md), [mastery assessment](MASTERY_ASSESSMENT.md), [mock interviews](interview/MOCK_INTERVIEWS.md).
 
 ## Start learning, not memorizing
 
-1. Open [the lesson index](lessons/README.md) and begin with hashing, arrays, complexity and invariants.
-2. Choose a related problem from the [question bank](problems/basics.md). Clarify constraints and draft a correct brute-force baseline **before** choosing an optimization.
-3. Implement in a new Python file and test it. Explain why the optimized solution is correct and its time/space cost.
-4. Only after attempting the task, open the **Deep solution study** section: it traces the algorithm, proves the invariant and discloses the actual reference code.
-5. Solve the **transfer variant** at the end of that section on a different day. Repeat missed problems after 1, 3 and 7 days.
-6. Combine skills in three projects, then attempt a mock interview with unfamiliar variations.
+1. Open the [Foundations guide](lessons/basics/README.md) and read [lesson 01](lessons/basics/01_hashing_and_frequency.md). Predict each Try-it output before you read it.
+2. Solve the lesson's drills (`python -m tools.drills show DB01`, edit `drills/starter/DB01.py`, `python -m tools.drills check DB01`). Hints unlock one at a time.
+3. Check yourself with the quiz: `python -m tools.quiz basics/01 1 b`.
+4. Attempt the lesson's interview problems **before** opening their deep solution study. Write a brute force first.
+5. Study the [worked examples](worked_examples/basics/README.md), then build the level's [projects](projects/README.md).
+6. Run `python -m tools.verify_level basics` and take the [level assessment](lessons/basics/ASSESSMENT.md). Repeat missed problems after 1, 3 and 7 days.
 
 Python **3.10+** and the standard library are sufficient; no network or external packages are required for grading.
 
 ```bash
-python -m tools.practice list
+python -m tools.drills list --level basics
+python -m tools.drills check DB01
+python -m tools.quiz basics/01
 python -m tools.practice show B01 --hints
-cp problems/starter/B01.py my_B01.py
-# Implement solve(...) in my_B01.py
-python -m tools.practice check B01 my_B01.py
-python -m unittest discover -s tests -v
-python -m tools.practice verify-references
+python -m tools.practice check B01 problems/starter/B01.py
+python -m tools.projects check basics/01_inventory_reconciler
+python -m tools.verify_level basics
 ```
-
-**Tests are not a proof of performance:** the grader checks exact JSON-compatible output, including order and types, against six public cases per problem. It does not automatically detect O(n²) solutions or validate all possible inputs. Supplement it with adversarial inputs, independent brute-force oracles and a correctness argument. Only run submitted code you trust: the subprocess timeout is **not a security sandbox**.
 
 ## Learning levels and competencies
 
@@ -61,6 +61,10 @@ python -m tools.practice verify-references
 ```bash
 python -m unittest discover -s tests -v
 python -m tools.practice verify-references
+python -m tools.drills verify-references
+python -m tools.projects verify-references
+python -m tools.lessons --check
+python -m tools.level_index --check
 ```
 
-GitHub Actions runs content coverage, solution checks and independent randomized tests on changes. New lessons should show a real state/invariant, a worked example, an adversarial test, a complexity derivation and a transfer exercise. Avoid filler and unsupported claims.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for how lessons, drills, quizzes and examples are written. GitHub Actions runs content coverage, solution checks and independent randomized tests on changes. New lessons should show a real state/invariant, a worked example, an adversarial test, a complexity derivation and a transfer exercise. Avoid filler and unsupported claims.

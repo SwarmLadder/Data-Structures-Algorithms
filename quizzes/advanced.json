@@ -1,0 +1,590 @@
+{
+ "advanced/01": {
+  "lesson": "lessons/advanced/01_graph_traversals_and_dependencies.md",
+  "questions": [
+   {
+    "question": "Why isn't BFS from an arbitrary vertex a topological sort?",
+    "options": {
+     "a": "A dependency may be discovered after the task that needs it",
+     "b": "BFS is too slow",
+     "c": "BFS needs weights"
+    },
+    "answer": "089756f66b58",
+    "section": "Topological sorting is not BFS on arbitrary vertices",
+    "explain": "Kahn's algorithm only releases a node when all its prerequisites are done."
+   },
+   {
+    "question": "How does Kahn's algorithm detect a cycle?",
+    "options": {
+     "a": "It outputs fewer than V vertices",
+     "b": "It raises an exception",
+     "c": "It revisits a node"
+    },
+    "answer": "1c361b2220ba",
+    "section": "DAG cycles and scheduling",
+    "explain": "Nodes on a cycle never reach in-degree 0."
+   },
+   {
+    "question": "Why does BFS give shortest paths in unweighted graphs?",
+    "options": {
+     "a": "Nodes are discovered in nondecreasing distance order",
+     "b": "It uses a heap",
+     "c": "It explores deep paths first"
+    },
+    "answer": "48ff89d1bece",
+    "section": "Why BFS yields shortest paths for unit weights",
+    "explain": "The first discovery of a node is along a shortest path."
+   },
+   {
+    "question": "How do you make a topological order deterministic?",
+    "options": {
+     "a": "Shuffle neighbours",
+     "b": "Pick ready nodes with a heap / sorted order",
+     "c": "Use recursion"
+    },
+    "answer": "3911ec926a3b",
+    "section": "Parents and deterministic tie rules",
+    "explain": "Ties between ready nodes are then broken the same way every run."
+   }
+  ]
+ },
+ "advanced/02": {
+  "lesson": "lessons/advanced/02_dijkstra_dsu_and_spanning_trees.md",
+  "questions": [
+   {
+    "question": "Why does Dijkstra require non-negative edge weights?",
+    "options": {
+     "a": "A settled vertex could later get a shorter path through a negative edge",
+     "b": "Heaps can't store negatives",
+     "c": "It doesn't"
+    },
+    "answer": "3f32c124e502",
+    "section": "Deep dive: two greedy proofs that use different structures",
+    "explain": "The greedy 'closest first' proof relies on paths never getting shorter."
+   },
+   {
+    "question": "What is a stale heap entry in Dijkstra?",
+    "options": {
+     "a": "An entry whose distance is larger than the best now known for that vertex",
+     "b": "A duplicate vertex",
+     "c": "The source"
+    },
+    "answer": "f6d9e8ef812c",
+    "section": "Stale heap entries in Dijkstra",
+    "explain": "Skip it on pop instead of decreasing keys."
+   },
+   {
+    "question": "Union–find answers which question quickly?",
+    "options": {
+     "a": "Shortest path",
+     "b": "Are a and b in the same component?",
+     "c": "Topological order"
+    },
+    "answer": "a74be3be741b",
+    "section": "DSU as a component oracle",
+    "explain": "With path compression and union by rank, in near-constant amortised time."
+   },
+   {
+    "question": "Kruskal on a disconnected graph produces…",
+    "options": {
+     "a": "a spanning tree",
+     "b": "a minimum spanning forest with fewer than V − 1 edges",
+     "c": "an error"
+    },
+    "answer": "15fc10144bf6",
+    "section": "Disconnected graph behavior",
+    "explain": "Count the edges to detect it."
+   }
+  ]
+ },
+ "advanced/03": {
+  "lesson": "lessons/advanced/03_dynamic_programming.md",
+  "questions": [
+   {
+    "question": "What four things define a dynamic program?",
+    "options": {
+     "a": "State, transition, base case, iteration order",
+     "b": "Input, output, loop, return",
+     "c": "Memo, cache, recursion, limit"
+    },
+    "answer": "2eae9d51037a",
+    "section": "Interview method",
+    "explain": "Without a precise state, the recurrence can't be checked."
+   },
+   {
+    "question": "In LCS, what does dp[i][j] mean?",
+    "options": {
+     "a": "LCS length of a[:i] and b[:j]",
+     "b": "Whether a[i] == b[j]",
+     "c": "Edit distance"
+    },
+    "answer": "fd9740c972b0",
+    "section": "String DP and subsequences",
+    "explain": "Prefix states make the recurrence well-defined."
+   },
+   {
+    "question": "Iterating amounts in increasing order with coins in the inner loop allows…",
+    "options": {
+     "a": "each coin at most once",
+     "b": "unlimited reuse of each coin",
+     "c": "no coins"
+    },
+    "answer": "8fe5f45b5e6a",
+    "section": "Deep dive: iteration order encodes resource reuse",
+    "explain": "best[a − c] may already include coin c."
+   },
+   {
+    "question": "Why can LIS 'tails' be kept with binary search?",
+    "options": {
+     "a": "tails[k] is the smallest possible tail of an increasing subsequence of length k+1, and tails is sorted",
+     "b": "The input is sorted",
+     "c": "It's a heuristic"
+    },
+    "answer": "cb50ee62c9b1",
+    "section": "LIS tails are dominance states",
+    "explain": "A smaller tail dominates a larger one of the same length."
+   }
+  ]
+ },
+ "advanced/04": {
+  "lesson": "lessons/advanced/04_backtracking_tries_and_partition_search.md",
+  "questions": [
+   {
+    "question": "What must happen after exploring from a marked grid cell?",
+    "options": {
+     "a": "Restore the cell so other paths can use it",
+     "b": "Leave it marked",
+     "c": "Delete it"
+    },
+    "answer": "76fa527c7adb",
+    "section": "State restoration is the core invariant",
+    "explain": "Marking prevents reuse within one path only."
+   },
+   {
+    "question": "How does a trie speed up multi-word grid search?",
+    "options": {
+     "a": "It stops paths whose prefix matches no word",
+     "b": "It sorts the grid",
+     "c": "It removes duplicates"
+    },
+    "answer": "75c13e75cdbf",
+    "section": "Tries and prefix search",
+    "explain": "Pruning on prefixes cuts most of the search tree."
+   },
+   {
+    "question": "In the two-sorted-arrays median, binary search runs over…",
+    "options": {
+     "a": "the values",
+     "b": "the cut position in the shorter array",
+     "c": "both arrays fully"
+    },
+    "answer": "d0185567c900",
+    "section": "Binary-search partitions",
+    "explain": "The other cut position follows from the total size."
+   },
+   {
+    "question": "Why is honest complexity accounting important for backtracking?",
+    "options": {
+     "a": "Its worst case is exponential and depends on branching and output size",
+     "b": "It's always linear",
+     "c": "Interviewers don't care"
+    },
+    "answer": "e41b18d21d59",
+    "section": "Deep dive: exhaustive search requires honest complexity accounting",
+    "explain": "State branching factor, depth and output size."
+   }
+  ]
+ },
+ "advanced/05": {
+  "lesson": "lessons/advanced/05_shortest_paths_and_weight_assumptions.md",
+  "questions": [
+   {
+    "question": "Which algorithm fits non-negative weighted edges best?",
+    "options": {
+     "a": "BFS",
+     "b": "Dijkstra",
+     "c": "Bellman–Ford"
+    },
+    "answer": "f205836f76e2",
+    "section": "1. Start with a model, not a familiar implementation",
+    "explain": "BFS ignores weights; Bellman–Ford works but is slower: O(VE)."
+   },
+   {
+    "question": "Why does Dijkstra fail with a negative edge?",
+    "options": {
+     "a": "A vertex settled early can later be reached more cheaply",
+     "b": "The heap overflows",
+     "c": "It loops forever"
+    },
+    "answer": "54caf579549b",
+    "section": "2. Why Dijkstra needs nonnegative weights",
+    "explain": "The proof assumes extending a path never makes it cheaper."
+   },
+   {
+    "question": "How many rounds does Bellman–Ford need without negative cycles?",
+    "options": {
+     "a": "V − 1",
+     "b": "E",
+     "c": "log V"
+    },
+    "answer": "b5ab32f765ac",
+    "section": "4. Bellman–Ford and negative cycles",
+    "explain": "A shortest path has at most V − 1 edges."
+   },
+   {
+    "question": "Bellman–Ford detects a negative cycle when…",
+    "options": {
+     "a": "a distance still improves in round V",
+     "b": "a distance becomes 0",
+     "c": "the queue empties"
+    },
+    "answer": "8108c310a1b0",
+    "section": "4. Bellman–Ford and negative cycles",
+    "explain": "Without a negative cycle, distances are final after V − 1 rounds."
+   }
+  ]
+ },
+ "advanced/06": {
+  "lesson": "lessons/advanced/06_topological_sort_scc_and_dependency_cycles.md",
+  "questions": [
+   {
+    "question": "In DFS cycle detection, an edge to which kind of node proves a cycle?",
+    "options": {
+     "a": "An unvisited node",
+     "b": "A node still on the current DFS path (grey)",
+     "c": "A finished node (black)"
+    },
+    "answer": "db94c80374a8",
+    "section": "2. Detecting a cycle",
+    "explain": "Edges to finished nodes are cross or forward edges, not cycles."
+   },
+   {
+    "question": "A topological order exists exactly when…",
+    "options": {
+     "a": "the graph is connected",
+     "b": "the directed graph has no cycle",
+     "c": "every node has in-degree 1"
+    },
+    "answer": "2e9ef2ce210e",
+    "section": "1. A dependency graph encodes prerequisites",
+    "explain": "Any cycle makes 'before' impossible to satisfy."
+   },
+   {
+    "question": "What does collapsing each SCC into one node produce?",
+    "options": {
+     "a": "A DAG",
+     "b": "A tree",
+     "c": "A complete graph"
+    },
+    "answer": "a6443f0bddbb",
+    "section": "3. Strongly connected components",
+    "explain": "All cycles live inside components."
+   },
+   {
+    "question": "How should parallel edges affect Kahn's in-degrees?",
+    "options": {
+     "a": "Count each edge consistently (or de-duplicate first)",
+     "b": "Ignore them",
+     "c": "Double them"
+    },
+    "answer": "9de07c577207",
+    "section": "4. Parallel edges and deterministic output",
+    "explain": "Mismatched counting leaves nodes stuck with positive in-degree."
+   }
+  ]
+ },
+ "advanced/07": {
+  "lesson": "lessons/advanced/07_dp_multidimensional_state_design.md",
+  "questions": [
+   {
+    "question": "Which question comes first when designing a DP?",
+    "options": {
+     "a": "What exactly does one state value mean?",
+     "b": "Which language feature to use",
+     "c": "How big the table is"
+    },
+    "answer": "2bfcaea75226",
+    "section": "1. The four questions every DP needs",
+    "explain": "Transitions and order follow from a precise state."
+   },
+   {
+    "question": "Interval DP is filled in order of…",
+    "options": {
+     "a": "increasing interval length",
+     "b": "decreasing index",
+     "c": "random order"
+    },
+    "answer": "a9a167e6a303",
+    "section": "3. Interval DP is different",
+    "explain": "Each interval depends on strictly shorter ones."
+   },
+   {
+    "question": "Top-down memoised recursion vs bottom-up tables…",
+    "options": {
+     "a": "compute the same states; top-down may hit the recursion limit",
+     "b": "give different answers",
+     "c": "bottom-up is always slower"
+    },
+    "answer": "c1e416b6ace4",
+    "section": "4. Top-down versus bottom-up",
+    "explain": "Choose for clarity and depth constraints."
+   },
+   {
+    "question": "A grid DP that ignores walls will…",
+    "options": {
+     "a": "count paths through blocked cells",
+     "b": "be faster",
+     "c": "be correct anyway"
+    },
+    "answer": "88da5de2944a",
+    "section": "2. A grid path state",
+    "explain": "Blocked cells must contribute 0 paths."
+   }
+  ]
+ },
+ "advanced/08": {
+  "lesson": "lessons/advanced/08_dp_optimization_and_space_compression.md",
+  "questions": [
+   {
+    "question": "Why does 0/1 knapsack iterate capacity downwards in a 1-D array?",
+    "options": {
+     "a": "So best[c − w] still refers to the previous item row",
+     "b": "It's faster",
+     "c": "To sort items"
+    },
+    "answer": "cd63fe9ca4d1",
+    "section": "2. 0/1 versus unbounded knapsack",
+    "explain": "Upwards would reuse the current item."
+   },
+   {
+    "question": "What does tails[k] store in the O(n log n) LIS?",
+    "options": {
+     "a": "The smallest possible last value of an increasing subsequence of length k+1",
+     "b": "The LIS itself",
+     "c": "Counts"
+    },
+    "answer": "9bfa7b9ca64e",
+    "section": "3. LIS via dominant tails",
+    "explain": "A smaller tail is always at least as useful."
+   },
+   {
+    "question": "When can a 2-D DP table be compressed to one row?",
+    "options": {
+     "a": "When each row depends only on the previous row (in a safe order)",
+     "b": "Always",
+     "c": "Never"
+    },
+    "answer": "c74ec386437e",
+    "section": "1. Reduce dimensions with dependency analysis",
+    "explain": "Check which cells are read before they are overwritten."
+   },
+   {
+    "question": "An optimisation of a DP is valid when…",
+    "options": {
+     "a": "it runs faster on examples",
+     "b": "you can prove it computes the same recurrence",
+     "c": "it uses less memory"
+    },
+    "answer": "0c7262eca8e7",
+    "section": "4. Optimization requires a proof",
+    "explain": "Speed without a proof is a guess."
+   }
+  ]
+ },
+ "advanced/09": {
+  "lesson": "lessons/advanced/09_fenwick_segment_trees_and_range_queries.md",
+  "questions": [
+   {
+    "question": "Why can't a Fenwick tree answer range-minimum queries directly?",
+    "options": {
+     "a": "Minimum has no inverse, so prefix(hi) − prefix(lo) doesn't apply",
+     "b": "It's too slow",
+     "c": "It only stores even indexes"
+    },
+    "answer": "5f0357413066",
+    "section": "3. Segment tree and monoids",
+    "explain": "Segment trees only need an associative combine with an identity."
+   },
+   {
+    "question": "What does `i & -i` compute?",
+    "options": {
+     "a": "The lowest set bit of i",
+     "b": "The highest set bit",
+     "c": "i squared"
+    },
+    "answer": "371da70202fd",
+    "section": "2. Fenwick tree implementation",
+    "explain": "It is the size of the range node i is responsible for."
+   },
+   {
+    "question": "Data never changes and you need many range sums. Best choice?",
+    "options": {
+     "a": "Segment tree",
+     "b": "Plain prefix sums",
+     "c": "Fenwick tree"
+    },
+    "answer": "fa42dc12092c",
+    "section": "4. When not to reach for advanced structures",
+    "explain": "O(1) per query after O(n) preprocessing."
+   },
+   {
+    "question": "Update and query costs of Fenwick and segment trees?",
+    "options": {
+     "a": "O(1) and O(n)",
+     "b": "O(log n) each",
+     "c": "O(n) each"
+    },
+    "answer": "2e965e5d8b91",
+    "section": "1. Match the operation matrix",
+    "explain": "Both walk a logarithmic-height structure."
+   }
+  ]
+ },
+ "advanced/10": {
+  "lesson": "lessons/advanced/10_amortized_analysis_dsu_and_rollback.md",
+  "questions": [
+   {
+    "question": "Amortised O(1) append means…",
+    "options": {
+     "a": "every append is O(1)",
+     "b": "a sequence of n appends costs O(n) in total",
+     "c": "appends are O(log n)"
+    },
+    "answer": "77ced1777345",
+    "section": "1. Aggregate analysis for growing arrays",
+    "explain": "Occasional O(n) resizes are paid for by many cheap appends."
+   },
+   {
+    "question": "Path compression and union by size together make DSU operations…",
+    "options": {
+     "a": "O(n)",
+     "b": "near-constant amortised (inverse Ackermann)",
+     "c": "O(log² n)"
+    },
+    "answer": "96757c6b56b4",
+    "section": "2. Disjoint set union (union–find)",
+    "explain": "The bound grows so slowly it's effectively constant."
+   },
+   {
+    "question": "The cut property says…",
+    "options": {
+     "a": "the lightest edge crossing any cut belongs to some MST",
+     "b": "every edge belongs to an MST",
+     "c": "cuts must be balanced"
+    },
+    "answer": "9705c2894c50",
+    "section": "3. MST correctness via the cut property",
+    "explain": "Kruskal adds exactly such edges."
+   },
+   {
+    "question": "Why can't a rollback DSU use path compression?",
+    "options": {
+     "a": "Compression rewrites many parents, which a simple undo stack can't restore",
+     "b": "It's too fast",
+     "c": "It breaks union by size"
+    },
+    "answer": "ea69927c4cde",
+    "section": "4. Why rollback DSU needs special treatment",
+    "explain": "Union by size alone keeps trees O(log n) tall."
+   }
+  ]
+ },
+ "advanced/11": {
+  "lesson": "lessons/advanced/11_correctness_proofs_and_property_based_testing.md",
+  "questions": [
+   {
+    "question": "Which three claims should you separate about an algorithm?",
+    "options": {
+     "a": "Termination, correctness, complexity",
+     "b": "Speed, style, length",
+     "c": "Input, output, examples"
+    },
+    "answer": "a6ae9201a018",
+    "section": "1. Separate three different claims",
+    "explain": "Each needs its own argument or evidence."
+   },
+   {
+    "question": "A loop invariant must…",
+    "options": {
+     "a": "hold initially, be preserved by each iteration, and imply the result on exit",
+     "b": "be printed",
+     "c": "change every iteration"
+    },
+    "answer": "7f7eaba0a132",
+    "section": "2. Loop invariant example: lower bound search",
+    "explain": "That is induction over iterations."
+   },
+   {
+    "question": "Differential testing requires…",
+    "options": {
+     "a": "an independent oracle implementation",
+     "b": "a proof",
+     "c": "huge inputs"
+    },
+    "answer": "c72b7838d158",
+    "section": "3. Differential testing from independent oracles",
+    "explain": "Disagreements reveal bugs in either implementation."
+   },
+   {
+    "question": "What does a metamorphic test check?",
+    "options": {
+     "a": "A known output",
+     "b": "A relation between outputs on related inputs (e.g. shuffled input, same result)",
+     "c": "Speed"
+    },
+    "answer": "5a95cc9ffe38",
+    "section": "4. Metamorphic tests",
+    "explain": "Useful when there's no oracle for the exact answer."
+   }
+  ]
+ },
+ "advanced/12": {
+  "lesson": "lessons/advanced/12_mini_system_design_algorithm_capstone.md",
+  "questions": [
+   {
+    "question": "What should you write before any code for a system-style algorithm problem?",
+    "options": {
+     "a": "The contract: inputs, outputs, ties, failure modes",
+     "b": "Unit tests only",
+     "c": "The class hierarchy"
+    },
+    "answer": "31dffb8cb144",
+    "section": "1. The scenario and contract",
+    "explain": "Every later decision follows from it."
+   },
+   {
+    "question": "Which data structure keeps the scheduler deterministic when several tasks are ready?",
+    "options": {
+     "a": "A heap with a total ordering key",
+     "b": "A set",
+     "c": "A dict"
+    },
+    "answer": "476ee476e091",
+    "section": "2. Algorithm with explicit state",
+    "explain": "Sets and dicts don't define an order you can rely on for ties."
+   },
+   {
+    "question": "Adding task priorities to the scheduler changes…",
+    "options": {
+     "a": "only the heap key",
+     "b": "the invariants and tie rules, which must be restated",
+     "c": "nothing"
+    },
+    "answer": "97712d9ef136",
+    "section": "3. Extensions that change the algorithm",
+    "explain": "State the new ordering rule and re-check correctness."
+   },
+   {
+    "question": "A good interview presentation order is…",
+    "options": {
+     "a": "code, then contract",
+     "b": "contract → algorithm → invariant → complexity → tests",
+     "c": "tests only"
+    },
+    "answer": "38ffd7ecf26f",
+    "section": "5. Interview presentation",
+    "explain": "It shows reasoning, not just a result."
+   }
+  ]
+ }
+}
