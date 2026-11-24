@@ -1,83 +1,111 @@
-# Stacks: last-opened, first-closed
+# Stacks: last opened, first closed
 
-**Outcome:** understand when a stack captures the order of unfinished work more naturally than recursion or a dictionary.
+**Outcome:** use a stack whenever the newest unfinished item must be finished first, and recognise when a monotonic stack answers "what comes next?" in linear time.
 
-**Study time:** 75–100 minutes · **Before this:** [Two pointers and array invariants](02_two_pointers_and_invariants.md)
+**Study time:** 45–60 minutes · **Before this:** [Two pointers and array invariants](02_two_pointers_and_invariants.md)
 
-Consider brackets in a configuration expression: `([{}])` is valid, but `([)]` is not. Counting each type of bracket is insufficient. Both strings have the same counts; nesting order is the real constraint. Maintain a stack of unmatched opening brackets. On a closing bracket, demand a matching bracket on top, and remove it. At the end the stack must be empty.
+## 1. A stack holds unfinished work
+
+- `append` pushes onto the top and `pop` removes the most recent item: last in, first out (LIFO). Both are O(1).
+- `stack[-1]` reads the top without removing it. Check `if stack` first: popping an empty list raises `IndexError`.
+- Reach for a stack when the newest unfinished thing must be finished first: brackets, undo, nested calls.
+
+```python
+stack = []
+for action in ["open file", "type title", "type body"]:
+    stack.append(action)
+    print("push", repr(action), "->", stack)
+print("undo", repr(stack.pop()), "->", stack)
+print("top is now", repr(stack[-1]))
+```
+
+<!-- output -->
+```text
+push 'open file' -> ['open file']
+push 'type title' -> ['open file', 'type title']
+push 'type body' -> ['open file', 'type title', 'type body']
+undo 'type body' -> ['open file', 'type title']
+top is now 'type title'
+```
+<!-- /output -->
+
+<!-- drill DB10 -->
+**Exercise DB10 · Undo with backspaces.** In `s`, the character `#` deletes the previous surviving character (if any). Return the final text. Run `python -m tools.drills check DB10`.
+<!-- /drill -->
+
+## 2. Match brackets with a stack
+
+- Push every opening bracket. A closing bracket must match the top of the stack; then pop it.
+- At the end the stack must be empty: `"(("` is not balanced.
+- Counting is not enough: `"([)]"` has equal counts but crosses the nesting.
 
 ```python
 def valid_brackets(text):
-    matches = {')': '(', ']': '[', '}': '{'}
-    pending = []
+    matches = {")": "(", "]": "[", "}": "{"}
+    pending = []                      # openers still waiting, newest last
     for character in text:
-        if character in '([{':
+        if character in "([{":
             pending.append(character)
         elif not pending or pending.pop() != matches[character]:
             return False
     return not pending
+
+for sample in ["([{}])", "([)]", "((", "", ")("]:
+    print(repr(sample), valid_brackets(sample))
 ```
 
-The **invariant** is that `pending` contains the exact sequence of openings that have not been matched, in occurrence order. The most recent must close first: **LIFO**. Each character enters or leaves the stack at most once, so the runtime is **O(n)** and worst-case space is **O(n)**.
+<!-- output -->
+```text
+'([{}])' True
+'([)]' False
+'((' False
+'' True
+')(' False
+```
+<!-- /output -->
 
-## From matching to monotonic stacks
+<!-- drill DB09 -->
+**Exercise DB09 · Only round brackets.** Return True if every `(` in `s` is closed by a later `)` and no `)` appears without a matching `(`. Other characters are ignored. Run `python -m tools.drills check DB09`.
+<!-- /drill -->
 
-A related technique answers questions like *how many days until a higher latency occurs?* Keep unresolved positions in a stack. Unlike the bracket stack, this one is ordered by values: each new greater value resolves a run of earlier waiting positions. It is called a **monotonic stack**. Elements may be pushed and popped once, so nested-looking loops still have linear total work.
+## 3. A stack of operands
 
-The difference between the two patterns matters. Bracket matching uses nesting; next-greater-element problems exploit a **monotonic relation**. Do not choose a stack simply because the question involves history. Identify what remains unresolved and which future event can resolve it.
-
-## Validate the boundary cases
-
-Test an empty string, one closing bracket, leftover openings, crossing brackets, and deeply nested input. For next-greater values, test equal neighbors: a strictly greater requirement does not allow an equal value to resolve a position. Ask whether the answer should be an index, distance, or value before choosing what to store.
-
-**Practice:** B04 and I09. Describe the meaning of each stack element and explain how many times any element can be pushed or popped.
-
-## Deep dive: stack contents are a compact proof
-
-A stack does not just hold values; it captures the **unresolved work** from the processed prefix. For balanced delimiters, every opening bracket pushed is waiting for a closing bracket; the most recently opened must close first. If a closing bracket mismatches the top of the stack, no future character can repair the nesting already violated. This is why early rejection is safe.
-
-### Trace a nontrivial sequence
-
-For `'{[()]}'`, stacks after each character are `['{']`, `['{','[']`, `['{','[','(']`, `['{','[']`, `['{']`, `[]`. For `'([)]'`, the third symbol is `)` while `[` is on top, so reject immediately. Counting the total number of left/right delimiters cannot detect this violation.
-
-### Monotonic stacks store indices, not just values
-
-For daily latency `[7,4,6,8]`, an unresolved-index stack starts `[0]` for 7, becomes `[0,1]` for 4, then 6 pops index 1 and sets wait 1. Finally 8 pops index 2 and index 0. Every index is pushed once and popped once: O(n) total work, even with a nested while loop. Equal values remain unresolved if the question requires a **strictly** higher next value; changing `<` to `<=` changes semantics.
-
-### Stack versus recursion
-
-An explicit stack is the iterative counterpart to DFS's call stack. For preorder traversal, push a node's right child before its left child so left is visited first. A recursive traversal of a 100,000-node chain may exceed Python's recursion limit; an explicit stack handles depth without Python recursive frames but still uses O(n) memory in the worst case.
-
-**Failure tests:** unmatched opener, unmatched closer, incorrect nesting, empty input, repeated equal latency values, entirely decreasing latency sequence. **Practice:** B04 and I09; for each explain the invariant, the reason popped items will never be relevant again, and the stack's maximum size.
-
-<!-- lesson-practice -->
-
-## Try it
-
-Run this block (or `python -m tools.lessons` to refresh every page), then change one input and predict the new output before running it again.
+- In reverse Polish notation numbers are pushed; an operator pops two numbers and pushes the result.
+- Order matters: the first pop is the **right** operand.
 
 ```python
-PAIRS = {")": "(", "]": "[", "}": "{"}
+stack = [7, 2]
+right = stack.pop()
+left = stack.pop()
+print(left, "-", right, "=", left - right)
+print("int(-7 / 2) =", int(-7 / 2), "but -7 // 2 =", -7 // 2)
+```
 
-def balanced(text):
-    stack = []
-    for ch in text:
-        if ch in "([{":
-            stack.append(ch)
-        elif ch in PAIRS:
-            if not stack or stack.pop() != PAIRS[ch]:
-                return False
-    return not stack
+<!-- output -->
+```text
+7 - 2 = 5
+int(-7 / 2) = -3 but -7 // 2 = -4
+```
+<!-- /output -->
 
-for sample in ["{[()]}", "([)]", "((", "", "a(b)c"]:
-    print(repr(sample), balanced(sample))
+<!-- drill DB11 -->
+**Exercise DB11 · Evaluate reverse Polish notation.** `tokens` is a valid expression using integers and `+ - * /`. Division truncates toward zero, like `int(a / b)`. Return the value. Run `python -m tools.drills check DB11`.
+<!-- /drill -->
 
+## 4. Monotonic stack: the next greater value
+
+- Keep the **indexes** still waiting for an answer. Their values never increase from bottom to top.
+- A new value pops every smaller waiting index and becomes its answer.
+- Each index is pushed once and popped at most once, so the nested `while` is still O(n) in total.
+
+```python
 def next_greater(values):
     answer, stack = [-1] * len(values), []   # stack holds indexes still waiting
     for i, value in enumerate(values):
         while stack and values[stack[-1]] < value:
             answer[stack.pop()] = value
         stack.append(i)
+        print(f"after {value}: waiting {[values[j] for j in stack]}")
     return answer
 
 print(next_greater([2, 1, 2, 4, 3]))
@@ -85,12 +113,41 @@ print(next_greater([2, 1, 2, 4, 3]))
 
 <!-- output -->
 ```text
-'{[()]}' True
-'([)]' False
-'((' False
-'' True
-'a(b)c' True
+after 2: waiting [2]
+after 1: waiting [2, 1]
+after 2: waiting [2, 2]
+after 4: waiting [4]
+after 3: waiting [4, 3]
 [4, 2, 4, -1, -1]
+```
+<!-- /output -->
+
+<!-- drill DB12 -->
+**Exercise DB12 · Days until a warmer day.** For each day `i` in `temps`, return how many days you wait until a strictly warmer temperature, or 0 if none comes. Run `python -m tools.drills check DB12`.
+<!-- /drill -->
+
+<!-- lesson-practice -->
+
+## Try it
+
+Predict each line before you run it: one input is balanced, one closes too early, one leaves an opener behind.
+
+```python
+for sample in ["{[()()]}", "{[}]", "[[]"]:
+    print(repr(sample), valid_brackets(sample))
+print(next_greater([5, 4, 3, 6]))
+```
+
+<!-- output -->
+```text
+'{[()()]}' True
+'{[}]' False
+'[[]' False
+after 5: waiting [5]
+after 4: waiting [5, 4]
+after 3: waiting [5, 4, 3]
+after 6: waiting [6]
+[6, 6, 6, -1]
 ```
 <!-- /output -->
 
@@ -166,5 +223,39 @@ python -m tools.quiz basics/03           # list the questions
 - Balanced brackets: push openers, match closers, and require an empty stack at the end.
 - A monotonic stack keeps indexes still waiting for an answer; each is pushed and popped once.
 - Explicit stacks replace recursion when depth could be large.
+
+## Deep dive (optional)
+
+Read this after the drills: it explains why the stack is correct and how to test it.
+
+### From matching to monotonic stacks
+
+A related technique answers questions like *how many days until a higher latency occurs?* Keep unresolved positions in a stack. Unlike the bracket stack, this one is ordered by values: each new greater value resolves a run of earlier waiting positions. It is called a **monotonic stack**. Elements may be pushed and popped once, so nested-looking loops still have linear total work.
+
+The difference between the two patterns matters. Bracket matching uses nesting; next-greater-element problems exploit a **monotonic relation**. Do not choose a stack simply because the question involves history. Identify what remains unresolved and which future event can resolve it.
+
+### Validate the boundary cases
+
+Test an empty string, one closing bracket, leftover openings, crossing brackets, and deeply nested input. For next-greater values, test equal neighbors: a strictly greater requirement does not allow an equal value to resolve a position. Ask whether the answer should be an index, distance, or value before choosing what to store.
+
+**Practice:** B04 and I09. Describe the meaning of each stack element and explain how many times any element can be pushed or popped.
+
+### Deep dive: stack contents are a compact proof
+
+A stack does not just hold values; it captures the **unresolved work** from the processed prefix. For balanced delimiters, every opening bracket pushed is waiting for a closing bracket; the most recently opened must close first. If a closing bracket mismatches the top of the stack, no future character can repair the nesting already violated. This is why early rejection is safe.
+
+#### Trace a nontrivial sequence
+
+For `'{[()]}'`, stacks after each character are `['{']`, `['{','[']`, `['{','[','(']`, `['{','[']`, `['{']`, `[]`. For `'([)]'`, the third symbol is `)` while `[` is on top, so reject immediately. Counting the total number of left/right delimiters cannot detect this violation.
+
+#### Monotonic stacks store indices, not just values
+
+For daily latency `[7,4,6,8]`, an unresolved-index stack starts `[0]` for 7, becomes `[0,1]` for 4, then 6 pops index 1 and sets wait 1. Finally 8 pops index 2 and index 0. Every index is pushed once and popped once: O(n) total work, even with a nested while loop. Equal values remain unresolved if the question requires a **strictly** higher next value; changing `<` to `<=` changes semantics.
+
+#### Stack versus recursion
+
+An explicit stack is the iterative counterpart to DFS's call stack. For preorder traversal, push a node's right child before its left child so left is visited first. A recursive traversal of a 100,000-node chain may exceed Python's recursion limit; an explicit stack handles depth without Python recursive frames but still uses O(n) memory in the worst case.
+
+**Failure tests:** unmatched opener, unmatched closer, incorrect nesting, empty input, repeated equal latency values, entirely decreasing latency sequence. **Practice:** B04 and I09; for each explain the invariant, the reason popped items will never be relevant again, and the stack's maximum size.
 
 **Next:** [Binary search, prefix computation and one-dimensional DP](04_binary_search_prefixes_and_dp.md)

@@ -26,7 +26,7 @@ Every lesson keeps its in-depth explanation and adds a runnable **Try it** with 
 |---:|---|---|---:|---:|---|
 | 01 | [Hash maps: find information without repeated scans](01_hashing_and_frequency.md) | 75–100 minutes | 4 | 4 | `B01`, `B02`, `B03`, `B09`, `B11` |
 | 02 | [Two pointers and array invariants](02_two_pointers_and_invariants.md) | 75–100 minutes | 4 | 4 | `B06`, `B12`, `B13`, `B14` |
-| 03 | [Stacks: last-opened, first-closed](03_stacks_and_state.md) | 75–100 minutes | 4 | 4 | `B04`, `I09` |
+| 03 | [Stacks: last opened, first closed](03_stacks_and_state.md) | 45–60 minutes | 4 | 4 | `B04`, `I09` |
 | 04 | [Binary search, prefix computation and one-dimensional DP](04_binary_search_prefixes_and_dp.md) | 75–100 minutes | 4 | 4 | `B05`, `B07`, `B16` |
 | 05 | [Complexity analysis: count the work, not the loops](05_complexity_and_algorithm_analysis.md) | 90–120 minutes | 4 | 4 | `B01`, `B03`, `B06`, `B14` |
 | 06 | [Arrays and strings: indexes, range invariants, and stable transforms](06_arrays_strings_and_index_invariants.md) | 90 minutes | 4 | 4 | `B06`, `B08`, `B12`, `B14`, `B15`, `B16` |
